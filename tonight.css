@@ -1,0 +1,84 @@
+/* CSS declarations go here */
+
+html, body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: Helvetica, Arial;
+	font-size: 14px;
+}
+
+#sidebar {
+	position: absolute;
+	width: 300px;
+	top: 0;
+	bottom: 0;
+	background: #222;
+	color: #FFF;
+}
+
+#body {
+	position: absolute;
+	left: 300px;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	overflow: scroll;
+	background: #DDD;
+	padding: 5px;
+}
+
+.movie {
+	background: #FFF;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+	float: left;
+	margin: 5px;
+	width: calc(20% - 10px);
+	min-width: 200px;
+}
+
+.movie-details {
+	padding: 10px 12px;
+}
+
+.poster {
+	display: block;
+	margin: 0 auto;
+	height: 200px;
+	width: 140px;
+}
+.movie  h2 {
+	font-size: 16px;
+	margin: 12px 0 4px 0;
+}
+.movie  p {
+	font-size: 12px;
+	color: #AAA;
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.movie-buttons {
+	height: 32px;
+}
+
+.movie-button {
+	float: left;
+	width: calc(25% - 24px);
+	height: 16px;
+	padding: 8px 12px;
+	background: #CCC;
+	color: #FFF;
+	text-align: center;
+}
+
+.movie-button.dislike { background: #F44; }
+.movie-button.like { background: #4F4; }
+.movie-button.bookmark { background: #FD4; }
+
+
+
+
+
