@@ -6,7 +6,7 @@ Meteor.publish("allMovies", function(opts) {
   	// TODO Add additional filters
   	// TODO Sort by match certainty instead of year
   	var search = { poster: { $ne: 'N/A' } }
-  	if (opts.genre) search.title = { $regex: opts.genre, $options: 'i'};
+  	if (opts.genre) search.genre = { $regex: '.*' + opts.genre + '.*' };
   	
   	var res = Movies.find(search, { limit: page * 10, sort: { year: -1 } });
   	return res;
