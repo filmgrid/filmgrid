@@ -1,12 +1,6 @@
 
 #body {
-	position: absolute;
-	left: 260px;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	overflow: scroll;
-	background: #e5e5e5;
+	margin-left: 260px;
 	padding: 7px 40px;
 }
 
@@ -48,6 +42,8 @@
 	font-size: 15px;
 	margin: 0 0 5px 0;
 	line-height: 1.1;
+	max-height: 32px;
+	overflow: hidden;
 }
 
 .movie p {
@@ -81,5 +77,11 @@
 .movie:hover .movie-button { opacity: 0.7; }
 .movie:hover .movie-button:hover { opacity: 1; }
 
-
-
+.load-more {
+	clear: both;
+	margin: 7px;
+	border: none;
+	background: #DDD;
+	padding: 4px 8px;
+	text-align: center;
+}

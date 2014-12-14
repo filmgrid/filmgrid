@@ -1,8 +1,11 @@
 <template name="moviegrid">
 
-	{{#each movies}}
-		{{ > movie this }}
-	{{/each}}
+  	{{#each allMovies}}
+    	{{ > movie this }}
+  	{{/each}}
+
+    <div class="load-more">Load More</div>
+
 </template>
 
 <template name="movie">
@@ -23,6 +26,3 @@
 		</div>
 	</div>
 </template>
-
-
-

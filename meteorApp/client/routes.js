@@ -3,10 +3,13 @@ Router.route('/', function () {
 });
 
 Router.onBeforeAction(function() {
-	if (!Meteor.userId())
-	{
+	if (!Meteor.userId()) {
 		this.render('login');
 		return;
 	}
 	this.next();
-})
+});
+
+Meteor.startup(function() {
+  	Session.setDefault('query', { genre: undefined, page: 1 });
+});

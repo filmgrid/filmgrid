@@ -1,12 +1,13 @@
 
 #sidebar {
-	position: absolute;
+	position: fixed;
 	width: 220px;
 	padding: 20px;
 	top: 0;
 	bottom: 0;
 	background: #222;
 	color: #FFF;
+	z-index: 10;
 }
 
 h1 {

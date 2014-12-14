@@ -4,9 +4,7 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
 accounts-ui
 iron:router
 accounts-github
-
