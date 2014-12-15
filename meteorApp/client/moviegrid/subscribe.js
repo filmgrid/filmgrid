@@ -1,3 +1,3 @@
 Deps.autorun(function(){
-  Meteor.subscribe('allMovies', Session.get('query') );  
+  Meteor.subscribe('movies', Session.get('query') );  
 });

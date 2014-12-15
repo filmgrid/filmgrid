@@ -1,5 +1,3 @@
-Movies = new Meteor.Collection('movies');
-
 Movies.deny
 (
 	{
@@ -12,6 +10,7 @@ Movies.deny
 Meteor.users.allow(
 	{
 		update: function (userId, doc, fields, modifier) {
+			console.log(userId);
 		    return doc._id === userId;
 	 	}
 	}
