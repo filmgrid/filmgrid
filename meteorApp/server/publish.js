@@ -18,36 +18,52 @@ function initialInsert(userId) {
   Meteor.users.update({_id : userId}, { $set : { "profile.movies": movies }});
 }
 
-Meteor.publish("movies", function(opts) {
-  if (Meteor.users.findOne({_id:this.userId}))
+function subscribeToMovies(type, opts, userId) {
+
+  if (Meteor.users.findOne({_id: userId}))
   {
     var opts = opts || {};
     var page = opts.page || 1;
 
-    var movies = Meteor.users.findOne({_id:this.userId}).profile.movies;
+    var movies = Meteor.users.findOne({_id: userId}).profile.movies;
 
     if (movies == undefined)
     {
-      initialInsert(this.userId);
+      initialInsert( userId);
       return;
     }
 
-    var suggested = movies.suggested || [];
-    var liked     = movies.liked     || [];
-    var disliked  = movies.disliked  || [];
-    var dismissed = movies.dismissed || [];
-    var starred   = movies.starred   || [];
-
-    var ids = suggested.concat(liked).concat(disliked).concat(dismissed).concat(starred);
-
-    // TODO For now, only show movies with poster
-    // TODO Add additional filters
-    // TODO Sort by match certainty instead of year
+    var ids = movies[type];
+    
+    console.log(ids);
     var search = { poster: { $ne: 'N/A' }, _id : { $in : ids } };
     if (opts.genre) search.genre = { $regex: '.*' + opts.genre + '.*' };
     var res = Movies.find(search, { limit: page * 20, sort: { year: -1 } });
-
     return res;
   }
+};
+
+Meteor.publish("moviesSuggested", function(opts) 
+{
+    return subscribeToMovies("suggested", opts, this.userId);
 });
 
+Meteor.publish("moviesLiked", function(opts)
+{
+    return subscribeToMovies("liked", opts, this.userId);
+});
+
+Meteor.publish("moviesDisliked", function(opts) 
+{
+    return subscribeToMovies("disliked", opts, this.userId);
+});
+
+Meteor.publish("moviesStarred", function(opts) 
+{
+    return subscribeToMovies("starred", opts, this.userId);
+});
+
+Meteor.publish("moviesDismissed", function(opts) 
+{
+    return subscribeToMovies("dismissed", opts, this.userId);
+});
