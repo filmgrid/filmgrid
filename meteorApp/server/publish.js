@@ -3,12 +3,12 @@ function initialInsert(userId) {
   var suggested = Movies
   .find(
     {poster: { $ne: 'N/A' }, imdb_votes: { $ne: 'N/A' }},
-    { limit: 300, sort: { imdb_votes: -1 }, fields : {_id: 1 }}
+    { sort: { imdb_votes: -1 }, fields : {_id: 1 }}
     ).fetch()
   .map(function(e) { return e._id;});
 
   var movies = {
-    suggested : suggested,
+    suggested : suggested.slice(0, 300),
     liked     : [],
     disliked  : [],
     dismissed : [],
