@@ -35,6 +35,8 @@
 	height: 100%;
 	background: #000;
 	opacity: 0;
+	-webkit-transition: opacity .2s;
+	-moz-transition: opacity .2s;
 	transition: opacity .2s;
 }
 
@@ -72,18 +74,44 @@
 	background: url('/assets/icons.png');
 	background-size: 40px 240px;
 	-webkit-transition: -webkit-transform .2s;
+	-moz-transition: -moz-transform .2s;
+	transition: transform .2s;
 }
 
-.movie-bookmark { width: 40px; -webkit-transform: translateX(-100%); }
-.movie:hover .movie-bookmark { -webkit-transform: none; }
-.movie-bookmark:hover { background-position: 0 -120px; }
 
-.movie-dislike { width: 40px; right: 0; background-position: 0 -40px; -webkit-transform: translateX(100%); }
-.movie:hover .movie-dislike { -webkit-transform: none; }
+.movie-bookmark {
+	width: 40px;
+	-webkit-transform: translateX(-100%);
+	-moz-transform: translateX(-100%);
+	transform: translateX(-100%);
+}
+
+.movie-dislike {
+	width: 40px;
+	right: 0;
+	background-position: 0 -40px;
+	-webkit-transform: translateX(100%);
+	-moz-transform: translateX(100%);
+	transform: translateX(100%);
+}
+
+.movie-bookmark:hover { background-position: 0 -120px; }
 .movie-dislike:hover { background-position: 0 -160px; }
 
-.movie .movie-like { width: 160px; bottom: 0; background: none; -webkit-transform: translateY(100%); }
-.movie:hover .movie-like { -webkit-transform: none; }
+.movie .movie-like {
+	width: 160px;
+	bottom: 0;
+	background: none;
+	-webkit-transform: translateY(100%);
+	-moz-transform: translateY(100%);
+	transform: translateY(100%);
+}
+
+.movie:hover .movie-bookmark, .movie:hover .movie-dislike, .movie:hover .movie-like {
+	-webkit-transform: none;
+	-moz-transform: none;
+	transform: none;
+}
 
 .movie-like-1, .movie-like-2, .movie-like-3, .movie-like-4 {
 	cursor: pointer;
