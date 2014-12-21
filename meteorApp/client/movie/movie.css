@@ -95,8 +95,8 @@
 	transform: translateX(100%);
 }
 
-.movie-bookmark:hover { background-position: 0 -120px; }
-.movie-dismissed:hover { background-position: 0 -160px; }
+.movie-bookmark:hover, .movie-user-status-bookmarked .movie-bookmark { background-position: 0 -120px; }
+.movie-dismissed:hover, .movie-user-status-dismissed .movie-dismissed { background-position: 0 -160px; }
 
 .movie .movie-like {
 	width: 160px;
@@ -113,26 +113,34 @@
 	transform: none;
 }
 
-.movie-like-1, .movie-like-2, .movie-like-3, .movie-like-4 {
+.movie-like1, .movie-like2, .movie-like3, .movie-like4 {
 	cursor: pointer;
 	height: 40px;
 	position: absolute;
 	top: 0;
 }
 
-.movie-like-4 {
+.movie-like4 {
 	background: url('/assets/icons.png');
 	background-size: 40px 240px;
 	background-position: 0 -80px;
 }
 
-.movie-like-1:hover, .movie-like-2:hover, .movie-like-3:hover, .movie-like-4:hover {
+.movie-like1:hover, .movie-like2:hover, .movie-like3:hover, .movie-like4:hover
+{
 	background: url('/assets/icons.png');
 	background-size: 40px 240px;
 	background-position: 0 -200px;
 }
 
-.movie-like-1 { width: 40px; }
-.movie-like-2 { width: 80px; }
-.movie-like-3 { width: 120px; width: 120px; cursor: pointer; }
-.movie-like-4 { width: 160px; background-position: 0 -80px; bottom: 0; }
+
+.movie-user-status-liked1 .movie-like1, .movie-user-status-liked2 .movie-like2, .movie-user-status-liked3 .movie-like3, .movie-user-status-liked4 .movie-like4 {
+	background: url('/assets/icons.png');
+	background-size: 40px 240px;
+	background-position: 0 -200px;
+}
+
+.movie-like1 { width: 40px; }
+.movie-like2 { width: 80px; }
+.movie-like3 { width: 120px; width: 120px; cursor: pointer; }
+.movie-like4 { width: 160px; background-position: 0 -80px; bottom: 0; }

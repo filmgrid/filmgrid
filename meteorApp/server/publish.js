@@ -3,13 +3,25 @@ function initialInsert(userId) {
   var suggested = Movies
   .find(
     {poster: { $ne: 'N/A' }, imdb_votes: { $ne: 'N/A' }},
-    { sort: { imdb_votes: -1 }, fields : {_id: 1 }}
-    ).fetch()
-  .map(function(e) { return {id: e._id, status: {type : 'suggested'}, proba:1}});
+    { sort: { imdb_votes: -1 }, fields : {_id: 1, title:1, poster:1, year:1, genre:1, runtime:1 }}
+    )
+  .fetch()
+  .slice(0, 100)
+  .map(function(e) {
+    return [e._id, {
+      id : e._id, 
+      statusType:'suggested',
+      proba : 1,
+      title : e.title,
+      poster : e.poster,
+      year : e.year,
+      genre : e.genre,
+      runtime : e.runtime
 
-  var movies = suggested.slice(0, 300);
-  console.log("hello");
-  Meteor.users.update({_id : userId}, { $set : { "profile.movies": movies }});
+    }];
+  }); 
+  
+  Meteor.users.update({_id : userId}, { $set : { "profile.movies": _.object(suggested) }});
 }
 
 function subscribeToMovies(type, opts, userId) {
@@ -27,7 +39,7 @@ function subscribeToMovies(type, opts, userId) {
       return;
     }
 
-    var ids = movies.map(function(e) { return e.id;});
+    var ids = _.keys(movies);
     
     var search = { poster: { $ne: 'N/A' }, _id : { $in : ids } };
     if (opts.genre) search.genre = { $regex: '.*' + opts.genre + '.*' };

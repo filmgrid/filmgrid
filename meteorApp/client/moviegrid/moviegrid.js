@@ -1,10 +1,11 @@
-function findMovies(type, sort) {
-  var movies = _.filter(Meteor.user().profile.movies, (function(e) { return e.status.type === type; }));
-  var moviesIds = movies.map(function(e) { return e.id; });
+var userMovies = {};
 
-  return Movies.find(
-    {_id : { $in : moviesIds}}, sort
-    );
+function findMovies(type) {
+  if (Meteor.user()) {
+    userMovies = Meteor.user().profile.movies;  
+    return _.sortBy(_.where(userMovies,{statusType: type}), function(e) { return -e.year; });    
+  } 
+  return null;
 }
 
 Template.moviegrid.helpers(
@@ -12,22 +13,21 @@ Template.moviegrid.helpers(
   "movies" : function() {
     switch (Session.get('type')) {
       case 'suggested' :
-        return findMovies('suggested', { sort: { year: -1 } } );
+        return findMovies('suggested');
       case 'bookmarked' :
-        return findMovies('bookmarked', { sort: { year: -1 } } );
+        return findMovies('bookmarked');
       case 'dismissed' :
-        return findMovies('dismissed', { sort: { year: -1 } } );
+        return findMovies('dismissed');
       case 'liked' :
-        return findMovies('liked', { sort: { year: -1 } } );
-    }
-  }   
+        return findMovies('liked');
+    }    
+  }
 });
 
 Template.moviegrid.events = {
   	'click .load-more': function () {
     	  loadMore(true);
   	},
-
 }
 
 // See http://www.meteorpedia.com/read/Infinite_Scrolling
