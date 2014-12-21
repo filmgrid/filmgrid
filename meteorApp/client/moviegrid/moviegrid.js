@@ -1,10 +1,27 @@
+function findMovies(type, sort) {
+
+  var movies = _.filter(Meteor.user().profile.movies, (function(e) { return e.status === type; }));
+  var moviesIds = movies.map(function(e) { return e.id; });
+
+  return Movies.find(
+    {_id : { $in : moviesIds}}, sort
+    );
+}
+
 Template.moviegrid.helpers(
 {
-  "suggestedMovies" : function() {
-    return Movies.find({
-      _id : { $in : Meteor.user().profile.movies.suggested }
-      }, { sort: { year: -1 } });
-  }
+  "movies" : function() {
+    switch (Session.get('type')) {
+      case 'suggested' :
+        return findMovies('suggested', { sort: { year: -1 } } );
+      case 'bookmarked' :
+        return findMovies('bookmarked', { sort: { year: -1 } } );
+      case 'dismissed' :
+        return findMovies('dismissed', { sort: { year: -1 } } );
+      case 'liked' :
+        return findMovies('liked-4', { sort: { year: -1 } } );
+    }
+  }   
 });
 
 Template.moviegrid.events = {

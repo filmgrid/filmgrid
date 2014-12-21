@@ -5,15 +5,9 @@ function initialInsert(userId) {
     {poster: { $ne: 'N/A' }, imdb_votes: { $ne: 'N/A' }},
     { sort: { imdb_votes: -1 }, fields : {_id: 1 }}
     ).fetch()
-  .map(function(e) { return e._id;});
+  .map(function(e) { return {id: e._id, status: 'suggested', proba:1}});
 
-  var movies = {
-    suggested : suggested.slice(0, 300),
-    liked     : [],
-    disliked  : [],
-    dismissed : [],
-    starred   : []
-  };
+  var movies = suggested.slice(0, 300);
   console.log("hello");
   Meteor.users.update({_id : userId}, { $set : { "profile.movies": movies }});
 }
@@ -33,9 +27,8 @@ function subscribeToMovies(type, opts, userId) {
       return;
     }
 
-    var ids = movies[type];
+    var ids = movies.map(function(e) { return e.id;});
     
-    console.log(ids);
     var search = { poster: { $ne: 'N/A' }, _id : { $in : ids } };
     if (opts.genre) search.genre = { $regex: '.*' + opts.genre + '.*' };
     var res = Movies.find(search, { limit: page * 20, sort: { year: -1 } });
@@ -43,27 +36,7 @@ function subscribeToMovies(type, opts, userId) {
   }
 };
 
-Meteor.publish("moviesSuggested", function(opts) 
+Meteor.publish("movies", function(opts) 
 {
-    return subscribeToMovies("suggested", opts, this.userId);
-});
-
-Meteor.publish("moviesLiked", function(opts)
-{
-    return subscribeToMovies("liked", opts, this.userId);
-});
-
-Meteor.publish("moviesDisliked", function(opts) 
-{
-    return subscribeToMovies("disliked", opts, this.userId);
-});
-
-Meteor.publish("moviesStarred", function(opts) 
-{
-    return subscribeToMovies("starred", opts, this.userId);
-});
-
-Meteor.publish("moviesDismissed", function(opts) 
-{
-    return subscribeToMovies("dismissed", opts, this.userId);
+    return subscribeToMovies("movies", opts, this.userId);
 });
