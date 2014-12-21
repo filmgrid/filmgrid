@@ -42,7 +42,7 @@ function updateFromProfile(id, status)
   console.log('tic update');
   var $set = {};
   $set['profile.movies.' + id + '.statusType' ]  = status.type;
-  $set['profile.movies.' + id + '.statusScore' ] = status.score;
+  $set['profile.movies.' + id + '.statusScore' ] = status.score ? status.score : '';
   
   Meteor.users.update(
      {_id : Meteor.userId()},
