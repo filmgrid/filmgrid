@@ -1,6 +1,5 @@
 function findMovies(type, sort) {
-
-  var movies = _.filter(Meteor.user().profile.movies, (function(e) { return e.status === type; }));
+  var movies = _.filter(Meteor.user().profile.movies, (function(e) { return e.status.type === type; }));
   var moviesIds = movies.map(function(e) { return e.id; });
 
   return Movies.find(
@@ -19,7 +18,7 @@ Template.moviegrid.helpers(
       case 'dismissed' :
         return findMovies('dismissed', { sort: { year: -1 } } );
       case 'liked' :
-        return findMovies('liked-4', { sort: { year: -1 } } );
+        return findMovies('liked', { sort: { year: -1 } } );
     }
   }   
 });

@@ -67,7 +67,7 @@
 	white-space: nowrap;
 }
 
-.movie-bookmark, .movie-dislike, .movie-like {
+.movie-bookmark, .movie-dismissed, .movie-like {
 	height: 40px;
 	position: absolute;
 	cursor: pointer;
@@ -86,7 +86,7 @@
 	transform: translateX(-100%);
 }
 
-.movie-dislike {
+.movie-dismissed {
 	width: 40px;
 	right: 0;
 	background-position: 0 -40px;
@@ -96,7 +96,7 @@
 }
 
 .movie-bookmark:hover { background-position: 0 -120px; }
-.movie-dislike:hover { background-position: 0 -160px; }
+.movie-dismissed:hover { background-position: 0 -160px; }
 
 .movie .movie-like {
 	width: 160px;
@@ -107,7 +107,7 @@
 	transform: translateY(100%);
 }
 
-.movie:hover .movie-bookmark, .movie:hover .movie-dislike, .movie:hover .movie-like {
+.movie:hover .movie-bookmark, .movie:hover .movie-dismissed, .movie:hover .movie-like {
 	-webkit-transform: none;
 	-moz-transform: none;
 	transform: none;

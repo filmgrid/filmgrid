@@ -5,7 +5,7 @@ function initialInsert(userId) {
     {poster: { $ne: 'N/A' }, imdb_votes: { $ne: 'N/A' }},
     { sort: { imdb_votes: -1 }, fields : {_id: 1 }}
     ).fetch()
-  .map(function(e) { return {id: e._id, status: 'suggested', proba:1}});
+  .map(function(e) { return {id: e._id, status: {type : 'suggested'}, proba:1}});
 
   var movies = suggested.slice(0, 300);
   console.log("hello");

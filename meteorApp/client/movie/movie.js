@@ -1,29 +1,29 @@
 Template.movie.events = {
     'click .movie-bookmark' : function () {
-      updateFromProfile(this._id, 'bookmarked');
+      updateFromProfile(this._id, {type : 'bookmarked'} );
     },
 
     'click .movie-like-4' : function () {
-      updateFromProfile(this._id, 'liked-4');
+      updateFromProfile(this._id, {type : 'liked', score : 4});
     },
 
 
     'click .movie-like-3' : function () {
-      updateFromProfile(this._id, 'liked-3');
+      updateFromProfile(this._id, {type : 'liked', score : 3});
     },
 
 
     'click .movie-like-2' : function () {
-      updateFromProfile(this._id, 'liked-2');
+      updateFromProfile(this._id, {type : 'liked', score : 2});
     },
 
 
     'click .movie-like-1' : function () {
-      updateFromProfile(this._id, 'liked-1');
+      updateFromProfile(this._id, {type : 'liked', score : 1});
     },
 
     'click .movie-dismissed' : function () {
-      updateFromProfile(this._id, 'dismissed');
+      updateFromProfile(this._id, {type : 'dismissed'} );
     },
 }
 
