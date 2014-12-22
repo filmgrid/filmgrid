@@ -6,6 +6,19 @@
 	background-size: 200px 80px;
 }
 
+.link-selected-suggested #link-suggested,
+.link-selected-liked #link-liked,
+.link-selected-dismissed #link-dismissed,
+.link-selected-bookmarked #link-bookmarked {
+	background-color: white;
+	color: #444;
+}
+
+#sidebar p {
+	padding : 3px;
+}
+
+
 #sidebar {
 	position: fixed;
 	width: 220px;

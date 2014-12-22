@@ -21,6 +21,10 @@ Template.moviegrid.helpers(
       case 'liked' :
         return findMovies('liked');
     }    
+  },
+
+  "suggested" : function() {
+    return Session.get('type') === 'suggested';
   }
 });
 

@@ -6,7 +6,7 @@ function initialInsert(userId) {
     { sort: { imdb_votes: -1 }, fields : {_id: 1, title:1, poster:1, year:1, genre:1, runtime:1 }}
     )
   .fetch()
-  .slice(0, 100)
+  .slice(0, 50)
   .map(function(e) {
     return [e._id, {
       id : e._id, 
@@ -20,7 +20,7 @@ function initialInsert(userId) {
 
     }];
   }); 
-  
+
   Meteor.users.update({_id : userId}, { $set : { "profile.movies": _.object(suggested) }});
 }
 

@@ -1,7 +1,9 @@
 <template name="moviegrid">
   	{{#each movies}}
-    	{{ > movie }}
+    	{{ > movie this}}
   	{{/each}}  	
-    <div class="load-more">Load More</div>
+    {{#if suggested}}
+    	<div class="load-more">Suggest me more movies</div>
+    {{/if}}
 
 </template>
