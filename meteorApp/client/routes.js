@@ -34,7 +34,9 @@ Router.onBeforeAction(function() {
 		this.render('login');
 		return;
 	};		
-	Session.set('query', { filter: {type : "genre", value : "Drama"}, sortBy : "year", page: 2 }); // reinitialise the infinite scrolling on page change
+	var query = Session.get('query');
+	query.page = 2;
+	Session.set('query', query);
 	this.next();
 });
 

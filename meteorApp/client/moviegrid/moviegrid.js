@@ -19,8 +19,13 @@ var sortBy = {
   "year" : function(e) {
     return -e.year;
   },
-  "stars" : function(e) {    
-    return -e.statusScore;
+  "stars" : function(e) {
+    if (e.statusScore) 
+    {
+      return -e.statusScore;
+    } else {
+      return -e.year;
+    }
   }
 }
 

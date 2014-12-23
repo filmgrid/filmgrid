@@ -12,7 +12,6 @@ function handleFilter() {
 
 function handleSort() {
     var sort = $('#sort-type').val() || undefined;
-
     console.log("I am here");
  	var query = Session.get('query');
     query.sortBy = sort;
