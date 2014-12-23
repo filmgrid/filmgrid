@@ -36,5 +36,9 @@ h1 {
 
 label {
 	display: block;
-	margin: 12px 0;
+	margin: 12px 0;	
+}
+
+select {
+	color:#444;
 }

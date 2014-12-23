@@ -3,7 +3,8 @@
     	{{ > movie this}}
   	{{/each}}  	
     {{#if suggested}}
-    	<div class="load-more">Suggest me more movies</div>
+    	<div class="suggest-more">Suggest me more movies</div>
+    {{else}}    	    
+    	<div class="load-more">Load more</div>
     {{/if}}
-
 </template>

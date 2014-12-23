@@ -1,5 +1,5 @@
 Router.route('/', function () {
-  Session.set('type','suggested');  
+  Session.set('type','suggested');    
   this.render('homepage', {
 	data : {
 	 	"navSelected" : "suggested" }
@@ -33,14 +33,11 @@ Router.onBeforeAction(function() {
 	if (!Meteor.userId()) {
 		this.render('login');
 		return;
-	}
+	};		
+	Session.set('query', { filter: {type : "genre", value : "Drama"}, sortBy : "year", page: 2 }); // reinitialise the infinite scrolling on page change
 	this.next();
 });
 
-Router.waitOn(function() {
-	Meteor.subscribe('movies', Session.get('query'));
-});
-
 Meteor.startup(function() {
-  	Session.setDefault('query', { genre: undefined, page: 1 });
+  	Session.setDefault('query', { filter: {type : "genre", value : "Drama"}, sortBy : "year", page: 2 }); 
 });

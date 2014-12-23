@@ -6,7 +6,7 @@ function initialInsert(userId) {
     { sort: { imdb_votes: -1 }, fields : {_id: 1, title:1, poster:1, year:1, genre:1, runtime:1 }}
     )
   .fetch()
-  .slice(0, 50)
+  .slice(0, 500)
   .map(function(e) {
     return [e._id, {
       id : e._id, 
