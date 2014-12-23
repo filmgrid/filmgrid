@@ -1,12 +1,3 @@
-/*Template.movie.helpers({
-  userStatus : function () {
-    var movie = Session.get('userMovies')[this._id];
-    var score = movie.statusScore ? movie.statusScore : '';    
-    return movie.statusType + score;
-}});
-*/
-
-
 Template.movie.events = {
     'click .movie-bookmark' : function () {
       updateFromProfile(this.id, {type : 'bookmarked'} );
@@ -38,16 +29,31 @@ Template.movie.events = {
 
 
 function updateFromProfile(id, status)
-{ 
-  console.log('tic update');
+{   
   var $set = {};
-  $set['profile.movies.' + id + '.statusType' ]  = status.type;
-  $set['profile.movies.' + id + '.statusScore' ] = status.score ? status.score : '';
+  var statusType = Meteor.user().profile.movies[id].statusType;
   
+  // Let's check that we can access the current status
+  if (!statusType) {
+    console.log("This is strange Dr Watson, the id you asked for is not referenced in the user profile");
+    return;
+  } 
+
+  // Let's put it back in suggested if it is unclicked from dismissed or bookmarked
+  if (status.type === statusType && status.type != 'liked' ) {
+    $set['profile.movies.' + id + '.statusType' ]  = 'suggested';
+    $set['profile.movies.' + id + '.statusScore' ] = '';        
+  }
+  else
+  {
+    // Otherwise let's simply update
+    $set['profile.movies.' + id + '.statusType' ]  = status.type;
+    $set['profile.movies.' + id + '.statusScore' ] = status.score ? status.score : '';
+  }
+    
   Meteor.users.update(
      {_id : Meteor.userId()},
       {$set : $set }
-    );    
-  console.log('toc update') ;
+    );      
 }
 
