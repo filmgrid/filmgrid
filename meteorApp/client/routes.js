@@ -1,5 +1,10 @@
+function resetScrolling() {	
+	Session.set('scroll', 1);
+}
+
+
 Router.route('/', function () {
-  Session.set('type','suggested');    
+  Session.set('type','suggested');
   this.render('homepage', {
 	data : {
 	 	"navSelected" : "suggested" }
@@ -34,12 +39,11 @@ Router.onBeforeAction(function() {
 		this.render('login');
 		return;
 	};		
-	var query = Session.get('query');
-	query.page = 2;
-	Session.set('query', query);
+  	resetScrolling();
 	this.next();
 });
 
 Meteor.startup(function() {
-  	Session.setDefault('query', { filter: {type : "genre", value : "Drama"}, sortBy : "year", page: 2 }); 
+	Session.setDefault('scroll', 1);
+  	Session.setDefault('query', { filter: {type : "genre", value : "Drama"}, sortBy : "year"}); 
 });

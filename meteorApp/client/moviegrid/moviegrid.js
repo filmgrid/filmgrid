@@ -33,6 +33,7 @@ var sortBy = {
 function findMovies(type) {
   if (Meteor.user()) {
     var query = Session.get('query');
+    var scroll = Session.get('scroll');
     
     sortType = query.sortBy;
     filterType = query.filter.type;
@@ -50,7 +51,7 @@ function findMovies(type) {
       movies = _.sortBy(movies, sortBy[sortType])
     }    
 
-    return movies.slice(0, query.page*10); // infinite scrolling client side
+    return movies.slice(0, scroll*10); // infinite scrolling client side
   }
   return null;
 }
@@ -95,9 +96,9 @@ function loadMore(force) {
     var threshold = $(window).scrollTop() + $(window).height() - $body.height();
 
     if (force || $body.offset().top < threshold+1 && threshold < 2) {
-        var query = Session.get('query');
-        query.page = query.page + 1;
-        Session.set('query', query);
+        var scroll = Session.get('scroll');
+        scroll = scroll + 1;        
+        Session.set('scroll', scroll);
     }
 }
 

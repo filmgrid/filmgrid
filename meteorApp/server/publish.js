@@ -39,12 +39,12 @@ function subscribeToMovies(type, opts, userId) {
       return;
     }
 
-    var ids = _.keys(movies);
+    /*var ids = _.keys(movies);
     
     var search = { poster: { $ne: 'N/A' }, _id : { $in : ids } };
     if (opts.genre) search.genre = { $regex: '.*' + opts.genre + '.*' };
     var res = Movies.find(search, { limit: page * 20, sort: { year: -1 } });
-    return res;
+    return res;*/
   }
 };
 
