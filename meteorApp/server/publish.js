@@ -3,7 +3,7 @@ function initialInsert(userId) {
   var suggested = Movies
   .find(
     {poster: { $ne: 'N/A' }, imdb_votes: { $ne: 'N/A' }},
-    { sort: { imdb_votes: -1 }, fields : {_id: 1, title:1, poster:1, year:1, genre:1, runtime:1 }}
+    { sort: { imdb_votes: -1 }, fields : {_id: 1, title:1, plot:1, actors:1, poster:1, year:1, genre:1, runtime:1 }}
     )
   .fetch()
   .slice(0, 500)
@@ -14,6 +14,8 @@ function initialInsert(userId) {
       proba : 1,
       title : e.title,
       poster : e.poster,
+      plot : e.plot,
+      actors : e.actors,
       year : e.year,
       genre : e.genre,
       runtime : e.runtime
