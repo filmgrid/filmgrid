@@ -4,7 +4,7 @@ function resetScrolling() {
 
 
 Router.route('/', function () {
-  Session.set('type','suggested');
+  Session.set('type','suggested');  
   this.render('homepage', {
 	data : {
 	 	"navSelected" : "suggested" }

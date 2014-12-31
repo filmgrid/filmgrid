@@ -1,7 +1,11 @@
+var isTransitionning = false;
+var $window = $(window);
+
+
 Template.movie.events = {
     'click .movie-bookmark' : function (e) {
       updateFromProfile(this.id, {type : 'bookmarked'} );
-      //e.stopPropagation();
+      e.stopPropagation();
     },
 
     'click .movie-like3' : function (e) {
@@ -28,24 +32,21 @@ Template.movie.events = {
 Template.movie.rendered = function() {
 
   var node = this.firstNode;
-
   var $movie = $(node).find('.movie');
-  var $body = $('body');
-  var $window = $(window);
-
   var isExpanded = false;
+  var propagating = false;
 
   var getTransform = function() {
     var p = node.getBoundingClientRect();
     var x = ($window.width()  - 480) / 2 - p.left;
     var y = ($window.height() - 300) / 2 - p.top;
     return 'translate(' + x + 'px, ' + y + 'px)';
-  };
+  };  
 
-  var propagating = false;
+  var $body = $('body');
 
   $movie.click(function(e) {
-    if (isExpanded) {
+    if (isTransitionning) {
       e.stopPropagation();
     } else {
       $movie.addClass('transitioning');
@@ -56,15 +57,19 @@ Template.movie.rendered = function() {
         $movie.removeClass('transitioning');
         $movie.css('transform', 'none');
         $movie.addClass('fixed');
+        isExpanded = true;
+        propagating = false;
+        isTransitionning = false;
       }, 500);
       $movie.css('z-index', '100');
-      isExpanded = true;
       propagating = true;
+      isTransitionning = true;
     }
   });
 
   $body.click(function() {
     if (isExpanded && !propagating) {
+      isTransitionning = true;
       $movie.removeClass('fixed');
       console.log(getTransform());
       $movie.css('transform', getTransform());
@@ -74,10 +79,16 @@ Template.movie.rendered = function() {
       document.body.offsetTop;
       $movie.css('transform', 'none');
       $movie.removeClass('expanded');
-      setTimeout(function() { $movie.css('z-index', '0'); }, 500);
-      isExpanded = false;
-    }
-    propagating = false;
+      propagating = true;
+      isTransitionning = true;
+      setTimeout(function() { 
+        $movie.css('z-index', '0');
+        isExpanded = false;
+        propagating = false;
+        isTransitionning = false;
+      }, 500);
+      
+    }    
   });
 }
 
