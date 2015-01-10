@@ -4,18 +4,10 @@
 
 		<a href="/"><div id="logo"></div></a>
 
-		{{ > loginButtons }}
-
-		<hr/>
-		<div class="link-selected-{{navSelected}}">
-			<a href="/"><p id="link-suggested">Suggested Movies</p></a>
-			<a href="/bookmarked"><p id="link-bookmarked">My Watchlist</p></a>
-			<a href="/liked"><p  id="link-liked">Movies I ranked</p></a>
-			<a href="/dismissed"><p  id="link-dismissed">Dismissed Movies</p></a>
-		</div>
-
-
-		<hr/>
+		<a href="/"           class="nav-link {{#if navSelectedIs 'suggested' }} active{{/if}}">Suggested Movies</a>
+		<a href="/bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">My Watchlist</a>
+		<a href="/liked"      class="nav-link {{#if navSelectedIs 'liked'     }} active{{/if}}">Movies I ranked</a>
+		<a href="/dismissed"  class="nav-link {{#if navSelectedIs 'dismissed' }} active{{/if}}">Dismissed Movies</a>
 
 		<h2>Filter</h2>
 
@@ -53,6 +45,11 @@
 				<option>stars</option>
 			</select>
 		</label>
+
+		<h2>Account</h2>
+
+		{{ > loginButtons }}
+
 	</div>
 
 </template>

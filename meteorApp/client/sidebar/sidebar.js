@@ -3,6 +3,10 @@ Template.sidebar.events = {
   	'change #sort-type': handleSort
 };
 
+Template.sidebar.navSelectedIs = function (nav) {
+    return this.navSelected === nav;
+};
+
 function handleFilter() {
     var genre = $('#filter-genre').val() || undefined;
     var query = Session.get('query');
