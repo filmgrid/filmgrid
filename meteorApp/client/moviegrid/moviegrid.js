@@ -103,6 +103,16 @@ function loadMore(force) {
 }
 
 Meteor.startup(function() {
-  	$(window).scroll(function() { loadMore(); });
+  $(window).scroll(function() { loadMore(); });
+
+  window.$window = $(window);
+  window.activeMovie = null;
+
+  $('body').click(function() {
+    if (window.activeMovie) {
+      window.activeMovie.close();
+    }    
+  });
+
 });
 

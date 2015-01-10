@@ -1,96 +1,99 @@
-var isTransitionning = false;
-var $window = $(window);
-
 
 Template.movie.events = {
-    'click .movie-bookmark' : function (e) {
-      updateFromProfile(this.id, {type : 'bookmarked'} );
-      e.stopPropagation();
-    },
+  'click .movie-bookmark' : function (e) {
+    updateFromProfile(this.id, {type : 'bookmarked'} );
+  },
 
-    'click .movie-like3' : function (e) {
-      updateFromProfile(this.id, {type : 'liked', score : 3});
-      //e.stopPropagation();
-    },
+  'click .movie-like3' : function (e) {
+    updateFromProfile(this.id, {type : 'liked', score : 3});
+  },
 
-    'click .movie-like2' : function (e) {
-      updateFromProfile(this.id, {type : 'liked', score : 2});
-      //e.stopPropagation();
-    },
+  'click .movie-like2' : function (e) {
+    updateFromProfile(this.id, {type : 'liked', score : 2});
+  },
 
-    'click .movie-like1' : function (e) {
-      updateFromProfile(this.id, {type : 'liked', score : 1});
-      //e.stopPropagation();
-    },
+  'click .movie-like1' : function (e) {
+    updateFromProfile(this.id, {type : 'liked', score : 1});
+  },
 
-    'click .movie-dismissed' : function (e) {
-      updateFromProfile(this.id, {type : 'dismissed'} );
-      //e.stopPropagation();
-    }
+  'click .movie-dismissed' : function (e) {
+    updateFromProfile(this.id, {type : 'dismissed'} );
+  },
+
+  'click .movie-details' : function (e, template) {
+    template.open();
+  },
+
+  'click .movie' : function (e, template) {
+    e.stopPropagation();
+  }
 }
+
+
+function getTransform (node) {
+  var p = node.getBoundingClientRect();
+  var x = ($window.width()  - 480) / 2 - p.left;
+  var y = ($window.height() - 300) / 2 - p.top;
+  return 'translate(' + x + 'px, ' + y + 'px)';
+};  
 
 Template.movie.rendered = function() {
-
+  var _this = this;
   var node = this.firstNode;
   var $movie = $(node).find('.movie');
-  var isExpanded = false;
-  var propagating = false;
 
-  var getTransform = function() {
-    var p = node.getBoundingClientRect();
-    var x = ($window.width()  - 480) / 2 - p.left;
-    var y = ($window.height() - 300) / 2 - p.top;
-    return 'translate(' + x + 'px, ' + y + 'px)';
-  };  
+  var isOpen = false;
+  this.isTransitioning = false;
 
-  var $body = $('body');
-
-  $movie.click(function(e) {
-    if (isTransitionning) {
-      e.stopPropagation();
-    } else {
-      $movie.addClass('transitioning');
-      document.body.offsetTop;
-      $movie.addClass('expanded');
-      $movie.css('transform', getTransform());
-      setTimeout(function() {
-        $movie.removeClass('transitioning');
-        $movie.css('transform', 'none');
-        $movie.addClass('fixed');
-        isExpanded = true;
-        propagating = false;
-        isTransitionning = false;
-      }, 500);
-      $movie.css('z-index', '100');
-      propagating = true;
-      isTransitionning = true;
+  this.open = function() {
+    if (isOpen || _this.isTransitioning) return;
+    if (window.activeMovie) {
+      if (window.activeMovie.isTransitioning) return;
+      window.activeMovie.close();
     }
-  });
+    
+    _this.isTransitioning = true;
+    isOpen = true;
+    window.activeMovie = _this;
 
-  $body.click(function() {
-    if (isExpanded && !propagating) {
-      isTransitionning = true;
-      $movie.removeClass('fixed');
-      console.log(getTransform());
-      $movie.css('transform', getTransform());
-      document.body.offsetTop;
-      $movie.addClass('transitioning');
-      $movie.css('z-index', '50');
-      document.body.offsetTop;
+    $movie.addClass('transitioning');
+    document.body.offsetTop;
+    $movie.addClass('expanded');
+    $movie.css('transform', getTransform(node));
+    $movie.css('z-index', '100');
+
+    setTimeout(function() {
+      $movie.removeClass('transitioning');
       $movie.css('transform', 'none');
-      $movie.removeClass('expanded');
-      propagating = true;
-      isTransitionning = true;
-      setTimeout(function() { 
-        $movie.css('z-index', '0');
-        isExpanded = false;
-        propagating = false;
-        isTransitionning = false;
-      }, 500);
-      
-    }    
-  });
-}
+      $movie.addClass('fixed');
+      _this.isTransitioning = false;
+    }, 500);
+  },
+
+  this.close = function() {
+    var _this = this;
+
+    if (!isOpen || _this.isTransitioning) return;
+    isOpen = false;
+    _this.isTransitioning = true;
+    window.activeMovie = null;
+
+    $movie.removeClass('fixed');
+    $movie.css('transform', getTransform(node));
+    document.body.offsetTop;
+    $movie.addClass('transitioning');
+    $movie.css('z-index', '50');
+    document.body.offsetTop;
+    $movie.css('transform', 'none');
+    $movie.removeClass('expanded');
+    
+    setTimeout(function() { 
+      $movie.css('z-index', '0');
+      _this.isTransitioning = false;
+    }, 500);    
+  }
+};
+
 
 function updateFromProfile(id, status)
 {   
