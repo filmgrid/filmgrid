@@ -119,5 +119,7 @@ function updateFromProfile(id, status)
      {_id : Meteor.userId()},
       {$set : $set }
     );      
+
+  Meteor.call('recomputePreferences');
 }
 
