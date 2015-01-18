@@ -9,7 +9,7 @@
 	position: relative;
 	overflow: hidden;
 	background: #FFF;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	/*box-shadow: 0 2px 4px rgba(0,0,0,0.1);*/
 	border-radius: 2px;
 	width: 160px;
 	height: 300px;
@@ -20,19 +20,19 @@
 }
 
 .movie:hover {
-	box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+	/*box-shadow: 0 3px 12px rgba(0,0,0,0.3);*/
 }
 
 .movie.transitioning {
 	-webkit-transition: box-shadow .2s, width .5s, -webkit-transform .5s;
 	-moz-transition: box-shadow .2s, width .5s, -moz-transform .5s;
-	transition: box-shadow .2s, width .5s, transform .5s;	
+	transition: box-shadow .2s, width .5s, transform .5s;
 }
 
 .movie.expanded {
 	cursor: default;
 	width: 480px;
-	box-shadow: 0 20px 120px 60px rgba(0,0,0,0.8);
+	/*box-shadow: 0 20px 120px 60px rgba(0,0,0,0.8);*/
 }
 
 .movie.fixed {
