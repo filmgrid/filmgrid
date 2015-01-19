@@ -8,3 +8,19 @@ if (Movies.find().count() === 0) {
 	    if (i % 1000 === 0) console.log('inserted 1000 movies');
 	}
 }
+
+Meteor.startup(function () {
+    var search_index_name = 'title_'
+
+    // Remove old indexes as you can only have one text index and if you add 
+    // more fields to your index then you will need to recreate it.
+    //Movies._dropIndex(search_index_name);
+
+    //Movies._ensureIndex({
+    //    title: 'text',
+    //    plot: 'text'
+    //}, {
+    //    name: search_index_name,
+    //    default_language: 'none'
+    //});
+});

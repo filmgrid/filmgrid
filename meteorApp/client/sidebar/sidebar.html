@@ -9,6 +9,10 @@
 		<a href="/liked"      class="nav-link {{#if navSelectedIs 'liked'     }} active{{/if}}">Movies I ranked</a>
 		<a href="/dismissed"  class="nav-link {{#if navSelectedIs 'dismissed' }} active{{/if}}">Dismissed Movies</a>
 
+		<h2>Search</h2>
+
+		<input type="text" id="search"/>
+
 		<h2>Filter</h2>
 
 		<label>
@@ -42,7 +46,9 @@
 			by
 			<select id="sort-type">
 				<option>year</option>
-				<option>stars</option>
+				{{#if navSelectedIs 'liked'}}
+					<option>stars</option>
+				{{/if}}
 			</select>
 		</label>
 

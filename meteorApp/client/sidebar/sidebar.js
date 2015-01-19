@@ -1,6 +1,7 @@
 Template.sidebar.events = {
   	'change #filter-genre': handleFilter,
-  	'change #sort-type': handleSort
+  	'change #sort-type': handleSort,
+    'change #search': handeSearch
 };
 
 Template.sidebar.navSelectedIs = function (nav) {
@@ -20,4 +21,10 @@ function handleSort() {
  	var query = Session.get('query');
     query.sortBy = sort;
     Session.set('query', query);
+}
+
+function handeSearch() {
+    Meteor.call('searchMovies', $('#search').val(), function(error, result) {
+        console.log(result.map(function(x) { return [x.obj.title, x.obj.plot]; }));
+    });
 }
