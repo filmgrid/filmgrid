@@ -1,5 +1,6 @@
 var filterType = undefined;
 var filterValue = undefined;
+var searchString = undefined;
 var sortType = undefined;
 
 var filters = {
@@ -13,7 +14,7 @@ var filters = {
     }
     return true;
   }
-}
+};
 
 var sortBy = {
   "year" : function(e) {
@@ -27,17 +28,31 @@ var sortBy = {
       return -e.year;
     }
   }
+};
+
+function searchTitle(e) {
+  if (e.title.indexOf(searchString) != -1)
+  {
+    return true;
+  }
+  if (e.actors.indexOf(searchString) != -1)
+  {
+    return true;
+  }
+  return false;
 }
 
 
 function findMovies(type) {
+  console.log("repainting...");
   if (Meteor.user()) {
     var query = Session.get('query');
     var scroll = Session.get('scroll');
     
-    sortType = query.sortBy;
-    filterType = query.filter.type;
-    filterValue = query.filter.value;
+    sortType     = query.sortBy;
+    filterType   = query.filter.type;
+    filterValue  = query.filter.value;
+    searchString = Session.get('searchString'); 
 
     var movies = Meteor.user().profile.movies;  
     movies = _.where(movies,{statusType: type});
@@ -50,8 +65,14 @@ function findMovies(type) {
     {
       movies = _.sortBy(movies, sortBy[sortType])
     }    
+    if (searchString && searchString != "")
+    {
+      movies = _.filter(movies, searchTitle)
+    }
+    
+    Session.set('moviegridLength', movies.length);
 
-    return movies.slice(0, scroll*10); // infinite scrolling client side
+    return movies.slice(0, 30+scroll*10); // infinite scrolling client side
   }
   return null;
 }
@@ -70,10 +91,8 @@ Template.moviegrid.helpers(
         return findMovies('liked');
     }    
   },
-
-  "suggested" : function() {
-    return Session.get('type') === 'suggested';
-  }
+  "hasMovies" : function() { return Session.get('moviegridLength') > 0;},
+  "suggested" : function() { return Session.get('type') === 'suggested';}
 });
 
 Template.moviegrid.events = {

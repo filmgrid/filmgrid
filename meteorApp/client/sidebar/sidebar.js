@@ -1,30 +1,53 @@
 Template.sidebar.events = {
   	'change #filter-genre': handleFilter,
   	'change #sort-type': handleSort,
-    'change #search': handeSearch
+    'keyup #search': handleSearch,
+    'change #search': handleSearch
 };
 
-Template.sidebar.navSelectedIs = function (nav) {
-    return this.navSelected === nav;
-};
+Template.sidebar.helpers({
+    navSelectedIs : function (nav) {
+        return this.navSelected === nav;
+    }
+});
 
-function handleFilter() {
+function handleFilter() 
+{
     var genre = $('#filter-genre').val() || undefined;
     var query = Session.get('query');
     query.filter = {type : "genre", value : genre};
     Session.set('query', query);
 }
 
-function handleSort() {
+function handleSort() 
+{
     var sort = $('#sort-type').val() || undefined;
-    console.log("I am here");
  	var query = Session.get('query');
     query.sortBy = sort;
     Session.set('query', query);
 }
 
-function handeSearch() {
-    Meteor.call('searchMovies', $('#search').val(), function(error, result) {
-        console.log(result.map(function(x) { return [x.obj.title, x.obj.plot]; }));
+function handleSearch(e) 
+{
+    var val = $('#search').val() || undefined;
+    handleSearchLocal(val);
+    if (Session.get('type') === 'suggested')
+    {
+        if (val && val.length > 2 || e.keyCode == 13)
+            handleSearchGlobal(val);   
+        else
+            Session.set('searchResults', undefined);
+    }
+}
+
+function handleSearchGlobal(val) 
+{
+    Meteor.call('searchMovies', val , function(error, result) {
+        Session.set('searchResults', result);
     });
+}
+
+function handleSearchLocal(val)
+{
+    Session.set('searchString', val);
 }

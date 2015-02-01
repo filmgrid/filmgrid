@@ -1,4 +1,7 @@
-function resetScrolling() {	
+function resetVariables() {	
+	$('#search').val('');
+	Session.set('searchString', undefined);
+	Session.set('searchResults', undefined);
 	Session.set('scroll', 1);
 }
 
@@ -39,11 +42,11 @@ Router.onBeforeAction(function() {
 		this.render('login');
 		return;
 	};		
-  	resetScrolling();
+  	resetVariables();
 	this.next();
 });
 
 Meteor.startup(function() {
 	Session.setDefault('scroll', 1);
-  	Session.setDefault('query', { filter: {type : "genre", value : "Drama"}, sortBy : "year"}); 
+  	Session.setDefault('query', { filter: {type : "genre", value : undefined}, sortBy : "year"}); 
 });

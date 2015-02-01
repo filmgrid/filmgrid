@@ -1,6 +1,6 @@
-#body {
-	margin-left: 260px;
-	padding: 7px 40px;
+#moviegrid {
+	display : inline-block;
+	width : 100%;
 }
 
 .load-more, .suggest-more {

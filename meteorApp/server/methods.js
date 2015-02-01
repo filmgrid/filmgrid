@@ -58,9 +58,11 @@ function searchMovies(searchString)
         genre : 1,
         runtime : 1
       }
-      // limit : 3
+      , limit : 25
    }
    , function(error, results) {
+
+      console.log(results);
       if (results && results.documents[0].ok === 1) {
           future['return'](results.documents[0].results);
       }

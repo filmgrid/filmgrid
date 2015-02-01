@@ -10,3 +10,8 @@ html, body {
     cursor: default;
 	background: #e5e5e5;
 }
+
+#body {
+	margin-left: 260px;
+	padding: 7px 40px;
+}

@@ -9,6 +9,12 @@
 	z-index: 10;
 }
 
+#search {
+
+	width : 100%;
+
+}
+
 #logo {
 	width: 200px;
 	height: 80px;
