@@ -9,4 +9,5 @@
 
 .movie-list {
 	position: relative;
+	overflow: hidden;
 }

@@ -4,8 +4,6 @@
 	padding: 20px;
 	top: 0;
 	bottom: 0;
-	background: #222;
-	color: #FFF;
 	z-index: 10;
 }
 
@@ -26,7 +24,6 @@
 .nav-link {
 	cursor: pointer;
 	display: block;
-	width: 100%;
 	padding: 6px 10px 6px 10px;
 	position: relative;
 	border-top: 1px solid #555;
@@ -43,22 +40,6 @@
 .nav-link.active {
 	background: #555;
 	color: #EEE;
-}
-
-.nav-link:after {
-	content: " ";
-	position: absolute;
-	display: block;
-	border-top: 19px solid transparent;
-	border-bottom: 19px solid transparent;
-	border-left: 0px solid #222;
-	top: 0;
-	left: 100%;
-	transition: border .2s;
-}
-
-.nav-link.active:after {
-	border-left: 10px solid #555;
 }
 
 #sidebar h2 {

@@ -1,4 +1,6 @@
 
+var $window = $(window);
+
 Template.movie.events = {
   'click .movie-bookmark' : function (e) {
     updateFromProfile(this.id, {type : 'bookmarked'} );

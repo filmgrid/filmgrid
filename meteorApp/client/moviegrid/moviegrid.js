@@ -1,3 +1,22 @@
+// This wrapper can be used to ensure that a function is only triggered once ever t ms.
+function delay(fn, t) {
+  var delay = false;
+  var repeat = false;
+  return function() {
+    if (delay) {
+      repeat = true;
+    } else {
+      fn.apply(null, arguments);
+      delay = true;
+      setTimeout(function() {
+        if (repeat) fn.apply(null, arguments);
+        delay = false;
+        repeat = false;
+      }, t);
+    }
+  }
+};
+
 (function() {
 
   // --------------------------------------------------------------------------
@@ -7,8 +26,8 @@
 
   var gridWidth = 900;
   var movieWidth = 160;
-  var movieHeight = 300;
-  var gapWidth = 15;
+  var movieHeight = 220;
+  var gapWidth = 2;
 
   var filter = {
     genre: function(m, value) { return m.genre.indexOf(value) !== -1; },
@@ -29,14 +48,24 @@
   // --------------------------------------------------------------------------
   // Movie List
 
+  var movieCache = {};
   var allMovies = [];
   var shownMovies = [];
 
   function loadMovies() {
     if (!Meteor.user()) return;
     var movies = Meteor.user().profile.movies;
+    
     _.each(movies, function(m) {
-      allMovies.push({ data: m, el: null, show: false });
+      if (movieCache[m.id]) {
+        // Update the value for movies that were already loaded
+        movieCache[m.id].data.statusType = m.statusType;
+        movieCache[m.id].data.statusScore = m.statusScore;
+      } else {
+        var movie = { data: m, el: null, show: false };
+        allMovies.push(movie);
+        movieCache[m.id] = movie;        
+      }
     });
   }
 
@@ -56,7 +85,7 @@
 
   function selectMovies() {
 
-    if (!allMovies.length) loadMovies();
+    loadMovies();
     
     var query = Session.get('query') || {};
     var searchString = Session.get('searchString');
@@ -88,7 +117,7 @@
 
     // Infinite Scrolling
     var scroll = Session.get('scroll');
-    movies = movies.slice(0, 30 + scroll*10);
+    movies = movies.slice(0, 40 + scroll*20);
 
     _.each(movies, function(m) { m.show = true; });
     Session.set('moviesLength', movies.length);
@@ -114,16 +143,16 @@
   // --------------------------------------------------------------------------
   // Template Setup
 
-  function loadMore(force) {
+  var loadMore = delay(function() {
     // See http://www.meteorpedia.com/read/Infinite_Scrolling
     var scroll = Session.get('scroll');
     Session.set('scroll', scroll + 1);
-  }
+  }, 100);
 
-  function resize() {
+  var resize = delay(function() {
     gridWidth = $list ? $($list).width() : 900;
     positionMovies();
-  }
+  }, 100);
 
   Template.moviegrid.helpers({
     movies: selectMovies,
@@ -148,10 +177,10 @@
 
     // TODO use timeout to delay
     $window.on('resize', resize);
+    resize();
 
     $window.scroll(function() {
-      var threshold = $window.scrollTop() + $window.height() - $body.height();
-      if ($body.offset().top < threshold+1 && threshold < 2) loadMore();
+      if ($window.scrollTop() + $window.height() > $body.height() - 400) loadMore();
     });
 
     window.activeMovie = null;
