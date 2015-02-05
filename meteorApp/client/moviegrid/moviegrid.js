@@ -17,6 +17,13 @@ function delay(fn, t) {
   }
 };
 
+function findIndex(array, fn) {
+  for (var i=0; i<array.length; ++i) {
+    if (fn(array[i])) return i;
+  }
+  return -1;
+}
+
 (function() {
 
   // --------------------------------------------------------------------------
@@ -75,10 +82,29 @@ function delay(fn, t) {
     var height = Math.ceil(shownMovies.length/columns) * (movieHeight + gapWidth) - gapWidth;
     if ($list) $($list).css('height', height + 'px');
 
+    var activeMovie = Session.get('activeMovie') || {};
+    var activeMovieIndex = findIndex(shownMovies, function(x) { return x.data.id === activeMovie.id });
+
+    var activeMovieColumn = activeMovieIndex % columns;
+    var shift = Math.max(0, activeMovieColumn - (columns - 3));
+
     _.each(shownMovies, function(m, i) {
       if (!m.show) return;
+
+      if (activeMovieIndex >= 0) {
+        if (i === activeMovieIndex) {
+          i = activeMovieIndex - shift;
+        } else if (i === activeMovieIndex - shift) {
+          i = activeMovieIndex;
+        }
+
+        if (i > activeMovieIndex - shift) i += 2;
+        if (i > activeMovieIndex - shift + columns - 1) i += 3;
+      }
+
       var x = (i % columns) * (movieWidth + gapWidth);
       var y = Math.floor(i / columns) * (movieHeight + gapWidth);
+
       m.el.css('transform', 'translate(' + x + 'px, ' + y + 'px)');
     });
   }
