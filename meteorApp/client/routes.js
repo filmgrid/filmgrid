@@ -48,5 +48,5 @@ Router.onBeforeAction(function() {
 
 Meteor.startup(function() {
 	Session.setDefault('scroll', 1);
-  	Session.setDefault('query', { filter: {type : "genre", value : undefined}, sortBy : "year"}); 
+  	Session.setDefault('query', { filter: {}, sortBy : "year" }); 
 });
