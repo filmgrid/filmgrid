@@ -14,15 +14,15 @@ Template.sidebar.helpers({
 function handleFilter() 
 {
     var genre = $('#filter-genre').val() || undefined;
-    var query = Session.get('query');
-    query.filter = {type : "genre", value : genre};
+    var query = Session.get('query') || {};
+    query.filter = { genre: genre };
     Session.set('query', query);
 }
 
 function handleSort() 
 {
     var sort = $('#sort-type').val() || undefined;
- 	var query = Session.get('query');
+ 	var query = Session.get('query') || {};
     query.sortBy = sort;
     Session.set('query', query);
 }

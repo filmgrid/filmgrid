@@ -1,19 +1,13 @@
 <template name="moviegrid">
-	<div id="moviegrid">
-		{{#if suggested}}
-			<h1>Recommended for you</h1>
-		{{/if}}
-	  	{{#each movies}}
-	    	{{ > movie this}}
-	  	{{/each}} 
-	  	{{#if hasMovies}}
-	    	{{#if suggested}}
-	    		<div class="suggest-more">Suggest me more movies</div>
-	    	{{else}}    	    
-	    		<div class="load-more">Load more</div>
-	    	{{/if}}
-	    {{else}}
-	    	<p>No movie found</p>
-	    {{/if}}
-	</div> 
+  	<div class="movie-list"></div>
+  	{{movies}}
+  	{{#if hasMovies}}
+    	{{#if suggested}}
+    		<div class="suggest-more">Suggest me more movies</div>
+    	{{else}}    	    
+    		<div class="load-more">Load more</div>
+    	{{/if}}
+    {{else}}
+    	<p>No movie found</p>
+    {{/if}}
 </template>
