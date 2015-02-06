@@ -23,9 +23,16 @@ Template.movie.events = {
   },
 
   'click .movie-poster-shadow': function(e) {
-    Session.set('activeMovie', this);
+    var m = (this.id === Session.get('activeMovie').id) ? {} : this;
+    Session.set('activeMovie', m);
   }
 }
+
+Template.movie.helpers({
+  openClass: function() {
+    return this.id === Session.get('activeMovie').id ? 'open' : '';
+  }
+});
 
 function updateFromProfile(id, status)
 {   
