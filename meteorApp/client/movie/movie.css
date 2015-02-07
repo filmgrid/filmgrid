@@ -7,6 +7,8 @@
 	height: 220px;
 	pointer-events: none;
 
+	will-change: transform, opacity;
+
 	-webkit-transition: -webkit-transform .4s, opacity .4s;
 	-moz-transition: -moz-transform .4s, opacity .4s;
 	transition: transform .4s, opacity .4s;
@@ -30,7 +32,8 @@
 	position: relative;
 	width: 160px;
 	height: 220px;
-	cursor: pointer;
+
+	will-change: transform;
 
 	-webkit-transition: -webkit-transform .4s;
 	-moz-transition: -moz-transform .4s;
@@ -60,6 +63,7 @@
 	border-radius: 2px;
 	position: relative;
 	z-index: 10;
+	cursor: pointer;
 
 	-webkit-transition: -webkit-transform .4s;
 	-moz-transition: -moz-transform .4s;
@@ -189,6 +193,8 @@
 	color: #333;
 	pointer-events: none;
 
+	will-change: opacity;
+
 	-webkit-transition: opacity .4s;
 	-moz-transition: opacity .4s;
 	transition: opacity .4s;
@@ -199,41 +205,52 @@
 	pointer-events: all;
 }
 
-.movie-details h2 {
-	font-size: 16px;
-	margin: 0 0 5px 172px;
-	line-height: 1.1;
-	overflow: hidden;
-}
-
-.movie-details .meta-data {
-	margin: 0 0 5px 172px;
-}
-
-.movie-details .plot-body {
+.movie-body {
 	position: absolute;
-	top: 260px;
-	left: 16px;
-	right: 16px;
+	left: 192px;
+	right: 20px;
+	top: 16px;
 }
 
-.movie-details p {
-	font-size: 14px;
-	margin: 0 0 1em 0;
+.movie-body h2 {
+	font-size: 26px;
+	font-weight: 100;
+	margin: 0 0 10px;
+	line-height:1.1
 }
 
-.movie-details button {
-	-webkit-appearance: none;
-	border: 1px solid #BBB;
-	border-radius: 3px;
-	padding: 5px 12px;
+.movie-body .metadata {
+	color: #888;
 	font-size: 13px;
-	background: #DDD;
-	cursor: pointer;
+	margin: 0 0 4px;
+}
+
+.movie-body .plot {
+	margin-top: 20px;
+}
+
+.movie-buttons {
+	position: absolute;
+	top: 252px;
+	left: 16px;
+	width: 160px;
+}
+
+.movie-buttons button {
+	-webkit-appearance: none;
+	display: block;
+	border: none;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 3px;
+	padding: 6px 12px;
+	font-size: 14px;
+	background: #00395E;
+	color: #FFF;
+	margin-bottom: 8px;
 }
 
 .movie-details button:hover {
-	background: #CCC;
-	border-color: #AAA;
+	background: #116EAB;
 }
 

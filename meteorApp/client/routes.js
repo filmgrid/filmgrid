@@ -47,6 +47,7 @@ Router.onBeforeAction(function() {
 });
 
 Meteor.startup(function() {
-	Session.setDefault('scroll', 1);
+	resetVariables()
+	Session.setDefault('activeMovie', {});
   	Session.setDefault('query', { filter: {}, sortBy : "year" }); 
 });

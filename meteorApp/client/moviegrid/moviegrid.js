@@ -79,11 +79,13 @@ function findIndex(array, fn) {
   function positionMovies() {
     var columns = Math.floor(gridWidth / (movieWidth + gapWidth));
 
-    var height = Math.ceil(shownMovies.length/columns) * (movieHeight + gapWidth) - gapWidth;
-    if ($list) $($list).css('height', height + 'px');
+    var activeMovie = Session.get('activeMovie');
+    var activeMovieIndex = activeMovie.id ? findIndex(shownMovies, function(x) {
+      return x.data.id === activeMovie.id
+    }) : -1;
 
-    var activeMovie = Session.get('activeMovie') || {};
-    var activeMovieIndex = findIndex(shownMovies, function(x) { return x.data.id === activeMovie.id });
+    var rows = Math.ceil((shownMovies.length + (activeMovieIndex >= 0 ? 5 : 0))/columns);
+    if ($list) $($list).css('height', (rows * (movieHeight + gapWidth) - gapWidth) + 'px');
 
     var activeMovieColumn = activeMovieIndex % columns;
     var shift = Math.max(0, activeMovieColumn - (columns - 3));
