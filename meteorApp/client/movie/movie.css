@@ -215,7 +215,7 @@
 .movie-body h2 {
 	font-size: 26px;
 	font-weight: 100;
-	margin: 0 0 10px;
+	margin: 0 0 12px;
 	line-height:1.1
 }
 
@@ -226,7 +226,7 @@
 }
 
 .movie-body .plot {
-	margin-top: 20px;
+	margin-top: 24px;
 }
 
 .movie-buttons {
@@ -237,13 +237,14 @@
 }
 
 .movie-buttons button {
+    font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
 	-webkit-appearance: none;
 	display: block;
 	border: none;
 	width: 100%;
 	box-sizing: border-box;
 	border-radius: 3px;
-	padding: 6px 12px;
+	padding: 7px 12px;
 	font-size: 14px;
 	background: #00395E;
 	color: #FFF;
@@ -252,5 +253,23 @@
 
 .movie-details button:hover {
 	background: #116EAB;
+}
+
+.rating-imdb, .rating-rt {
+	display: inline-block;
+	color: #FFF;
+	margin-right: 5px;
+}
+
+.rating-imdb {
+	background: #d9b72f url(/assets/rating-imdb.png) no-repeat 4px 2px;
+	background-size: 33px 16px;
+	padding: 1px 5px 0 42px;
+}
+
+.rating-rt {
+	background: #c00 url(/assets/rating-rt.png) no-repeat 4px 1px;
+	background-size: 17px 18px;
+	padding: 1px 5px 0 26px;
 }
 
