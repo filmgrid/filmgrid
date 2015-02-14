@@ -15,14 +15,21 @@
 			<div class="movie-details">
 				<div class="movie-body">
 					<h2>{{ this.title }}</h2>
-					<p class="metadata">{{ this.year }} • {{ this.runtime }} • {{ this.genre }}</p>
+					<p class="metadata">{{ this.year }} • {{ this.runtime }}min</p>
+					<p class="metadata">{{ this.genre }}</p>
 					<p class="metadata">{{ this.actors }}</p>
-					<p class="metadata"><span class="rating-imdb">7.8</span> <span class="rating-rt">85%</span></p>
+					<p class="metadata">
+						<a href="http://www.imdb.com/title/tt{{ this.link_imdb }}/" target="_blank" class="rating-imdb">{{ this.score_imdb }}</a>
+						<a href="{{ this.link_rt }}" target="_blank">
+							<span class="rating-rt1">Public: {{ this.score_rtaudience }}</span>
+							<span class="rating-rt2">Critics: {{  this.score_rtcritics }}</span>
+						</a>
+						<span class="rating-meta">{{ this.score_metascore }}</span>
+					</p>
 					<p class="plot">{{ this.plot }}</p>
 				</div>
 				<div class="movie-buttons">
 					<button>Watch Trailer</button>
-					<button>IMDB Page</button>
 					<button>Watch on Amazon</button>
 					<button>Watch on Netflix</button>
 				</div>
