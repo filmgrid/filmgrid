@@ -13,7 +13,7 @@ function recomputePreferences()
       "Must be logged in to add to the job queue.");
   }
 
-  console.log("trying to upsert");
+  console.log("trying to upsert RECOMPUTING !!!!!");
   
   Jobqueue.upsert(
     {'payload.userId':this.userId},

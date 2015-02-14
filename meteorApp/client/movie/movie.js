@@ -1,25 +1,31 @@
 
 var $window = $(window);
 
+var interactions = 0;
+
 Template.movie.events = {
   'click .movie-bookmark' : function (e) {
-    updateFromProfile(this.id, {type : 'bookmarked'} );
+
+    updateFromProfile(this, {type : 'bookmarked'} );
   },
 
   'click .movie-like3' : function (e) {
-    updateFromProfile(this.id, {type : 'liked', score : 3});
+    $(e.target.parentNode.parentNode).removeClass('movie-user-status-liked1 movie-user-status-liked2').addClass('movie-user-status-liked3');
+    updateFromProfile(this, {type : 'liked', score : 3});
   },
 
   'click .movie-like2' : function (e) {
-    updateFromProfile(this.id, {type : 'liked', score : 2});
+    $(e.target.parentNode.parentNode).removeClass('movie-user-status-liked1 movie-user-status-liked3').addClass('movie-user-status-liked2');
+    updateFromProfile(this, {type : 'liked', score : 2});
   },
 
   'click .movie-like1' : function (e) {
-    updateFromProfile(this.id, {type : 'liked', score : 1});
+    $(e.target.parentNode.parentNode).removeClass('movie-user-status-liked3 movie-user-status-liked2').addClass('movie-user-status-liked1');
+    updateFromProfile(this, {type : 'liked', score : 1});
   },
 
   'click .movie-dismissed' : function (e) {
-    updateFromProfile(this.id, {type : 'dismissed'} );
+    updateFromProfile(this, {type : 'dismissed'} );
   },
 
   'click .movie-poster-shadow': function(e) {
@@ -34,10 +40,10 @@ Template.movie.helpers({
   }
 });
 
-function updateFromProfile(id, status)
+function updateFromProfile(movie, status)
 {   
   var $set = {};
-  var statusType = Meteor.user().profile.movies[id].statusType;
+  var statusType = movie.statusType;
   
   // Let's check that we can access the current status
   if (!statusType) {
@@ -45,23 +51,29 @@ function updateFromProfile(id, status)
     return;
   } 
 
+
+
   // Let's put it back in suggested if it is unclicked from dismissed or bookmarked
   if (status.type === statusType && status.type != 'liked' ) {
-    $set['profile.movies.' + id + '.statusType' ]  = 'suggested';
-    $set['profile.movies.' + id + '.statusScore' ] = '';        
+    movie.statusType = "suggested";
+    movie.statusScore = "";
+    $set['profile.movies.' + movie.id]  = movie;        
   }
   else
   {
-    // Otherwise let's simply update
-    $set['profile.movies.' + id + '.statusType' ]  = status.type;
-    $set['profile.movies.' + id + '.statusScore' ] = status.score ? status.score : '';
+    movie.statusType = status.type
+    movie.statusScore = status.score ? status.score : '';
+    $set['profile.movies.' + movie.id] = movie;
   }
     
   Meteor.users.update(
      {_id : Meteor.userId()},
       {$set : $set }
     );      
-
-  Meteor.call('recomputePreferences');
+  if (interactions % 1 == 0)
+  {
+    Meteor.call('recomputePreferences');
+  }
+  interactions++;
 }
 

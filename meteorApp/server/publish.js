@@ -47,6 +47,7 @@ function initialInsert(userId) {
     return [e._id, {
       id : e._id, 
       statusType:'suggested',
+      statusScore: '',
       proba : 1,
 
       title : e.title,

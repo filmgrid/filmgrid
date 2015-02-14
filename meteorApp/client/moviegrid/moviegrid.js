@@ -62,12 +62,15 @@ function findIndex(array, fn) {
   function loadMovies() {
     if (!Meteor.user()) return;
     var movies = Meteor.user().profile.movies;
-    
+
+    _.each(movieCache, function(m) {
+      m.data.statusType = -1;
+    });
+
     _.each(movies, function(m) {
       if (movieCache[m.id]) {
         // Update the value for movies that were already loaded
-        movieCache[m.id].data.statusType = m.statusType;
-        movieCache[m.id].data.statusScore = m.statusScore;
+        movieCache[m.id].data = m;
       } else {
         var movie = { data: m, el: null, show: false };
         allMovies.push(movie);
