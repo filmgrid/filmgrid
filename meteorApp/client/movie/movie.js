@@ -29,8 +29,20 @@ Template.movie.events = {
   },
 
   'click .movie-poster-shadow': function(e) {
-    var m = (this.id === Session.get('activeMovie').id) ? {} : this;
-    Session.set('activeMovie', m);
+    var activeMovie = Session.get('activeMovie');
+    
+    if (activeMovie.id)
+      Session.set('previousActiveId', activeMovie.id);
+
+    if (this.id === activeMovie.id) 
+    {
+      Session.set('previousActiveId', null);
+      Session.set('activeMovie', {});
+    }
+    else
+    {
+      Session.set('activeMovie', this);
+    }
     Session.set('flipped', false);
   },
 

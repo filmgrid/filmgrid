@@ -3,6 +3,8 @@ function resetVariables() {
 	Session.set('searchString', undefined);
 	Session.set('searchResults', undefined);
 	Session.set('scroll', 1);
+	Session.set('previousActiveId',null);
+	Session.set('activeMovie', {});
 }
 
 
@@ -48,6 +50,8 @@ Router.onBeforeAction(function() {
 
 Meteor.startup(function() {
 	resetVariables()
+
+	Session.setDefault('previousActiveId',null);
 	Session.setDefault('activeMovie', {});
   	Session.setDefault('query', { filter: {}, sortBy : "year" }); 
 });

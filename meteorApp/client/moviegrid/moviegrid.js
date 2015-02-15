@@ -83,28 +83,62 @@ function findIndex(array, fn) {
     var columns = Math.floor(gridWidth / (movieWidth + gapWidth));
 
     var activeMovie = Session.get('activeMovie');
+    var previousActiveId = Session.get('previousActiveId');
+    
+    var previousActiveIndex = activeMovie.id ? findIndex(shownMovies, function(x) {
+      return x.data.id === previousActiveId
+    }) : -1;
+    
+
     var activeMovieIndex = activeMovie.id ? findIndex(shownMovies, function(x) {
       return x.data.id === activeMovie.id
     }) : -1;
 
+    console.log(previousActiveIndex);
     var rows = Math.ceil((shownMovies.length + (activeMovieIndex >= 0 ? 5 : 0))/columns);
     if ($list) $($list).css('height', (rows * (movieHeight + gapWidth) - gapWidth) + 'px');
 
-    var activeMovieColumn = activeMovieIndex % columns;
+    computedActiveMovieIndex = activeMovieIndex;
+    if (previousActiveIndex >= 0 && activeMovieIndex > previousActiveIndex)
+    {
+      computedActiveMovieIndex += 2;
+      if (activeMovieIndex > previousActiveIndex + columns)
+      {
+        computedActiveMovieIndex += 3;
+      }
+    }
+
+    var activeMovieColumn = computedActiveMovieIndex % columns;
     var shift = Math.max(0, activeMovieColumn - (columns - 3));
+
+
 
     _.each(shownMovies, function(m, i) {
       if (!m.show) return;
 
       if (activeMovieIndex >= 0) {
+
+        /*if (previousActiveIndex > 0 && activeMovieIndex > previousActiveIndex)
+        {
+          if (i === activeMovieIndex - 5)
+          {
+            i = activeMovieIndex;
+          }
+          else if (i === activeMovieIndex)
+          {
+          }
+        }*/
+
+
+
         if (i === activeMovieIndex) {
-          i = activeMovieIndex - shift;
-        } else if (i === activeMovieIndex - shift) {
+          i = computedActiveMovieIndex - shift;
+        } else if (i === computedActiveMovieIndex - shift) {
           i = activeMovieIndex;
         }
 
-        if (i > activeMovieIndex - shift) i += 2;
-        if (i > activeMovieIndex - shift + columns - 1) i += 3;
+        if (i > computedActiveMovieIndex - shift) i += 2;
+        if (i > computedActiveMovieIndex - shift + columns - 1) i += 3;
       }
 
       var x = (i % columns) * (movieWidth + gapWidth);
