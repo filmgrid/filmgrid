@@ -1,6 +1,6 @@
 <template name="movie">
-	<div class="movie-wrap">
-		<div class="movie {{ openClass }}">
+	<div class="movie {{ flippedClass }}">
+		<div class="movie-front {{ openClass }}">
 			<div class="movie-poster-wrap movie-user-status-{{ this.statusType }}{{ this.statusScore }}">
 				<div class="movie-poster" style="background-image: url({{ this.poster }})"></div>
 				<div class="movie-poster-shadow"></div>
@@ -29,11 +29,23 @@
 					<p class="plot">{{ this.plot }}</p>
 				</div>
 				<div class="movie-buttons">
-					<button>Watch Trailer</button>
-					<button>Watch on Amazon</button>
-					<button>Watch on Netflix</button>
+					{{#if hasTrailer}}
+	    				<button class="trailer">Watch Trailer</button>
+			    	{{/if}}
+					<!--<button>Watch on Amazon</button>
+					<button>Watch on Netflix</button>-->
 				</div>
 			</div>
+		</div>
+		<div class="movie-back">
+			<div class="trailer-title">
+				{{ this.title }}
+				<div class="trailer-return"></div>
+			</div>
+			{{#if showTrailer}}
+				<iframe class="trailer" type="text/html" width="484" height="408" frameborder="0"
+				src="http://www.youtube.com/embed/{{ trailer_youtube }}?version=3&autoplay=1&autohide=1&modestbranding=1&showinfo=0&iv_load_policy=3&fs=1" allowfullscreen></iframe>
+	    	{{/if}}
 		</div>
 	</div>
 </template>

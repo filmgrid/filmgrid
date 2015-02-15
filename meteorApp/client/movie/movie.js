@@ -31,12 +31,33 @@ Template.movie.events = {
   'click .movie-poster-shadow': function(e) {
     var m = (this.id === Session.get('activeMovie').id) ? {} : this;
     Session.set('activeMovie', m);
+    Session.set('flipped', false);
+  },
+
+  'click .trailer': function(e) {
+    Session.set('flipped', true);
+  },
+
+  'click .trailer-return': function(e) {
+    Session.set('flipped', false);
   }
 }
 
 Template.movie.helpers({
   openClass: function() {
     return this.id === Session.get('activeMovie').id ? 'open' : '';
+  },
+
+  flippedClass: function() {
+    return this.id === Session.get('activeMovie').id && Session.get('flipped') ? 'flipped' : '';
+  },
+
+  hasTrailer: function() {
+    return !!this.trailer_youtube;
+  },
+
+  showTrailer: function() {
+    return this.id === Session.get('activeMovie').id && Session.get('flipped');
   }
 });
 
@@ -50,8 +71,6 @@ function updateFromProfile(movie, status)
     console.log("This is strange Dr Watson, the id you asked for is not referenced in the user profile");
     return;
   } 
-
-
 
   // Let's put it back in suggested if it is unclicked from dismissed or bookmarked
   if (status.type === statusType && status.type != 'liked' ) {

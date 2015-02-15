@@ -36,6 +36,7 @@ function initialInsert(userId) {
       link_rt : 1,
       link_imdb : 1,
       homepage : 1,
+      trailer_youtube : 1,
 
       poster : 1,
       poster_1 : 1,
@@ -80,6 +81,7 @@ function initialInsert(userId) {
       link_rt : e.link_rt,
       link_imdb : e.link_imdb,
       homepage : e.homepage,
+      trailer_youtube : e.trailer_youtube,
 
       poster : e.poster,
       poster_1 : e.poster_1,
