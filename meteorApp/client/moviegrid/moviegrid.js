@@ -89,12 +89,10 @@ function findIndex(array, fn) {
       return x.data.id === previousActiveId
     }) : -1;
     
-
     var activeMovieIndex = activeMovie.id ? findIndex(shownMovies, function(x) {
       return x.data.id === activeMovie.id
     }) : -1;
 
-    console.log(previousActiveIndex);
     var rows = Math.ceil((shownMovies.length + (activeMovieIndex >= 0 ? 5 : 0))/columns);
     if ($list) $($list).css('height', (rows * (movieHeight + gapWidth) - gapWidth) + 'px');
 
@@ -102,12 +100,11 @@ function findIndex(array, fn) {
     if (previousActiveIndex >= 0 && activeMovieIndex > previousActiveIndex)
     {
       computedActiveMovieIndex += 2;
-      if (activeMovieIndex > previousActiveIndex + columns)
+      if (activeMovieIndex >= previousActiveIndex + columns - 2 )
       {
         computedActiveMovieIndex += 3;
       }
     }
-
     var activeMovieColumn = computedActiveMovieIndex % columns;
     var shift = Math.max(0, activeMovieColumn - (columns - 3));
 
@@ -117,19 +114,6 @@ function findIndex(array, fn) {
       if (!m.show) return;
 
       if (activeMovieIndex >= 0) {
-
-        /*if (previousActiveIndex > 0 && activeMovieIndex > previousActiveIndex)
-        {
-          if (i === activeMovieIndex - 5)
-          {
-            i = activeMovieIndex;
-          }
-          else if (i === activeMovieIndex)
-          {
-          }
-        }*/
-
-
 
         if (i === activeMovieIndex) {
           i = computedActiveMovieIndex - shift;
