@@ -53,34 +53,54 @@ var sort = {
 // --------------------------------------------------------------------------
 // Movie List
 
-var movieCache = {};
-var allMovies = [];
+var movieCache  = {};
+var allMovies   = [];
 var shownMovies = [];
-var oldQuery = null;
-var oldSearchString = "";
-var oldNav = "";
-var oldScroll = 0;
+var firstInit   = true;
 
 function loadMovies() {
-  var movies = Meteor.user().profile.movies;
 
+  console.log("RELOAD MOVIES");
+
+  // Reactive variable;
+  u = Meteor.user();
+
+  if (!u || !$list) return;
+
+  var movies = Meteor.user().profile.movies;
   _.each(movies, function(m) {
 
     if (!movieCache[m.id]) {
       var movie = { data: m, el: null, show: false };
       allMovies.push(movie);
-      movieCache[m.id] = movie;    
-      Session.set('rePosition', true);
+      movieCache[m.id] = movie;
+      console.log("INITIALISE SESSION VARIABLES");
+      Session.set('activeMovie'+m.id,false); //initialise the activeMovie to false;
     }
     else if (JSON.stringify(movieCache[m.id].data) != JSON.stringify(m)) {
-      // Update the value for movies that were already loaded
       movieCache[m.id].data = m;
-      Session.set('rePosition', true);
+      Session.set('activeMovie'+m.id,false); //initialise the activeMovie to false;
+      console.log("CHANGE DATA FROM USER");
     }
   });
+  if (firstInit)
+  {
+    firstInit = false
+    recomputeMovies();
+  }
 }
 
-function recomputeMovies(query, searchString, nav, scroll) {
+function recomputeMovies() {
+  if (!allMovies.length) return;
+  console.log("RECOMPUTE MOVIES");
+
+  // Reactive variables
+  var query = Session.get('query') || {};
+  var searchString = Session.get('searchString');
+  var nav = Session.get('type');
+  var scroll = Session.get('scroll');
+  var recompute = Session.get('reCompute');
+
   _.each(allMovies, function(m) {
       m.wasShown = m.show;
       m.show = false;
@@ -127,16 +147,22 @@ function recomputeMovies(query, searchString, nav, scroll) {
 }
 
 function positionMovies() {
+  if (!shownMovies.length) return;
+
+  console.log("REPOSITION MOVIES");
+
+  // Reactive variables
+  var activeMovie      = Session.get('activeMovie');
+  var previousActiveId = Session.get('previousActiveId');
+  var scroll           = Session.get('scroll');
+  var rePosition       = Session.get('rePosition');
+  
+
   var columns = Math.floor(gridWidth / (movieWidth + gapWidth));
-
-  var activeMovie = Session.get('activeMovie');
-  var previousActiveId = Session.get('previousActiveId')
-  console.log(activeMovie.id, previousActiveId);
-
+  
   var previousActiveIndex = activeMovie.id ? findIndex(shownMovies, function(x) {
     return x.data.id === previousActiveId
   }) : -1;
-  
   var activeMovieIndex = activeMovie.id ? findIndex(shownMovies, function(x) {
     return x.data.id === activeMovie.id
   }) : -1;
@@ -158,7 +184,6 @@ function positionMovies() {
 
   var activeMovieColumn = activeMovieIndex % columns;
   var shift = Math.max(0, activeMovieColumn - (columns - 3));
-
 
   _.each(shownMovies, function(m, i) {
     if (!m.show) return;
@@ -215,27 +240,12 @@ function swapMovies(i,j){
   }
 }
 
-function selectMovies() {
-  if (!Meteor.user() || !$list) return;
-  var query = Session.get('query') || {};
-  var searchString = Session.get('searchString');
-  var nav = Session.get('type');
-  var scroll = Session.get('scroll');
+function refreshMovies()
+{
   loadMovies();
-  console.log("SELECT");
-
-  if (Session.get('rePosition') || nav != oldNav || scroll != oldScroll || JSON.stringify(query) != JSON.stringify(oldQuery) || searchString != oldSearchString)
-  {
-    oldQuery = query;
-    oldSearchString = searchString;
-    oldNav = nav;
-    oldScroll = scroll;
-
-    recomputeMovies(query, searchString, nav, scroll);    
-  }
+  recomputeMovies();
   positionMovies();
 }
-
 
 // --------------------------------------------------------------------------
 // Template Setup
@@ -244,16 +254,18 @@ var loadMore = delay(function() {
   // See http://www.meteorpedia.com/read/Infinite_Scrolling
   var scroll = Session.get('scroll');
   Session.set('scroll', scroll + 1);
+  console.log("SCROLL IS NOW ", scroll + 1);
 }, 300);
 
 var resize = delay(function() {
   gridWidth = $list ? $($list).width() : 900;
-  selectMovies();
-
+  refreshMovies();
 }, 300);
 
 Template.moviegrid.helpers({
-  movies: selectMovies,
+  reload: loadMovies,
+  reCompute: recomputeMovies,
+  rePosition: positionMovies,
   hasMovies: function() { return shownMovies.length > 0; },
   suggested: function() { return Session.get('type') === 'suggested'; }
 });

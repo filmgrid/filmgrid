@@ -3,8 +3,17 @@ Jobqueue = new Meteor.Collection('jobqueue');
 
 Meteor.methods({
   recomputePreferences: recomputePreferences,
-  searchMovies        : searchMovies 
+  searchMovies        : searchMovies,
+  updateUserStatus    : updateUserStatus
 });
+
+function updateUserStatus($set)
+{
+  Meteor.users.update(
+     {_id : this.userId},
+      {$set : $set }
+  );
+}
 
 function recomputePreferences()
 {

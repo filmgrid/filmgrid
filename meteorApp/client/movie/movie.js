@@ -38,12 +38,19 @@ Template.movie.events = {
     {
       Session.set('previousActiveId', null);
       Session.set('activeMovie', {});
+      Session.set('activeMovie'+this.id, false);
     }
     else
     {
+      if (activeMovie)
+      {
+        Session.set('activeMovie'+activeMovie.id, false);
+      }
       Session.set('activeMovie', this);
+      Session.set('activeMovie'+this.id, true);
     }
     Session.set('flipped', false);
+    Session.set('rePosition', true); // we ask for rePosition but false because we don't want the order to change
   },
 
   'click .trailer': function(e) {
@@ -57,11 +64,11 @@ Template.movie.events = {
 
 Template.movie.helpers({
   openClass: function() {
-    return this.id === Session.get('activeMovie').id ? 'open' : '';
+    return Session.get('activeMovie'+this.id) ? 'open' : '';
   },
 
   flippedClass: function() {
-    return this.id === Session.get('activeMovie').id && Session.get('flipped') ? 'flipped' : '';
+    return Session.get('activeMovie'+this.id) && Session.get('flipped') ? 'flipped' : '';
   },
 
   hasTrailer: function() {
@@ -69,11 +76,12 @@ Template.movie.helpers({
   },
 
   showTrailer: function() {
-    return this.id === Session.get('activeMovie').id && Session.get('flipped');
+    return Session.get('activeMovie'+this.id) && Session.get('flipped');
   },
 
   status: function() {
-    Session.get('activeMovie');
+    var a = Session.get('activeMovie'+this.id);
+    console.log("STATUS ", this.title, " ", this.statusType + this.statusScore);
     return this.statusType + this.statusScore;
   }
 });
@@ -100,16 +108,28 @@ function updateFromProfile(movie, status)
     movie.statusScore = status.score ? status.score : '';
     $set['profile.movies.' + movie.id] = movie;
   }
-    
+      
   Meteor.users.update(
      {_id : Meteor.userId()},
       {$set : $set }
-    );      
+    );
+  
   if (interactions % 5 == 0)
   {
     Meteor.call('recomputePreferences');
   }
   interactions++;
-  Session.set('rePosition', true);
+  
+  Session.set('activeMovie'+movie.id, false);
+
+  var activeMovie = Session.get('activeMovie')
+  if (activeMovie.id === movie.id)
+  {
+    Session.set('activeMovie', {});
+  }
+
+  // Re position : the clicked stuff should disappear
+  Session.set('reCompute', true);
+
 }
 
