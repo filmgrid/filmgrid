@@ -57,11 +57,11 @@ Template.movie.events = {
 
 Template.movie.helpers({
   openClass: function() {
-    return Session.get('activeMovie').id ? 'open' : '';
+    return this.id === Session.get('activeMovie').id ? 'open' : '';
   },
 
   flippedClass: function() {
-    return Session.get('activeMovie').id && Session.get('flipped') ? 'flipped' : '';
+    return this.id === Session.get('activeMovie').id && Session.get('flipped') ? 'flipped' : '';
   },
 
   hasTrailer: function() {
