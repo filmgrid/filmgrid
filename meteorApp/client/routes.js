@@ -1,6 +1,6 @@
 function resetVariables() {	
 	$('#search').val('');
-	Session.set('searchString', undefined);
+	Session.set('searchString', "");
 	Session.set('searchResults', undefined);
 	Session.set('scroll', 1);
 	Session.set('previousActiveId',null);
@@ -12,7 +12,8 @@ Router.route('/', function () {
   Session.set('type','suggested');  
   this.render('homepage', {
 	data : {
-	 	"navSelected" : "suggested" }
+	 	"navSelected" : "suggested" },
+	waitOn : Meteor.user()
 	});
 });
 
@@ -54,4 +55,5 @@ Meteor.startup(function() {
 	Session.setDefault('previousActiveId',null);
 	Session.setDefault('activeMovie', {});
   	Session.setDefault('query', { filter: {}, sortBy : "year" }); 
+  	Session.setDefault('rePosition', true); 
 });

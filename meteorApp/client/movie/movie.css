@@ -9,9 +9,9 @@
 
 	will-change: transform, opacity;
 
-	-webkit-transition: -webkit-transform .4s, opacity .4s;
-	-moz-transition: -moz-transform .4s, opacity .4s;
-	transition: transform .4s, opacity .4s;
+	-webkit-transition: -webkit-transform .6s, opacity .6s;
+	-moz-transition: -moz-transform .6s, opacity .6s;
+	transition: transform .6s, opacity .6s;
 
 	-webkit-perspective: 1200px;
 	-moz-perspective: 1200px;
@@ -51,9 +51,9 @@
 	-moz-transform-origin: 242px 221px;
 	transform-origin: 242px 221px;
 
-	-webkit-transition: -webkit-transform .4s, -webkit-transform-origin 0s;
-	-moz-transition: -moz-transform .4s, -moz-transform-origin 0s;
-	transition: transform .4s, transform-origin 0s;
+	-webkit-transition: -webkit-transform .6s, -webkit-transform-origin 0s;
+	-moz-transition: -moz-transform .6s, -moz-transform-origin 0s;
+	transition: transform .6s, transform-origin 0s;
 }
 
 .movie-front {
@@ -101,9 +101,9 @@
 	z-index: 10;
 	cursor: pointer;
 
-	-webkit-transition: -webkit-transform .4s;
-	-moz-transition: -moz-transform .4s;
-	transition: transform .4s;
+	-webkit-transition: -webkit-transform .6s;
+	-moz-transition: -moz-transform .6s;
+	transition: transform .6s;
 }
 
 .movie-front.open .movie-poster-wrap {
@@ -231,9 +231,9 @@
 
 	will-change: opacity;
 
-	-webkit-transition: opacity .4s;
-	-moz-transition: opacity .4s;
-	transition: opacity .4s;
+	-webkit-transition: opacity .6s;
+	-moz-transition: opacity .6s;
+	transition: opacity .6s;
 }
 
 .movie-front.open .movie-details {

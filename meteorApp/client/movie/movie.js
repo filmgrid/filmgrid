@@ -77,7 +77,6 @@ function updateFromProfile(movie, status)
 {   
   var $set = {};
   var statusType = movie.statusType;
-  
   // Let's check that we can access the current status
   if (!statusType) {
     console.log("This is strange Dr Watson, the id you asked for is not referenced in the user profile");
@@ -101,10 +100,11 @@ function updateFromProfile(movie, status)
      {_id : Meteor.userId()},
       {$set : $set }
     );      
-  if (interactions % 1 == 0)
+  if (interactions % 5 == 0)
   {
     Meteor.call('recomputePreferences');
   }
   interactions++;
+  Session.set('rePosition', true);
 }
 
