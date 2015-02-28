@@ -1,7 +1,5 @@
 .movie {
 	position: absolute;
-	top: 0;
-	left: 0;
 	opacity: 0;
 	width: 160px;
 	height: 220px;
@@ -9,9 +7,9 @@
 
 	will-change: transform, opacity;
 
-	-webkit-transition: -webkit-transform .6s, opacity .6s;
-	-moz-transition: -moz-transform .6s, opacity .6s;
-	transition: transform .6s, opacity .6s;
+	-webkit-transition: -webkit-transform .6s, opacity .4s;
+	-moz-transition: -moz-transform .6s, opacity .4s;
+	transition: transform .6s, opacity .4s;
 
 	-webkit-perspective: 1200px;
 	-moz-perspective: 1200px;

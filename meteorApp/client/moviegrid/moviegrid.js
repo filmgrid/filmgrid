@@ -58,6 +58,8 @@ var allMovies = [];
 var shownMovies = [];
 var oldQuery = null;
 var oldSearchString = "";
+var oldNav = "";
+var oldScroll = 0;
 
 function loadMovies() {
   var movies = Meteor.user().profile.movies;
@@ -169,15 +171,19 @@ function selectMovies() {
   if (!Meteor.user() || !$list) return;
   var query = Session.get('query') || {};
   var searchString = Session.get('searchString');
+  var nav = Session.get('type');
+  var scroll = Session.get('scroll');
   loadMovies();
 
   console.log("SELECT MOVIES, LIST", $list, "SHOWN MOVIES ", shownMovies);
-  if (JSON.stringify(query) != JSON.stringify(oldQuery) || searchString != oldSearchString || Session.get('rePosition'))
+  if (nav != oldNav || scroll != oldScroll || JSON.stringify(query) != JSON.stringify(oldQuery) || searchString != oldSearchString || Session.get('rePosition'))
   {
     console.log("RECOMPUTING");
     Session.set('rePosition', false);
     oldQuery = query;
     oldSearchString = searchString;
+    oldNav = nav;
+    oldScroll = scroll;
      
     _.each(allMovies, function(m) {
       m.wasShown = m.show;

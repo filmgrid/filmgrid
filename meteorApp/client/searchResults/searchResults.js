@@ -9,6 +9,7 @@ Template.searchResults.helpers(
          _.filter(
            results,
            function(e) {
+            console.log(e);
              if (e.score > 2) 
                return true;
              else
