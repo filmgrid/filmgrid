@@ -57,11 +57,11 @@ Template.movie.events = {
 
 Template.movie.helpers({
   openClass: function() {
-    return this.id === Session.get('activeMovie').id ? 'open' : '';
+    return Session.get('activeMovie').id ? 'open' : '';
   },
 
   flippedClass: function() {
-    return this.id === Session.get('activeMovie').id && Session.get('flipped') ? 'flipped' : '';
+    return Session.get('activeMovie').id && Session.get('flipped') ? 'flipped' : '';
   },
 
   hasTrailer: function() {
@@ -70,6 +70,11 @@ Template.movie.helpers({
 
   showTrailer: function() {
     return this.id === Session.get('activeMovie').id && Session.get('flipped');
+  },
+
+  status: function() {
+    Session.get('activeMovie');
+    return this.statusType + this.statusScore;
   }
 });
 
