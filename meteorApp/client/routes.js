@@ -50,6 +50,7 @@ Router.onBeforeAction(function() {
 
 Meteor.startup(function() {
 	resetVariables()
+	Session.set('query', { sortBy: 'year' });
 
 	Session.setDefault('previousActiveId',null);
 	Session.setDefault('activeMovie', {});

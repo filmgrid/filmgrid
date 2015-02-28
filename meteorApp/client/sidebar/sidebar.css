@@ -1,16 +1,10 @@
 #sidebar {
 	position: fixed;
-	width: 220px;
-	padding: 20px;
+	width: 200px;
+	padding: 30px;
 	top: 0;
 	bottom: 0;
 	z-index: 10;
-}
-
-#search {
-
-	width : 100%;
-
 }
 
 #logo {
@@ -22,42 +16,67 @@
 }
 
 .nav-link {
-	cursor: pointer;
 	display: block;
-	padding: 6px 10px 6px 10px;
-	position: relative;
-	border-top: 1px solid #555;
-	color: #666;
+	padding: 7px 12px 7px 62px;
+	height: 22px;
+	margin: 0 0 1px -30px;
+	background: rgba(104, 7, 46, 0.4);
+	color: rgba(255,255,255,0.5);
 	text-decoration: none;
+	position: relative;
 	transition: background .2s, color .2s;
 }
 
-.nav-link:hover {
-	background: #333;
-	color: #999;
+.nav-icon {
+	background: url('/assets/sidebar.png');
+	background-size: 30px 180px;
+	width: 30px;
+	height: 36px;
+	position: absolute;
+	left: 28px;
+	top: 0px;
+	opacity: 0.3;
+	transition: opacity .2s;
 }
 
-.nav-link.active {
-	background: #555;
-	color: #EEE;
-}
+.nav-link:hover, .nav-link.active { background: rgba(104, 7, 46, 0.8); color: #FFF; }
+.nav-link:hover .nav-icon, .nav-link.active .nav-icon { opacity: 0.8; }
 
-#sidebar h2 {
-	margin: 40px 0 10px;
-}
+.nav-link.active { cursor: default; }
 
-
-#sidebar input {
-	color: #000;
-}
+.nav-icon-watchlist { background-position: 0 -36px; }
+.nav-icon-favourites { background-position: 0 -72px; }
+.nav-icon-cinemas { background-position: 0 -108px; }
+.nav-icon-friends { background-position: 0 -144px; }
 
 
 
-label {
+#sidebar label {
 	display: block;
-	margin: 12px 0;	
+  	font-size: 12px;
+  	color: rgba(255,255,255,0.4);
+  	margin: 20px 0 0 0;
+  	display: block;
 }
 
-select {
-	color:#444;
+#sidebar input, #sidebar select {
+	background: transparent;
+	border: none;
+	display: block;
+	width: 100%;
+	padding: 0 0 2px 0;
+	border-bottom: 1px solid rgba(255,255,255,0.2);
+	color: #FFF;
+	outline: none;
+	font-size: 16px;
+	font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
+}
+
+#login {
+	position: absolute;
+	bottom: 30px;
+	background: rgba(255,255,255,0.1);
+	left: 0;
+	padding: 10px 10px 10px 30px;
+	width: 190px;
 }

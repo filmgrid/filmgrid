@@ -261,6 +261,14 @@
 	margin: 0 0 4px;
 }
 
+.movie-body .rating {
+	border: 1px solid #888;
+	padding: 0 1px;
+	display: inline-block;
+	line-height: 1;
+	margin-left: 2px;
+}
+
 .movie-body .plot {
 	margin-top: 40px;
 }

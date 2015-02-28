@@ -13,7 +13,7 @@ Template.sidebar.helpers({
 
 function handleFilter() 
 {
-    var genre = $('#filter-genre').val() || undefined;
+    var genre = $('#filter-genre').val().replace('All', '') || undefined;
     var query = Session.get('query') || {};
     query.filter = { genre: genre };
     Session.set('query', query);
