@@ -1,4 +1,3 @@
-
 var $window = $(window);
 
 var interactions = 0;
@@ -50,7 +49,7 @@ Template.movie.events = {
       Session.set('activeMovie'+this.id, true);
     }
     Session.set('flipped', false);
-    Session.set('rePosition', movie.id); // we ask for rePosition but false because we don't want the order to change
+    Session.set('rePosition', this.id); // we ask for rePosition but false because we don't want the order to change
   },
 
   'click .trailer': function(e) {

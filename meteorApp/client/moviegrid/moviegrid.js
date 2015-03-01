@@ -163,12 +163,12 @@ function positionMovies() {
   console.log("REPOSITION MOVIES");
 
   // Reactive variables
+  var searchString     = Session.get('searchString');
   var activeMovie      = Session.get('activeMovie');
   var previousActiveId = Session.get('previousActiveId');
   var scroll           = Session.get('scroll');
   var rePosition       = Session.get('rePosition');
   var query            = Session.get('query');
-  var searchString     = Session.get('searchString');
   
 
   var columns = Math.floor(gridWidth / (movieWidth + gapWidth));
