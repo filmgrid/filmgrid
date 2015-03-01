@@ -1,7 +1,7 @@
 <template name="movie">
 	<div class="movie {{ flippedClass }}">
 		<div class="movie-front {{ openClass }}">
-			<div class="movie-poster-wrap movie-user-status-{{ this.statusType }}{{ this.statusScore }}">
+			<div class="movie-poster-wrap movie-user-status-{{ status }}">
 				<div class="movie-poster" style="background-image: url({{ this.poster }})"></div>
 				<div class="movie-poster-shadow"></div>
 			    <div class="movie-bookmark"></div>
@@ -43,8 +43,8 @@
 				<div class="trailer-return"></div>
 			</div>
 			{{#if showTrailer}}
-				<iframe class="trailer" type="text/html" width="484" height="408" frameborder="0"
-				src="http://www.youtube.com/embed/{{ trailer_youtube }}?version=3&autoplay=1&autohide=1&modestbranding=1&showinfo=0&iv_load_policy=3&fs=1" allowfullscreen="true"></iframe>
+				<iframe class="trailer" width="484" height="408" frameborder="0" allowfullscreen="true" webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen
+					src="http://www.youtube.com/embed/{{ trailer_youtube }}?autoplay=1&autohide=1&modestbranding=1&showinfo=0&iv_load_policy=3&fs=1" ></iframe>
 	    	{{/if}}
 		</div>
 	</div>

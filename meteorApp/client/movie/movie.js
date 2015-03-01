@@ -38,12 +38,19 @@ Template.movie.events = {
     {
       Session.set('previousActiveId', null);
       Session.set('activeMovie', {});
+      Session.set('activeMovie'+this.id, false);
     }
     else
     {
+      if (activeMovie)
+      {
+        Session.set('activeMovie'+activeMovie.id, false);
+      }
       Session.set('activeMovie', this);
+      Session.set('activeMovie'+this.id, true);
     }
     Session.set('flipped', false);
+    Session.set('rePosition', true); // we ask for rePosition but false because we don't want the order to change
   },
 
   'click .trailer': function(e) {
@@ -57,11 +64,11 @@ Template.movie.events = {
 
 Template.movie.helpers({
   openClass: function() {
-    return this.id === Session.get('activeMovie').id ? 'open' : '';
+    return Session.get('activeMovie'+this.id) ? 'open' : '';
   },
 
   flippedClass: function() {
-    return this.id === Session.get('activeMovie').id && Session.get('flipped') ? 'flipped' : '';
+    return Session.get('activeMovie'+this.id) && Session.get('flipped') ? 'flipped' : '';
   },
 
   hasTrailer: function() {
@@ -69,7 +76,13 @@ Template.movie.helpers({
   },
 
   showTrailer: function() {
-    return this.id === Session.get('activeMovie').id && Session.get('flipped');
+    return Session.get('activeMovie'+this.id) && Session.get('flipped');
+  },
+
+  status: function() {
+    var a = Session.get('updateMovie'+this.id);
+    if (a) Session.set('updateMovie'+this.id, false);
+    return this.statusType + this.statusScore;
   }
 });
 
@@ -77,7 +90,6 @@ function updateFromProfile(movie, status)
 {   
   var $set = {};
   var statusType = movie.statusType;
-  
   // Let's check that we can access the current status
   if (!statusType) {
     console.log("This is strange Dr Watson, the id you asked for is not referenced in the user profile");
@@ -96,15 +108,27 @@ function updateFromProfile(movie, status)
     movie.statusScore = status.score ? status.score : '';
     $set['profile.movies.' + movie.id] = movie;
   }
-    
+  // Re position : the clicked stuff should disappear
+  Session.set('activeMovie'+movie.id, false);
+  Session.set('updateMovie'+movie.id, true);
+  Session.set('reCompute', true);
+
   Meteor.users.update(
      {_id : Meteor.userId()},
       {$set : $set }
-    );      
-  if (interactions % 1 == 0)
+    );
+  
+
+  if (interactions % 5 == 0)
   {
     Meteor.call('recomputePreferences');
   }
   interactions++;
+  
+  var activeMovie = Session.get('activeMovie')
+  if (activeMovie.id === movie.id)
+  {
+    Session.set('activeMovie', {});
+  }
 }
 

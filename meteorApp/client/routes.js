@@ -1,42 +1,38 @@
 function resetVariables() {	
 	$('#search').val('');
-	Session.set('searchString', undefined);
+	Session.set('searchString', "");
 	Session.set('searchResults', undefined);
 	Session.set('scroll', 1);
 	Session.set('previousActiveId',null);
-	Session.set('activeMovie', {});
 }
 
+function configureRoute(route, that) {
+  if (Session.get('type') != route)
+  {
+  	resetVariables();
+  	Session.set('type',route);  
+  	console.log("ROUTE CHANGED")
+  }
+  that.render('homepage', {
+	data : {
+	 	"navSelected" : route },
+	waitOn : Meteor.user()
+	});
+}
 
 Router.route('/', function () {
-  Session.set('type','suggested');  
-  this.render('homepage', {
-	data : {
-	 	"navSelected" : "suggested" }
-	});
+  configureRoute('suggested', this);
 });
 
 Router.route('/bookmarked', function () {
-  Session.set('type','bookmarked');
-  this.render('homepage', {
-	data : {
-	 	"navSelected" : "bookmarked" }
-	});
+  configureRoute('bookmarked', this);
 });
 
 Router.route('/liked', function () {
-  Session.set('type','liked');
-  this.render('homepage', {
-	data : {
-	 	"navSelected" : "liked" }
-	});
+  configureRoute('liked', this);
 });
 Router.route('/dismissed', function () {
-  Session.set('type','dismissed');
-  this.render('homepage', {
-	data : {
-	 	"navSelected" : "dismissed" }
-	});
+  configureRoute('dismissed', this);
 });
 
 Router.onBeforeAction(function() {
@@ -44,15 +40,14 @@ Router.onBeforeAction(function() {
 		this.render('login');
 		return;
 	};		
-  	resetVariables();
 	this.next();
 });
 
 Meteor.startup(function() {
-	resetVariables()
-	Session.set('query', { sortBy: 'year' });
-
 	Session.setDefault('previousActiveId',null);
 	Session.setDefault('activeMovie', {});
   	Session.setDefault('query', { filter: {}, sortBy : "year" }); 
+  	Session.setDefault('rePosition', true); 
+  	Session.setDefault('scroll', 1);
+  	resetVariables();
 });

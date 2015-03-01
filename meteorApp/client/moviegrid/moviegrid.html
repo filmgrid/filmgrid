@@ -1,6 +1,8 @@
 <template name="moviegrid">
   	<div class="movie-list"></div>
-  	{{movies}}
+  	{{reload}}
+    {{reCompute}}
+    {{rePosition}}
   	{{#if hasMovies}}
     	{{#if suggested}}
     		<div class="suggest-more">Suggest me more movies</div>
