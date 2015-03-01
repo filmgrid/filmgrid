@@ -1,122 +1,68 @@
-function initialInsert(userId) {
-  // Find the first set of movies to insert
-  var suggested = Movies
-  .find(
-    {poster: { $ne: 'N/A' }, imdb_votes: { $ne: 'N/A' }},
-    { sort: { revenue: -1 }, fields : {
-      _id: 1,
+// =================================================================================================
+// WATCHLIST - PUBLISHING
+// =================================================================================================
 
-      title: 1,
-      plot: 1,
-      genre: 1,
 
-      runtime : 1,
-      budget : 1,
-      revenue : 1,
+// Table Config ------------------------------------------------------------------------------------
 
-      year : 1,
-      released : 1,
-      languages : 1,
-      country : 1,
+var fields = ['title', 'plot', 'genre', 'runtime', 'budget', 'revenue', 'year', 'released',
+'languages', 'country', 'score_rtaudience', 'score_rtcritics', 'score_imdb', 'score_metascore',
+'votes_imdb', 'awards', 'rating', 'actors', 'directors', 'studio', 'link_rt', 'link_imdb',
+'homepage', 'trailer_youtube', 'poster', 'poster_1', 'background'];
 
-      score_rtaudience : 1,
-      score_rtcritics : 1,
-      score_imdb : 1,
-      score_metascore : 1,
-      votes_imdb : 1,
+var findFields = { _id: 1 };
+_.each(fields, function(f) { findFields[f] = 1 });
 
-      awards : 1,
-      rating : 1,
 
-      actors : 1,
-      directors : 1,
-      studio : 1,
-      studio : 1,
+// Subscribe to Movies -----------------------------------------------------------------------------
 
-      link_rt : 1,
-      link_imdb : 1,
-      homepage : 1,
-      trailer_youtube : 1,
+function getInitialSuggestions() {
+    var suggestions = Movies
+    .find({
+        poster: { $ne: 'N/A' },
+        imdb_votes: { $ne: 'N/A' }
+    }, {
+        sort: { revenue: -1 },
+        fields: findFields
+    })
+    .fetch()
+    .slice(0, 500)
+    .map(function(e) {
+        var mapFields = { id: e._id, statusType:'suggested', statusScore: '', score : 1 };
+        _.each(fields, function(f) { mapFields[f] = e[f] });
+        return [e._id, mapFields];
+    });
 
-      poster : 1,
-      poster_1 : 1,
-      background : 1
-  }})
-  .fetch()
-  .slice(0, 500)
-  .map(function(e) {
-    return [e._id, {
-      id : e._id, 
-      statusType:'suggested',
-      statusScore: '',
-      proba : 1,
-
-      title : e.title,
-      plot : e.plot,
-      genre : e.genre,
-
-      runtime : e.runtime,
-      budget : e.budget,
-      revenue : e.revenue,
-
-      year : e.year,
-      released : e.released,
-      languages : e.languages,
-      country : e.country,
-
-      score_rtaudience : e.score_rtaudience,
-      score_rtcritics : e.score_rtcritics,
-      score_imdb : e.score_imdb,
-      score_metascore : e.score_metascore,
-      votes_imdb : e.votes_imdb,
-
-      awards : e.awards,
-      rating : e.rating,
-
-      actors : e.actors,
-      directors : e.directors,
-      studio : e.studio,
-      studio : e.studio,
-
-      link_rt : e.link_rt,
-      link_imdb : e.link_imdb,
-      homepage : e.homepage,
-      trailer_youtube : e.trailer_youtube,
-
-      poster : e.poster,
-      poster_1 : e.poster_1,
-      background : e.background
-    }];
-  }); 
-
-  Meteor.users.update({_id : userId}, { $set : { "profile.movies": _.object(suggested) }});
+    return _.object(suggestions);
 }
 
-function subscribeToMovies(type, opts, userId) {
+Meteor.publish('movies', function() {
 
-  if (Meteor.users.findOne({_id: userId}))
-  {
-    var opts = opts || {};
-    var page = opts.page || 1;
+    if (!Meteor.users.findOne({_id: this.userId})) return;
 
-    var movies = Meteor.users.findOne({_id: userId}).profile.movies;
+    var movies = Meteor.users.findOne({ _id: this.userId }).profile.movies;
 
-    if (movies == undefined)
-    {
-      initialInsert( userId);
-      return;
+    if (!movies) {
+        // Initial Insert
+        var suggestions = getInitialSuggestions();
+        Meteor.users.update({ _id : this.userId }, { $set : { 'profile.movies': suggestions }});
     }
+});
 
-    /*var ids = _.keys(movies);
-    
-    var search = { poster: { $ne: 'N/A' }, _id : { $in : ids } };
-    if (opts.genre) search.genre = { $regex: '.*' + opts.genre + '.*' };
-    var res = Movies.find(search, { limit: page * 20, sort: { year: -1 } });
-    return res;*/
-  }
-};
 
-Meteor.publish("movies", function(opts) 
-{
-    return subscribeToMovies("movies", opts, this.userId);
+// Public Methods ----------------------------------------------------------------------------------
+
+var driver = new MongoInternals.RemoteCollectionDriver("mongodb://127.0.0.1:27017/appdb");
+
+Meteor.methods({
+    search: function(str) {
+        var asyncDb = Meteor.wrapAsync(driver.mongo.db.executeDbCommand, driver.mongo.db);
+        var result = asyncDb({
+            text: 'movies',
+            search: str || '',
+            project: findFields,
+            limit : 25
+        });
+        return (result && result.documents[0].ok === 1) ? result.documents[0].results : [];
+    }
 });
