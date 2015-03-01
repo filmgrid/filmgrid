@@ -24,6 +24,11 @@ function findIndex(array, fn) {
   return -1;
 }
 
+function compareMovies(m1,m2)
+{
+  return (m1.statusType+m1.statusScore) == (m2.statusType+m2.statusScore);
+}
+
 // --------------------------------------------------------------------------
 // Setup and Config
 
@@ -33,6 +38,7 @@ var gridWidth = 900;
 var movieWidth = 160;
 var movieHeight = 220;
 var gapWidth = 2;
+var lastAction = ""; //dirty hack to prevent double reload
 
 var filter = {
   genre: function(m, value) { return m.genre.indexOf(value) !== -1; },
@@ -59,6 +65,8 @@ var shownMovies = [];
 var firstInit   = true;
 
 function loadMovies() {
+  if (lastAction == "loadMovies") return;
+  lastAction = "loadMovies";
 
   console.log("RELOAD MOVIES");
 
@@ -67,7 +75,7 @@ function loadMovies() {
 
   if (!u || !$list) return;
 
-  var movies = Meteor.user().profile.movies;
+  var movies = u.profile.movies;
   _.each(movies, function(m) {
 
     if (!movieCache[m.id]) {
@@ -77,7 +85,7 @@ function loadMovies() {
       console.log("INITIALISE SESSION VARIABLES");
       Session.set('activeMovie'+m.id,false); //initialise the activeMovie to false;
     }
-    else if (JSON.stringify(movieCache[m.id].data) != JSON.stringify(m)) {
+    else if (!compareMovies(movieCache[m.id].data,m)) {
       movieCache[m.id].data = m;
       Session.set('activeMovie'+m.id,false); //initialise the activeMovie to false;
       console.log("CHANGE DATA FROM USER");
@@ -91,6 +99,8 @@ function loadMovies() {
 }
 
 function recomputeMovies() {
+  lastAction = "recomputeMovies";
+
   if (!allMovies.length) return;
   console.log("RECOMPUTE MOVIES");
 
@@ -156,6 +166,8 @@ function positionMovies() {
   var previousActiveId = Session.get('previousActiveId');
   var scroll           = Session.get('scroll');
   var rePosition       = Session.get('rePosition');
+  var query            = Session.get('query');
+  var searchString     = Session.get('searchString');
   
 
   var columns = Math.floor(gridWidth / (movieWidth + gapWidth));

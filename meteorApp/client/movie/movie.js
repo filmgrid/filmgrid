@@ -80,8 +80,8 @@ Template.movie.helpers({
   },
 
   status: function() {
-    var a = Session.get('activeMovie'+this.id);
-    console.log("STATUS ", this.title, " ", this.statusType + this.statusScore);
+    var a = Session.get('updateMovie'+this.id);
+    if (a) Session.set('updateMovie'+this.id, false);
     return this.statusType + this.statusScore;
   }
 });
@@ -108,28 +108,27 @@ function updateFromProfile(movie, status)
     movie.statusScore = status.score ? status.score : '';
     $set['profile.movies.' + movie.id] = movie;
   }
-      
+  // Re position : the clicked stuff should disappear
+  Session.set('activeMovie'+movie.id, false);
+  Session.set('updateMovie'+movie.id, true);
+  Session.set('reCompute', true);
+
   Meteor.users.update(
      {_id : Meteor.userId()},
       {$set : $set }
     );
   
+
   if (interactions % 5 == 0)
   {
     Meteor.call('recomputePreferences');
   }
   interactions++;
   
-  Session.set('activeMovie'+movie.id, false);
-
   var activeMovie = Session.get('activeMovie')
   if (activeMovie.id === movie.id)
   {
     Session.set('activeMovie', {});
   }
-
-  // Re position : the clicked stuff should disappear
-  Session.set('reCompute', true);
-
 }
 
