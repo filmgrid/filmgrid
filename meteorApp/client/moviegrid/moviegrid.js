@@ -95,6 +95,7 @@ function loadMovies() {
   {
     firstInit = false
     recomputeMovies();
+    positionMovies();
   }
 }
 
@@ -162,12 +163,12 @@ function positionMovies() {
   console.log("REPOSITION MOVIES");
 
   // Reactive variables
+  var searchString     = Session.get('searchString');
   var activeMovie      = Session.get('activeMovie');
   var previousActiveId = Session.get('previousActiveId');
   var scroll           = Session.get('scroll');
   var rePosition       = Session.get('rePosition');
   var query            = Session.get('query');
-  var searchString     = Session.get('searchString');
   
 
   var columns = Math.floor(gridWidth / (movieWidth + gapWidth));
@@ -199,7 +200,6 @@ function positionMovies() {
 
   _.each(shownMovies, function(m, i) {
     if (!m.show) return;
-
     if (activeMovieIndex >= 0) {
       if (shift > 0) {
         if (i == activeMovieIndex - 1 || (shift == 2 &&  i == activeMovieIndex - 2)) {
