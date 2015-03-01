@@ -40,9 +40,9 @@ function handleSearch(e)
     }
 }
 
-function handleSearchGlobal(val) 
+function handleSearchGlobal(val)
 {
-    Meteor.call('searchMovies', val , function(error, result) {
+    Meteor.call('search', val, function(error, result) {
         Session.set('searchResults', result);
     });
 }
