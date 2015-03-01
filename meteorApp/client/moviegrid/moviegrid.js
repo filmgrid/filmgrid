@@ -201,37 +201,14 @@ function positionMovies() {
     if (!m.show) return;
 
     if (activeMovieIndex >= 0) {
-      switch (shift){
-        case 0:
-          break;
-        case 1:
-          if ( i == activeMovieIndex - 1)
-          {
-            i++; 
-          }
-          else if( i == activeMovieIndex)
-          {
-            i = activeMovieIndex - 1;
-            swapMovies(activeMovieIndex, activeMovieIndex - 1);
-          } 
-          break;
-        case 2:
-          if (i == activeMovieIndex - 2)
-          {
-            i++;
-          }
-          else if  ( i == activeMovieIndex - 1)
-          {
-            i++;
-          }
-          else if ( i == activeMovieIndex)
-          {
-            i = activeMovieIndex - 2;
-            swapMovies(activeMovieIndex, activeMovieIndex - 2);
-          }
-          break
+      if (shift > 0) {
+        if (i == activeMovieIndex - 1 || (shift == 2 &&  i == activeMovieIndex - 2)) {
+          i++; 
+        } else if (i == activeMovieIndex) {
+          i = activeMovieIndex - shift;
+          swapMovies(activeMovieIndex, activeMovieIndex - shift);
+        }
       }
-
       if (i > activeMovieIndex - shift) i += 2;
       if (i > activeMovieIndex - shift + columns - 1) i += 3;
     }
