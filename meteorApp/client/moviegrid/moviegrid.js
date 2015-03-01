@@ -95,6 +95,7 @@ function loadMovies() {
   {
     firstInit = false
     recomputeMovies();
+    positionMovies();
   }
 }
 
@@ -199,7 +200,6 @@ function positionMovies() {
 
   _.each(shownMovies, function(m, i) {
     if (!m.show) return;
-
     if (activeMovieIndex >= 0) {
       if (shift > 0) {
         if (i == activeMovieIndex - 1 || (shift == 2 &&  i == activeMovieIndex - 2)) {

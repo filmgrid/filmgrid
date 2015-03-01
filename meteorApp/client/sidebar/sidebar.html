@@ -4,15 +4,15 @@
 
 		<a href="/"><div id="logo"></div></a>
 
-		<a href="/" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
+		<a href="/" id="nav-link-suggested" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
 			Recommended
 			<div class="nav-icon nav-icon-recommended"></div>
 		</a>
-		<a href="/bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">
+		<a href="/bookmarked" id="nav-link-bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">
 			Watchlist
 			<div class="nav-icon nav-icon-watchlist"></div>
 		</a>
-		<a href="/liked" class="nav-link {{#if navSelectedIs 'liked'}} active{{/if}}">
+		<a href="/liked" id="nav-link-liked" class="nav-link {{#if navSelectedIs 'liked'}} active{{/if}}">
 			Favourites
 			<div class="nav-icon nav-icon-favourites"></div>
 		</a>

@@ -24,7 +24,17 @@
 	color: rgba(255,255,255,0.5);
 	text-decoration: none;
 	position: relative;
+	margin-right: 0px;
 	transition: background .2s, color .2s;
+}
+
+.bouncy-nav {
+	color: rgba(255,255,255,1);
+	transition: color 0s !important;
+}
+
+.bouncy-nav .nav-icon {
+	opacity: 0.8;
 }
 
 .nav-icon {
