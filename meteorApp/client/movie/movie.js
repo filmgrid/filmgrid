@@ -136,7 +136,6 @@ function updateFromProfile(movie, status)
 function bounceNav(type)
 {
   var el= $('#nav-link-'+type);
-  console.log(el);
   el.addClass("bouncy-nav");
   setTimeout(function() {el.removeClass("bouncy-nav")}, 500);
 }
