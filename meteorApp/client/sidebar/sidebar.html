@@ -4,57 +4,64 @@
 
 		<a href="/"><div id="logo"></div></a>
 
-		<a href="/"           class="nav-link {{#if navSelectedIs 'suggested' }} active{{/if}}">Recommended Movies</a>
-		<a href="/bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">My Watchlist</a>
-		<a href="/liked"      class="nav-link {{#if navSelectedIs 'liked'     }} active{{/if}}">Movies I ranked</a>
-		<a href="/dismissed"  class="nav-link {{#if navSelectedIs 'dismissed' }} active{{/if}}">Dismissed Movies</a>
+		<a href="/" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
+			Recommended
+			<div class="nav-icon nav-icon-recommended"></div>
+		</a>
+		<a href="/bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">
+			Watchlist
+			<div class="nav-icon nav-icon-watchlist"></div>
+		</a>
+		<a href="/liked" class="nav-link {{#if navSelectedIs 'liked'}} active{{/if}}">
+			Favourites
+			<div class="nav-icon nav-icon-favourites"></div>
+		</a>
+		<a class="nav-link">
+			In Cinemas
+			<div class="nav-icon nav-icon-cinemas"></div>
+		</a>
+		<a class="nav-link">
+			Watch with Friends
+			<div class="nav-icon nav-icon-friends"></div>
+		</a>
 
-		<h2>Search</h2>
+		<label for="search" style="margin-top: 30px">Search</label>
+		<input type="text" id="search" placeholder="Title, Actor, Keywords"/>
 
-		<input type="text" id="search"/>
+		<label for="filter-genre">Genre</label>
+		<select id="filter-genre">
+			<option>All</option>
+			<option>Action</option>
+			<option>Adventure</option>
+			<option>Animation</option>
+			<option>Biography</option>
+			<option>Comedy</option>
+			<option>Crime</option>
+			<option>Documentary</option>
+			<option>Drama</option>
+			<option>Family</option>
+			<option>Fantasy</option>
+			<option>Horror</option>
+			<option>Music</option>
+			<option>Mystery</option>
+			<option>Romance</option>
+			<option>Sci-Fi</option>
+			<option>Sport</option>
+			<option>Thriller</option>
+			<option>War</option>
+		</select>
+		
+		<label for="sort-type">Sort by</label>
+		<select id="sort-type">
+			<option>year</option>
+			{{#if navSelectedIs 'liked'}}
+				<option>stars</option>
+			{{/if}}
+		</select>
 
-		<h2>Filter</h2>
-
-		<label>
-			Genre
-			<select id="filter-genre">
-				<option></option>
-				<option>Action</option>
-				<option>Adventure</option>
-				<option>Animation</option>
-				<option>Biography</option>
-				<option>Comedy</option>
-				<option>Crime</option>
-				<option>Documentary</option>
-				<option>Drama</option>
-				<option>Family</option>
-				<option>Fantasy</option>
-				<option>Horror</option>
-				<option>Music</option>
-				<option>Mystery</option>
-				<option>Romance</option>
-				<option>Sci-Fi</option>
-				<option>Sport</option>
-				<option>Thriller</option>
-				<option>War</option>
-			</select>
-		</label>
-
-		<h2>Sort</h2>
-
-		<label>
-			by
-			<select id="sort-type">
-				<option>year</option>
-				{{#if navSelectedIs 'liked'}}
-					<option>stars</option>
-				{{/if}}
-			</select>
-		</label>
-
-		<h2>Account</h2>
-
-		{{ > loginButtons }}
+		<div id="login">
+			{{ > loginButtons }}
+		</div>
 
 	</div>
 
