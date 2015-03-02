@@ -29,4 +29,4 @@ node_modules
 
 pythonApp/assets
 meteorApp/build
-
+meteorApp/public/assets/posters/*

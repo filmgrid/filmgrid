@@ -63,6 +63,7 @@ Meteor.methods({
             project: findFields,
             limit : 25
         });
+        console.log(result);
         return (result && result.documents[0].ok === 1) ? result.documents[0].results : [];
     }
 });

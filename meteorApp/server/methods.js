@@ -3,16 +3,7 @@ Jobqueue = new Meteor.Collection('jobqueue');
 
 Meteor.methods({
   recomputePreferences: recomputePreferences,
-  updateUserStatus    : updateUserStatus
 });
-
-function updateUserStatus($set)
-{
-  Meteor.users.update(
-     {_id : this.userId},
-      {$set : $set }
-  );
-}
 
 function recomputePreferences()
 {
@@ -24,10 +15,10 @@ function recomputePreferences()
   console.log("trying to upsert RECOMPUTING !!!!!");
   
   Jobqueue.upsert(
-    {'payload.userId':this.userId},
+    {payload:this.userId},
     {   $set: 
       {
-        payload:{userId:this.userId}, 
+        payload:this.userId, 
         priority:1, 
         time:null, 
         period:0,

@@ -14,7 +14,9 @@ rs.initiate(config);'
 echo $config > config.js
 mongo localhost:8000 config.js
 
-export OPLOG_URL="mongodb://10.240.161.48:8000/local"
+echo "Initialising node"
+sudo kill -9 $(pgrep nodejs)
+export OPLOG_URL="mongodb://watchlist:w4tchl1st@10.240.161.48:8000/local"
 export ROOT_URL="http://104.155.5.219/" 
-export MONGO_URL="mongodb://10.240.161.48:8000/appdb"
+export MONGO_URL="mongodb://watchlist:w4tchl1st@10.240.161.48:8000/appdb"
 sudo nodejs main.js&
