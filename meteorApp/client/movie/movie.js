@@ -1,4 +1,3 @@
-
 var $window = $(window);
 
 var interactions = 0;
@@ -50,7 +49,7 @@ Template.movie.events = {
       Session.set('activeMovie'+this.id, true);
     }
     Session.set('flipped', false);
-    Session.set('rePosition', true); // we ask for rePosition but false because we don't want the order to change
+    Session.set('rePosition', this.id); // we ask for rePosition but false because we don't want the order to change
   },
 
   'click .trailer': function(e) {
@@ -100,13 +99,15 @@ function updateFromProfile(movie, status)
   if (status.type === statusType && status.type != 'liked' ) {
     movie.statusType = "suggested";
     movie.statusScore = "";
-    $set['profile.movies.' + movie.id]  = movie;        
+    $set['profile.movies.' + movie.id]  = movie;
+    bounceNav("suggested");   
   }
   else
   {
     movie.statusType = status.type
     movie.statusScore = status.score ? status.score : '';
     $set['profile.movies.' + movie.id] = movie;
+    if (!(status.type === statusType && status.type == 'liked')) bounceNav(status.type); // bounce the nav except if
   }
   // Re position : the clicked stuff should disappear
   Session.set('activeMovie'+movie.id, false);
@@ -132,3 +133,9 @@ function updateFromProfile(movie, status)
   }
 }
 
+function bounceNav(type)
+{
+  var el= $('#nav-link-'+type);
+  el.addClass("bouncy-nav");
+  setTimeout(function() {el.removeClass("bouncy-nav")}, 500);
+}
