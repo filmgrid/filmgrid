@@ -1,28 +1,3 @@
-// This wrapper can be used to ensure that a function is only triggered once ever t ms.
-function delay(fn, t) {
-  var delay = false;
-  var repeat = false;
-  return function() {
-    if (delay) {
-      repeat = true;
-    } else {
-      fn.apply(null, arguments);
-      delay = true;
-      setTimeout(function() {
-        if (repeat) fn.apply(null, arguments);
-        delay = false;
-        repeat = false;
-      }, t);
-    }
-  }
-};
-
-function findIndex(array, fn) {
-  for (var i=0; i<array.length; ++i) {
-    if (fn(array[i])) return i;
-  }
-  return -1;
-}
 
 function compareMovies(m1,m2)
 {
@@ -191,7 +166,7 @@ function positionMovies() {
     {
       computedActiveMovieIndex += 3;
     }
-    swapMovies(activeMovieIndex, computedActiveMovieIndex);
+    swap(shownMovies, activeMovieIndex, computedActiveMovieIndex);
   }
   activeMovieIndex = computedActiveMovieIndex;
 
@@ -206,7 +181,7 @@ function positionMovies() {
           i++; 
         } else if (i == activeMovieIndex) {
           i = activeMovieIndex - shift;
-          swapMovies(activeMovieIndex, activeMovieIndex - shift);
+          swap(shownMovies, activeMovieIndex, activeMovieIndex - shift);
         }
       }
       if (i > activeMovieIndex - shift) i += 2;
@@ -220,15 +195,6 @@ function positionMovies() {
   });
 }
 
-function swapMovies(i,j){
-  if (j < shownMovies.length && i < shownMovies.length)
-  {
-    var buff = shownMovies[i]
-    shownMovies[i] = shownMovies[j]
-    shownMovies[j] = buff;
-  }
-}
-
 function refreshMovies()
 {
   loadMovies();
@@ -239,14 +205,14 @@ function refreshMovies()
 // --------------------------------------------------------------------------
 // Template Setup
 
-var loadMore = delay(function() {
+var loadMore = throttle(function() {
   // See http://www.meteorpedia.com/read/Infinite_Scrolling
   var scroll = Session.get('scroll');
   Session.set('scroll', scroll + 1);
   console.log("SCROLL IS NOW ", scroll + 1);
 }, 300);
 
-var resize = delay(function() {
+var resize = throttle(function() {
   gridWidth = $list ? $($list).width() : 900;
   refreshMovies();
 }, 300);

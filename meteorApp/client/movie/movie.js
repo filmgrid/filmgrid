@@ -100,14 +100,14 @@ function updateFromProfile(movie, status)
     movie.statusType = "suggested";
     movie.statusScore = "";
     $set['profile.movies.' + movie.id]  = movie;
-    bounceNav("suggested");   
+    flash($('#nav-link-suggested'), 'bounce');   
   }
   else
   {
     movie.statusType = status.type
     movie.statusScore = status.score ? status.score : '';
     $set['profile.movies.' + movie.id] = movie;
-    if (!(status.type === statusType && status.type == 'liked')) bounceNav(status.type); // bounce the nav except if
+    if (!(status.type === statusType && status.type == 'liked')) flash($('#nav-link-' + status.type), 'bounce'); // bounce the nav except if
   }
   // Re position : the clicked stuff should disappear
   Session.set('activeMovie'+movie.id, false);
@@ -131,11 +131,4 @@ function updateFromProfile(movie, status)
   {
     Session.set('activeMovie', {});
   }
-}
-
-function bounceNav(type)
-{
-  var el= $('#nav-link-'+type);
-  el.addClass("bouncy-nav");
-  setTimeout(function() {el.removeClass("bouncy-nav")}, 500);
 }

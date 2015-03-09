@@ -367,3 +367,27 @@
 	opacity: 1;
 	background-color: #333;
 }
+
+/* ---------------------- */
+
+@-webkit-keyframes bounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.11); }
+    65% { transform: scale(0.96); }
+    85% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.11); }
+    65% { transform: scale(0.96); }
+    85% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+.bounce {
+    -webkit-animation: bounce .5s;
+    animation: bounce .5s;
+}
+
