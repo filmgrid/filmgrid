@@ -1,70 +1,68 @@
 <template name="sidebar">
-	{{ nav }}
-	<div id="sidebar">
+    <div id="sidebar">
 
-		<a href="/"><div id="logo"></div></a>
+        <a href="/" id="logo"></a>
 
-		<a href="/" id="nav-link-suggested" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
-			Recommended
-			<div class="nav-icon nav-icon-recommended"></div>
-		</a>
-		<a href="/bookmarked" id="nav-link-bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">
-			Watchlist
-			<div class="nav-icon nav-icon-watchlist"></div>
-		</a>
-		<a href="/liked" id="nav-link-liked" class="nav-link {{#if navSelectedIs 'liked'}} active{{/if}}">
-			Favourites
-			<div class="nav-icon nav-icon-favourites"></div>
-		</a>
-		<a class="nav-link">
-			In Cinemas
-			<div class="nav-icon nav-icon-cinemas"></div>
-		</a>
-		<a class="nav-link">
-			Watch with Friends
-			<div class="nav-icon nav-icon-friends"></div>
-		</a>
+        <nav>
+            <a href="/" id="nav-link-suggested" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
+                <div class="nav-icon nav-icon-recommended"></div>
+                Recommended
+            </a>
+            <a href="/watchlist" id="nav-link-bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">
+                <div class="nav-icon nav-icon-watchlist"></div>
+                Watchlist
+            </a>
+            <a href="/favourites" id="nav-link-liked" class="nav-link {{#if navSelectedIs 'liked'}} active{{/if}}">
+                <div class="nav-icon nav-icon-favourites"></div>
+                Favourites
+            </a>
+            <a href="/now-playing" class="nav-link {{#if navSelectedIs 'playing'}}active{{/if}}">
+                <div class="nav-icon nav-icon-cinemas"></div>
+                In Cinemas
+            </a>
+            <a href="/watch-with-friends" class="nav-link {{#if navSelectedIs 'friends'}}active{{/if}}">
+                <div class="nav-icon nav-icon-friends"></div>
+                Watch with Friends
+            </a>
+        </nav>
 
-		<label for="search" style="margin-top: 30px">Search</label>
-		<input type="text" id="search" placeholder="Title, Actor, Keywords"/>
+        <label for="search">Search</label>
+        <input type="text" id="search" placeholder="Title, Actor, Keywords"/>
 
-		<label for="filter-genre">Genre</label>
-		<select id="filter-genre">
-			<option>All</option>
-			<option>Action</option>
-			<option>Adventure</option>
-			<option>Animation</option>
-			<option>Biography</option>
-			<option>Comedy</option>
-			<option>Crime</option>
-			<option>Documentary</option>
-			<option>Drama</option>
-			<option>Family</option>
-			<option>Fantasy</option>
-			<option>Horror</option>
-			<option>Music</option>
-			<option>Mystery</option>
-			<option>Romance</option>
-			<option>Sci-Fi</option>
-			<option>Sport</option>
-			<option>Thriller</option>
-			<option>War</option>
-		</select>
-		
-		<label for="sort-type">Sort by</label>
-		<select id="sort-type">
-			<option>year</option>
-			{{#if navSelectedIs 'liked'}}
-				<option>stars</option>
-			{{/if}}
-		</select>
+        <label for="genre">Genre</label>
+        <select id="genre">
+            <option>All</option>
+            <option>Action</option>
+            <option>Adventure</option>
+            <option>Animation</option>
+            <option>Biography</option>
+            <option>Comedy</option>
+            <option>Crime</option>
+            <option>Documentary</option>
+            <option>Drama</option>
+            <option>Family</option>
+            <option>Fantasy</option>
+            <option>Horror</option>
+            <option>Music</option>
+            <option>Mystery</option>
+            <option>Romance</option>
+            <option>Sci-Fi</option>
+            <option>Sport</option>
+            <option>Thriller</option>
+            <option>War</option>
+        </select>
+        
+        <label for="sort">Sort by</label>
+        <select id="sort">
+            <option id="special-sort" value=""></option>
+            <option value="popularity">Popularity</option>
+            <option value="year">Year</option>
+            <option value="az">A-Z</option>
+        </select>
 
-		<div id="login">
-			{{ > loginButtons }}
-		</div>
+        <div id="login">
+            {{ > loginButtons }}
+        </div>
 
-	</div>
-
+    </div>
 </template>
-
-

@@ -29,27 +29,9 @@ Template.movie.events = {
 
   'click .movie-poster-shadow': function(e) {
     var activeMovie = Session.get('activeMovie');
-    
-    if (activeMovie.id)
-      Session.set('previousActiveId', activeMovie.id);
-
-    if (this.id === activeMovie.id) 
-    {
-      Session.set('previousActiveId', null);
-      Session.set('activeMovie', {});
-      Session.set('activeMovie'+this.id, false);
-    }
-    else
-    {
-      if (activeMovie)
-      {
-        Session.set('activeMovie'+activeMovie.id, false);
-      }
-      Session.set('activeMovie', this);
-      Session.set('activeMovie'+this.id, true);
-    }
+    Session.set('activeMovie', this.id === activeMovie.id ? {} : this);
     Session.set('flipped', false);
-    Session.set('rePosition', this.id); // we ask for rePosition but false because we don't want the order to change
+    App.trigger('reposition');
   },
 
   'click .trailer': function(e) {
@@ -63,11 +45,11 @@ Template.movie.events = {
 
 Template.movie.helpers({
   openClass: function() {
-    return Session.get('activeMovie'+this.id) ? 'open' : '';
+    return Session.get('activeMovie').id === this.id ? 'open' : '';
   },
 
   flippedClass: function() {
-    return Session.get('activeMovie'+this.id) && Session.get('flipped') ? 'flipped' : '';
+    return Session.get('activeMovie').id === this.id && Session.get('flipped') ? 'flipped' : '';
   },
 
   hasTrailer: function() {
@@ -75,12 +57,10 @@ Template.movie.helpers({
   },
 
   showTrailer: function() {
-    return Session.get('activeMovie'+this.id) && Session.get('flipped');
+    return Session.get('activeMovie').id === this.id && Session.get('flipped');
   },
 
   status: function() {
-    var a = Session.get('updateMovie'+this.id);
-    if (a) Session.set('updateMovie'+this.id, false);
     return this.statusType + this.statusScore;
   }
 });
@@ -109,10 +89,10 @@ function updateFromProfile(movie, status)
     $set['profile.movies.' + movie.id] = movie;
     if (!(status.type === statusType && status.type == 'liked')) flash($('#nav-link-' + status.type), 'bounce'); // bounce the nav except if
   }
+
   // Re position : the clicked stuff should disappear
-  Session.set('activeMovie'+movie.id, false);
-  Session.set('updateMovie'+movie.id, true);
-  Session.set('reCompute', true);
+  if (Session.get('activeMovie').id === movie.id) Session.set('activeMovie', {});
+  App.trigger('recompute');
 
   Meteor.users.update(
      {_id : Meteor.userId()},
@@ -125,10 +105,4 @@ function updateFromProfile(movie, status)
     Meteor.call('recomputePreferences');
   }
   interactions++;
-  
-  var activeMovie = Session.get('activeMovie')
-  if (activeMovie.id === movie.id)
-  {
-    Session.set('activeMovie', {});
-  }
 }

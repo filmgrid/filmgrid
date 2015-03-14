@@ -12,14 +12,28 @@
 	<link rel="stylesheet" href="http://mathigon.org/styles/fonts.css">
 </head>
 
-<template name="homepage">
+<template name="login">
+	<h1>Login Page</h1>
+	{{ > loginButtons }}
+</template>
+
+<template name="movies">
 	{{ > sidebar }}
-	<div id="body">
+	<div id="page">
 	 	{{ > moviegrid }}
 	</div>
 </template>
 
-<template name="login">
-	<h1>You are on the login page</h1>
-	{{ > loginButtons }}
+<template name="now-playing">
+	{{ > sidebar }}
+	<div id="page">
+		<h1>TODO Now Playing in Cinemas Near You</h1>
+	</div>
+</template>
+
+<template name="watch-with-friends">
+	{{ > sidebar }}
+	<div id="page">
+		<h1>TODO Watch with friends</h1>
+	</div>
 </template>

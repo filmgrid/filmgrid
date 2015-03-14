@@ -7,17 +7,25 @@ a:hover { text-decoration: none; }
 a:focus, a:active, a:hover { outline: 0; }
 
 html, body {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
     font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
-	font-size: 16px;
-	line-height: 1.4;
+    font-size: 16px;
+    line-height: 1.4;
     cursor: default;
-	background: #12121B;
-	color: #FFF;
+    background: #12121B;
+    color: #FFF;
 }
 
-#body {
-	margin-left: 260px;
-	padding: 0;
+#sidebar {
+    position: fixed;
+    width: 200px;
+    padding: 30px;
+    top: 0;
+    bottom: 0;
+}
+
+#page {
+    margin-left: 260px;
+    padding: 0;
 }

@@ -1,53 +1,71 @@
+// =================================================================================================
+// FILMGRID - SIDEBAR
+// =================================================================================================
+
+
+var $search;
+var $genre;
+var $sort;
+var $specialSort;
+
+var specialSortOptions = {
+  stars: 'Stars',
+  score: 'Recommended',
+  added: 'Date added'
+};
+
+function handleGenre() {
+  var genre = $genre.val().replace('All', '') || null;
+
+  var query = Session.get('filter') || {};
+  query.filter = { genre: genre };
+  Session.set('filter', query);
+
+  App.trigger('reload');
+}
+
+function handleSort() {
+  var sort = $sort.val() || null;
+  Session.set('sort', sort);
+  App.trigger('reload');
+}
+
+function handleSearch() {
+  var search = $search.val() || null;
+  Session.set('search', search);
+  App.trigger('reload');
+}
+
+// =================================================================================================
+
 Template.sidebar.events = {
-  	'change #filter-genre': handleFilter,
-  	'change #sort-type': handleSort,
-    'keyup #search': handleSearch,
-    'change #search': handleSearch
+  'change #genre': handleGenre,
+  'change #sort': handleSort,
+  'keyup #search': handleSearch,
+  'change #search': handleSearch
 };
 
 Template.sidebar.helpers({
-    navSelectedIs : function (nav) {
-        return this.navSelected === nav;
-    }
+  navSelectedIs: function(nav) {
+    return nav.split('|').indexOf(this.nav) >= 0;
+  },
 });
 
-function handleFilter() 
-{
-    var genre = $('#filter-genre').val().replace('All', '') || undefined;
-    var query = Session.get('query') || {};
-    query.filter = { genre: genre };
-    Session.set('query', query);
-}
+Template.sidebar.rendered = function() {
+  $search = $('#search');
+  $genre = $('#genre');
+  $sort = $('#sort');
+  $specialSort = $('#special-sort');
 
-function handleSort() 
-{
-    var sort = $('#sort-type').val() || undefined;
- 	var query = Session.get('query') || {};
-    query.sortBy = sort;
-    Session.set('query', query);
-}
+  $specialSort.attr('value', Session.get('sort'));
+  $specialSort.text(specialSortOptions[Session.get('sort')]);
+};
 
-function handleSearch(e) 
-{
-    var val = $('#search').val() || undefined;
-    handleSearchLocal(val);
-    if (Session.get('type') === 'suggested')
-    {
-        if (val && val.length > 2 || e.keyCode == 13)
-            handleSearchGlobal(val);   
-        else
-            Session.set('searchResults', undefined);
-    }
-}
-
-function handleSearchGlobal(val)
-{
-    Meteor.call('search', val, function(error, result) {
-        Session.set('searchResults', result);
-    });
-}
-
-function handleSearchLocal(val)
-{
-    Session.set('searchString', val);
-}
+App.on('sortChange', function(sort) {
+  // TODO Simplify + Cleanup Special Sort Item
+  if ($specialSort) {
+    $specialSort.attr('value', sort);
+    $specialSort.text(specialSortOptions[sort]);
+  }
+  Session.set('sort', sort);
+});

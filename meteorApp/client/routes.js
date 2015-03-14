@@ -1,53 +1,55 @@
-function resetVariables() {	
-	$('#search').val('');
-	Session.set('searchString', "");
-	Session.set('searchResults', undefined);
-	Session.set('scroll', 1);
-	Session.set('previousActiveId',null);
-}
+// =============================================================================
+// FILMGRID - ROUTER
+// =============================================================================
 
-function configureRoute(route, that) {
-  if (Session.get('type') != route)
-  {
-  	resetVariables();
-  	Session.set('type',route);  
-  	console.log("ROUTE CHANGED")
-  }
-  that.render('homepage', {
-	data : {
-	 	"navSelected" : route },
-	waitOn : Meteor.user()
-	});
-}
-
-Router.route('/', function () {
-  configureRoute('suggested', this);
-});
-
-Router.route('/bookmarked', function () {
-  configureRoute('bookmarked', this);
-});
-
-Router.route('/liked', function () {
-  configureRoute('liked', this);
-});
-Router.route('/dismissed', function () {
-  configureRoute('dismissed', this);
-});
 
 Router.onBeforeAction(function() {
-	if (!Meteor.userId()) {
-		this.render('login');
-		return;
-	};		
-	this.next();
+  if (Meteor.userId()) {
+    this.next();
+  } else {
+    this.render('login');
+  };
+});
+
+function configureRoute(that, path, sort) {
+  Session.set('type', path);
+  that.render('movies', { data: { nav: path }, waitOn: Meteor.user() });
+  App.trigger('sortChange', sort);
+  App.trigger('reload')
+}
+
+Router.route('/', function() {
+  configureRoute(this, 'suggested', 'score');
+});
+
+Router.route('/watchlist', function() {
+  configureRoute(this, 'bookmarked', 'added');
+});
+
+Router.route('/favourites', function() {
+  configureRoute(this, 'liked', 'stars');
+});
+
+Router.route('/disliked', function() {
+  configureRoute(this, 'disliked', 'added');
+});
+
+Router.route('/now-playing', function() {
+  this.render('now-playing', { data: { nav: 'playing' } });
+  App.trigger('clean')
+});
+
+Router.route('/watch-with-friends', function() {
+  this.render('watch-with-friends', { data: { nav: 'friends' } });
+  App.trigger('clean')
 });
 
 Meteor.startup(function() {
-	Session.setDefault('previousActiveId',null);
-	Session.setDefault('activeMovie', {});
-  	Session.setDefault('query', { filter: {}, sortBy : "year" }); 
-  	Session.setDefault('rePosition', null); 
-  	Session.setDefault('scroll', 1);
-  	resetVariables();
+  Session.set('activeMovie', {});
+  Session.set('search', '');
+  Session.set('filter', {});
+
+  Meteor.subscribe('movies').ready(function() {
+    App.trigger('reload')
+  });
 });

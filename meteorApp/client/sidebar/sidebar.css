@@ -1,52 +1,60 @@
-#sidebar {
-	position: fixed;
-	width: 200px;
-	padding: 30px;
-	top: 0;
-	bottom: 0;
-	z-index: 10;
+#logo {
+    display: block;
+    width: 200px;
+    height: 80px;
+    margin-bottom: 40px;
+    background: url('/assets/logo.png');
+    background-size: 200px 80px;
 }
 
-#logo {
-	width: 200px;
-	height: 80px;
-	margin: 0 auto 40px;
-	background: url('/assets/logo.png');
-	background-size: 200px 80px;
+nav {
+    margin-bottom: 30px;
 }
 
 .nav-link {
-	display: block;
-	padding: 7px 12px 7px 62px;
-	height: 22px;
-	margin: 0 0 1px -30px;
-	background: rgba(104, 7, 46, 0.4);
-	color: rgba(255,255,255,0.5);
-	text-decoration: none;
-	position: relative;
-	margin-right: 0px;
-	transition: background .2s, color .2s;
-}
-
-.bouncy-nav {
-	color: rgba(255,255,255,1);
-	transition: color 0s !important;
-}
-
-.bouncy-nav .nav-icon {
-	opacity: 0.8;
+    display: block;
+    padding: 7px 12px 7px 62px;
+    height: 22px;
+    margin: 0 0 1px -30px;
+    background: rgba(104, 7, 46, 0.4);
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    position: relative;
+    margin-right: 0px;
+    transition: background .2s, color .2s;
 }
 
 .nav-icon {
-	background: url('/assets/sidebar.png');
-	background-size: 30px 180px;
-	width: 30px;
-	height: 36px;
-	position: absolute;
-	left: 28px;
-	top: 0px;
-	opacity: 0.3;
-	transition: opacity .2s;
+    background: url('/assets/icons.png');
+    background-size: 40px 440px;
+    width: 30px;
+    height: 36px;
+    position: absolute;
+    left: 28px;
+    top: 0px;
+    opacity: 0.3;
+    transition: opacity .2s;
+}
+
+@-webkit-keyframes bounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.11); }
+    65% { transform: scale(0.96); }
+    85% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.11); }
+    65% { transform: scale(0.96); }
+    85% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+.nav-icon.bounce {
+    -webkit-animation: bounce .5s;
+    animation: bounce .5s;
 }
 
 .nav-link:hover, .nav-link.active { background: rgba(104, 7, 46, 0.8); color: #FFF; }
@@ -54,39 +62,38 @@
 
 .nav-link.active { cursor: default; }
 
-.nav-icon-watchlist { background-position: 0 -36px; }
-.nav-icon-favourites { background-position: 0 -72px; }
-.nav-icon-cinemas { background-position: 0 -108px; }
-.nav-icon-friends { background-position: 0 -144px; }
-
-
+.nav-icon.recommended { background-position: -5px -322px; }
+.nav-icon.watchlist { background-position: -5px -2px; }
+.nav-icon.favourites { background-position: -5px -82px; }
+.nav-icon.cinema { background-position: -5px -362px; }
+.nav-icon.friends { background-position: -5px -402px; }
 
 #sidebar label {
-	display: block;
-  	font-size: 12px;
-  	color: rgba(255,255,255,0.4);
-  	margin: 20px 0 0 0;
-  	display: block;
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin: 20px 0 0 0;
+    display: block;
 }
 
 #sidebar input, #sidebar select {
-	background: #12121B;
-	border: none;
-	display: block;
-	width: 100%;
-	padding: 0 0 2px 0;
-	border-bottom: 1px solid rgba(255,255,255,0.2);
-	color: #FFF;
-	outline: none;
-	font-size: 16px;
-	font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
+    background: #12121B;
+    border: none;
+    display: block;
+    width: 100%;
+    padding: 0 0 2px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    color: #FFF;
+    outline: none;
+    font-size: 16px;
+    font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
 }
 
 #login {
-	position: absolute;
-	bottom: 30px;
-	background: rgba(255,255,255,0.1);
-	left: 0;
-	padding: 10px 10px 10px 30px;
-	width: 190px;
+    position: absolute;
+    bottom: 30px;
+    background: rgba(255,255,255,0.1);
+    left: 0;
+    padding: 10px 10px 10px 30px;
+    width: 190px;
 }

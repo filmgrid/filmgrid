@@ -1,15 +1,4 @@
 <template name="moviegrid">
-  	<div class="movie-list"></div>
-  	{{reload}}
-    {{reCompute}}
-    {{rePosition}}
-  	{{#if hasMovies}}
-    	{{#if suggested}}
-    		<div class="suggest-more">Suggest me more movies</div>
-    	{{else}}    	    
-    		<div class="load-more">Load more</div>
-    	{{/if}}
-    {{else}}
-    	<p>No movie found</p>
-    {{/if}}
+  <div class="movie-list {{ listClass }}"></div>
+  <!-- TODO Load more buttons, none found warning, disliked movies link -->
 </template>
