@@ -53,7 +53,7 @@ Meteor.publish('movies', function() {
 
 // Public Methods ----------------------------------------------------------------------------------
 
-var driver = new MongoInternals.RemoteCollectionDriver("mongodb://127.0.0.1:27017/appdb");
+var driver = new MongoInternals.RemoteCollectionDriver(process.env.MONGO_URL);
 
 Meteor.methods({
     search: function(str) {
@@ -64,6 +64,7 @@ Meteor.methods({
             project: findFields,
             limit: 25
         });
+
         return (result && result.documents[0].ok === 1) ? result.documents[0].results : [];
     }
 });
