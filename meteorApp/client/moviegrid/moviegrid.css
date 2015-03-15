@@ -19,6 +19,7 @@
     text-align: center;
     background: rgba(255,255,255,0.15);
     color: rgba(255,255,255,0.5);
+    -webkit-transition: background .3s, color .3s;
     transition: background .3s, color .3s;
 }
 
@@ -30,6 +31,7 @@
     background-size: 40px 440px;
     margin: 0 4px -8px;
     opacity: 0.5;
+    -webkit-transition: opacity .3s;
     transition: opacity .3s;
 }
 
@@ -47,12 +49,21 @@
     margin: -110px 0 0 -50px;
     
     will-change: transform, opacity;
-    transition: transform .6s, opacity .4s;
-    transform: scale(0);
     opacity: 0;
+
+    -webkit-transition: -webkit-transform .6s, opacity .4s;
+    transition: transform .6s, opacity .4s;
+
+    -webkit-transform: scale(0);
+    transform: scale(0);
 }
 
 .no-movies.show {
+    -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 1;
+}
+
+@media screen and (max-width: 750px) {
+    .no-movies { margin-left: -180px; }
 }

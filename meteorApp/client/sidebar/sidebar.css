@@ -27,6 +27,7 @@ nav {
     color: rgba(255,255,255,0.5);
     position: relative;
     margin-right: 0px;
+    -webkit-transition: background .2s, color .2s;
     transition: background .2s, color .2s;
 }
 
@@ -39,6 +40,7 @@ nav {
     left: 28px;
     top: 0px;
     opacity: 0.3;
+    -webkit-transition: opacity .2s;
     transition: opacity .2s;
 }
 
@@ -78,11 +80,13 @@ nav {
 .nav-icon-friends { background-position: -5px -402px; }
 
 .filters {
+    -webkit-transition: transform .3s opacity .3s;
     transition: transform .3s opacity .3s;
 }
 
 .filters.hidden {
     opacity: 0;
+    -webkit-transform: translateX(-260px);
     transform: translateX(-260px);
 }
 
@@ -121,6 +125,7 @@ nav {
     color: rgba(255,255,255,0.5);
     padding: 6px 12px 6px 30px;
     margin-bottom: 1px;
+    -webkit-transition: background .2s, color .2s;
     transition: background .2s, color .2s;
 }
 
@@ -147,16 +152,17 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active {
     height: 44px;
     float: left;
     margin-right: 10px;
-    background: #C00;
+    background: url('/assets/mobile.png');
+    background-size: 170px 44px;
+    opacity: 0.8;
 }
 
 #mobile-logo {
     float: left;
-    margin: 4px 0;
-    width: 102px;
-    height: 36px;
-    background: url('/assets/logo.png');
-    background-size: 102px 36px;
+    width: 126px;
+    height: 44px;
+    background: url('/assets/mobile.png') -44px 0;
+    background-size: 170px 44px;
 }
 
 @media screen and (max-width: 750px) {

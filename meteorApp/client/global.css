@@ -34,10 +34,14 @@ html, body {
     #sidebar {
         z-index: 500;
         background: #12121B;
-        transition: transform .4s;
-        transform: translateX(-260px);
         top: 44px;
         background: #000;
+
+        -webkit-transition: -webkit-transform .4s;
+        transition: transform .4s;
+
+        -webkit-transform: translateX(-260px);
+        transform: translateX(-260px);
     }
     #sidebar.show { transform: none; }
     #page { margin: 44px 0 0 0; }
