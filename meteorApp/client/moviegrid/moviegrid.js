@@ -1,290 +1,279 @@
-// This wrapper can be used to ensure that a function is only triggered once ever t ms.
-function delay(fn, t) {
-  var delay = false;
-  var repeat = false;
-  return function() {
-    if (delay) {
-      repeat = true;
-    } else {
-      fn.apply(null, arguments);
-      delay = true;
-      setTimeout(function() {
-        if (repeat) fn.apply(null, arguments);
-        delay = false;
-        repeat = false;
-      }, t);
-    }
-  }
-};
+// =================================================================================================
+// FILMGRID - MOVIEGRID
+// =================================================================================================
 
-function findIndex(array, fn) {
-  for (var i=0; i<array.length; ++i) {
-    if (fn(array[i])) return i;
-  }
-  return -1;
-}
 
-function compareMovies(m1,m2)
-{
-  return (m1.statusType+m1.statusScore) == (m2.statusType+m2.statusScore);
-}
-
-// --------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // Setup and Config
 
 var $list;
+var $noMovies;
 
-var gridWidth = 900;
-var movieWidth = 160;
-var movieHeight = 220;
-var gapWidth = 2;
-var lastAction = ""; //dirty hack to prevent double reload
-
-var filter = {
+var filters = {
   genre: function(m, value) { return m.genre.indexOf(value) !== -1; },
   title: function(m, value) {
     // TODO better searching
+    // TODO generate search string in db (+ keywords)
     var words = value.toLowerCase().trim().replace(/\s+/g, ' ').split(' ');
     var searchStr = m.title .toLowerCase() + ' ' + m.actors.toLowerCase();
-    return _.all(words, function(w) { return searchStr.indexOf(w) !== -1; });      
+    return _.all(words, function(w) { return searchStr.indexOf(w) !== -1; });
   }
 };
 
-var sort = {
+var sorts = {
+  az: function(m) { return m.title; },
   year:  function(m) { return -m.year; },
-  stars: function(m) { return -(m.statusScore || m.year); }
+  stars: function(m) { return -(m.statusScore || 0); },
+  popularity: function(m) { return -m.score_imdb || 0; },
+  score: function(m) { /* TODO sort by recommendation score */ return -m.revenue || 0; },
+  added: function(m) { /* TODO sort by date added to list */ return -m.year; }
 };
 
 
-// --------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // Movie List
 
+var allMovies = [];
 var movieCache  = {};
-var allMovies   = [];
 var shownMovies = [];
-var firstInit   = true;
 
-function loadMovies() {
-  if (lastAction == "loadMovies") return;
-  lastAction = "loadMovies";
+var selectedMovies = [];
+var queryCache = '';
+var scroll = 0;
 
-  console.log("RELOAD MOVIES");
+// Handles global search
+function searchMovies(str) {
+  console.log('Search Movies');
+  Meteor.call('search', str, function(error, result) {
+    selectedMovies = _.sortBy(result, function(x) { return -x.score * x.revenue; });
+    selectedMovies = _.map(selectedMovies, function(x) { return x.obj; });
+    
+    _.each(selectedMovies, function(m) { m.id = m._id });  // TODO fix this
 
-  // Reactive variable;
-  u = Meteor.user();
+    // TODO sorting + filtering options ?
 
-  if (!u || !$list) return;
+    initialiseMovies();
+  });
+}
 
-  var movies = u.profile.movies;
-  _.each(movies, function(m) {
+// Finds and filter user movies
+function lookupMovies(type, search, sort, filter) {
+  var user = Meteor.user();
+  if (!user) return;
+  var movies = user.profile.movies;
+  console.log('Load Movies');
 
-    if (!movieCache[m.id]) {
-      var movie = { data: m, el: null, show: false };
+  // Select movies on current page
+  movies = _.filter(movies, function(m) { return m.statusType === type; });
+
+  // Filter movies
+  _.each(filter, function(value, type) {
+    if (value) movies = _.filter(movies, function(m) { return filters[type](m, value); });
+  });
+
+  // Search movies
+  if (search.length > 1) {
+    movies = movies.filter(function(m) { return filters.title(m, search); });
+  }
+
+  // Sort movies
+  if (sort) movies = _.sortBy(movies, sorts[sort]);
+
+  selectedMovies = movies;
+  initialiseMovies();
+}
+
+// Finds an array of selected movies (search, filters, etc.)
+function selectMovies() {
+  var type = Session.get('type');
+  var search = Session.get('search');
+  var sort = Session.get('sort');
+  var filter = Session.get('filter') || {};
+
+
+  // Update scroll position when the query changes -----------------------------
+
+  var query = [type, search, sort, filter.genre].join('|');
+  if (query !== queryCache) {
+    scroll = 0;
+    scrollTo(0, 600);
+    queryCache = query;
+  }
+
+
+  // TODO Loading icons, what happens if you search <2 letters
+
+
+  // Load Data -----------------------------------------------------------------
+
+  if (search.length > 1 && type === 'suggested') {
+    // Global Search
+    searchMovies(search);
+  } else {
+    lookupMovies(type, search, sort, filter);
+  }
+}
+
+// Creates the movie objects and dom elements for all requred movies
+function initialiseMovies() {
+  if (!$list) return;
+  console.log('Initialise Movies');
+
+  // Reset all existing movies
+  _.each(allMovies, function(m) {
+    m.wasShown = m.show;
+    m.show = false;
+  });
+
+  // Infinite scrolling
+  var movies = selectedMovies.slice(0, 40 + scroll * 20);
+
+  // Create or update all selected movies
+  shownMovies = _.map(movies, function(m) {
+    if (movieCache[m.id]) {
+      movieCache[m.id].data = m;
+      movieCache[m.id].show = true;
+    } else  {
+      var dom = UI.renderWithData(Template.movie, m, $list[0]);
+      var movie = { data: m, el: $(dom.lastNode()), show: true, wasShown: false };
       allMovies.push(movie);
       movieCache[m.id] = movie;
-      console.log("INITIALISE SESSION VARIABLES");
-      Session.set('activeMovie'+m.id,false); //initialise the activeMovie to false;
     }
-    else if (!compareMovies(movieCache[m.id].data,m)) {
-      movieCache[m.id].data = m;
-      Session.set('activeMovie'+m.id,false); //initialise the activeMovie to false;
-      console.log("CHANGE DATA FROM USER");
-    }
+    return movieCache[m.id];
   });
-  if (firstInit)
-  {
-    firstInit = false
-    recomputeMovies();
-    positionMovies();
-  }
+
+  positionMovies(true);
 }
 
-function recomputeMovies() {
-  lastAction = "recomputeMovies";
 
-  if (!allMovies.length) return;
-  console.log("RECOMPUTE MOVIES");
+// -------------------------------------------------------------------------------------------------
+// Movie Positioning
 
-  // Reactive variables
-  var query = Session.get('query') || {};
-  var searchString = Session.get('searchString');
-  var nav = Session.get('type');
-  var scroll = Session.get('scroll');
-  var recompute = Session.get('reCompute');
+var movieWidth = 160;
+var movieHeight = 220;
+var gapWidth = 2;
+var gridColumns;
 
-  _.each(allMovies, function(m) {
-      m.wasShown = m.show;
-      m.show = false;
-    });
+var previousActiveId = null;
+var previousGridHeight = null;
 
-    // Select movies on current page
-    var movies = _.filter(allMovies, function(m) { return m.data.statusType === nav; });
-    // Filter movies
-    if (query.filter) {
-      _.each(query.filter, function(value, type) {
-        if (value) movies = _.filter(movies, function(m) { return filter[type](m.data, value); });
-      });
-    }
+function positionMovies(hideOrShow) {
+  if (!$list || !gridColumns) return;
+  console.log('Position Movies');
 
-    // Search movies
-    if (searchString) {
-      movies = _.filter(movies, function(m) { return filter.title(m.data, searchString); });
-    }
 
-    // Sort movies
-    if (query.sortBy) {
-      movies = _.sortBy(movies, function(m) { return sort[query.sortBy](m.data); });
-    }
+  // Compare with previously active movie --------------------------------------
 
-    // Infinite Scrolling
-    movies = movies.slice(0, 40 + scroll*20);
+  var activeMovie = Session.get('activeMovie');
 
-    _.each(movies, function(m) { m.show = true; });
+  var previousActiveIndex = (activeMovie.id && activeMovie.id !== previousActiveId) ?
+      findIndex(shownMovies, function(x) { return x.data.id === previousActiveId }) : -1;
 
-    _.each(allMovies, function(m) { 
-      if (m.show && !m.wasShown) {
-        if (!m.el) {
-          var dom = UI.renderWithData(Template.movie, m.data, $list);
-          m.el = $(dom.lastNode());
-        }
-        m.el.addClass('on');
-      } else if (m.el && !m.show && m.wasShown) {
-        m.el.removeClass('on');
-        m.el.css('transform', m.el.css('transform'));
-      }
-    });
+  var activeIndex = activeMovie.id ?
+      findIndex(shownMovies, function(x) { return x.data.id === activeMovie.id }) : -1;
 
-    shownMovies = movies;
-}
+  previousActiveId = activeMovie.id || null;
 
-function positionMovies() {
-  if (!shownMovies.length) return;
 
-  console.log("REPOSITION MOVIES");
+  // Resize Grid ---------------------------------------------------------------
 
-  // Reactive variables
-  var searchString     = Session.get('searchString');
-  var activeMovie      = Session.get('activeMovie');
-  var previousActiveId = Session.get('previousActiveId');
-  var scroll           = Session.get('scroll');
-  var rePosition       = Session.get('rePosition');
-  var query            = Session.get('query');
-  
+  var rows = Math.ceil(shownMovies.length/gridColumns);
+  var gridHeight = rows * (movieHeight + gapWidth) - gapWidth + (activeIndex >= 0 ? 1 : 0);
+  $noMovies[shownMovies.length ? 'removeClass' : 'addClass']('show');
 
-  var columns = Math.floor(gridWidth / (movieWidth + gapWidth));
-  
-  var previousActiveIndex = activeMovie.id ? findIndex(shownMovies, function(x) {
-    return x.data.id === previousActiveId
-  }) : -1;
-  var activeMovieIndex = activeMovie.id ? findIndex(shownMovies, function(x) {
-    return x.data.id === activeMovie.id
-  }) : -1;
+  setTimeout(function() {
+    $list.css('height', gridHeight + 'px');
+  }, gridHeight <= previousGridHeight ? 600 : 0);
+  previousGridHeight = gridHeight;
 
-  var rows = Math.ceil((shownMovies.length + (activeMovieIndex >= 0 ? 5 : 0))/columns);
-  if ($list) $($list).css('height', (rows * (movieHeight + gapWidth) - gapWidth) + 'px');
 
-  computedActiveMovieIndex = activeMovieIndex;
-  if (previousActiveIndex >= 0 && activeMovieIndex > previousActiveIndex)
-  {
-    computedActiveMovieIndex += 2;
-    if (activeMovieIndex > previousActiveIndex + columns - 3 )
-    {
-      computedActiveMovieIndex += 3;
-    }
-    swapMovies(activeMovieIndex, computedActiveMovieIndex);
+  // Calculate Movie Positions -------------------------------------------------
+
+  var computedActiveIndex = activeIndex;
+  if (previousActiveIndex >= 0 && activeIndex > previousActiveIndex) {
+    computedActiveIndex += 2;
+    if (activeIndex > previousActiveIndex + gridColumns - 3) computedActiveIndex += 3;
+    swap(shownMovies, activeIndex, computedActiveIndex);
   }
-  activeMovieIndex = computedActiveMovieIndex;
+  activeIndex = computedActiveIndex;
 
-  var activeMovieColumn = activeMovieIndex % columns;
-  var shift = Math.max(0, activeMovieColumn - (columns - 3));
+  var activeColumn = activeIndex % gridColumns;
+  var shift = Math.max(0, activeColumn - (gridColumns - 3));
 
   _.each(shownMovies, function(m, i) {
-    if (!m.show) return;
-    if (activeMovieIndex >= 0) {
+
+    if (activeIndex >= 0) {
       if (shift > 0) {
-        if (i == activeMovieIndex - 1 || (shift == 2 &&  i == activeMovieIndex - 2)) {
-          i++; 
-        } else if (i == activeMovieIndex) {
-          i = activeMovieIndex - shift;
-          swapMovies(activeMovieIndex, activeMovieIndex - shift);
+        if (i == activeIndex - 1 || (shift == 2 &&  i == activeIndex - 2)) {
+          i++;
+        } else if (i == activeIndex) {
+          i = activeIndex - shift;
+          swap(shownMovies, activeIndex, activeIndex - shift);
         }
       }
-      if (i > activeMovieIndex - shift) i += 2;
-      if (i > activeMovieIndex - shift + columns - 1) i += 3;
+      if (i > activeIndex - shift) i += 2;
+      if (i > activeIndex - shift + gridColumns - 1) i += 3;
     }
 
-    var x = (i % columns) * (movieWidth + gapWidth);
-    var y = Math.floor(i / columns) * (movieHeight + gapWidth);
+    var x = (i % gridColumns) * (movieWidth + gapWidth);
+    var y = Math.floor(i / gridColumns) * (movieHeight + gapWidth);
 
     m.el.css('transform', 'translate(' + x + 'px, ' + y + 'px)');
   });
+
+
+  // Hide or show movies -------------------------------------------------------
+
+  if (!hideOrShow) return;
+  document.body.offsetTop;
+
+  _.each(allMovies, function(m) {
+    if (m.show && !m.wasShown) {
+      m.el.addClass('on');
+    } else if (!m.show && m.wasShown) {
+      m.el.removeClass('on');
+    }     
+  });
 }
 
-function swapMovies(i,j){
-  if (j < shownMovies.length && i < shownMovies.length)
-  {
-    var buff = shownMovies[i]
-    shownMovies[i] = shownMovies[j]
-    shownMovies[j] = buff;
-  }
-}
 
-function refreshMovies()
-{
-  loadMovies();
-  recomputeMovies();
-  positionMovies();
-}
-
-// --------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // Template Setup
 
-var loadMore = delay(function() {
-  // See http://www.meteorpedia.com/read/Infinite_Scrolling
-  var scroll = Session.get('scroll');
-  Session.set('scroll', scroll + 1);
-  console.log("SCROLL IS NOW ", scroll + 1);
+var initial = true;
+
+var loadMore = throttle(function() {
+  scroll += 1;
+  initialiseMovies();
 }, 300);
 
-var resize = delay(function() {
-  gridWidth = $list ? $($list).width() : 900;
-  refreshMovies();
+var resize = throttle(function() {
+  var oldGridColumns = gridColumns;
+  var gridWidth = $list ? $list.width() : 900;
+  gridColumns = Math.floor(gridWidth / (movieWidth + gapWidth));
+  if ($list && gridColumns !== oldGridColumns) positionMovies(initial);
+  initial = false;
 }, 300);
 
 Template.moviegrid.helpers({
-  reload: loadMovies,
-  reCompute: recomputeMovies,
-  rePosition: positionMovies,
-  hasMovies: function() { return shownMovies.length > 0; },
-  suggested: function() { return Session.get('type') === 'suggested'; }
+  favourites: function() { return this.nav === 'liked'; }
 });
 
-Template.moviegrid.events = {
-  'click .load-more': function() {
-      loadMore(true);
-  },
-  'click .suggest-more': function () {
-      loadMore(true);
-      // TODO addToTheJobQueue
-  }
-}
+App.on('reload', function() { selectMovies(); });
+App.on('reposition', function() { positionMovies(); });
 
 Template.moviegrid.rendered = function() {
   var $body = $('body');
   var $window = $(window);
-  $list = this.find('.movie-list');
+  $list = $(this.find('.movie-list'));
+  $noMovies = $(this.find('.no-movies'));
 
-  // TODO use timeout to delay
+  initialiseMovies();
+
   $window.on('resize', resize);
   resize();
 
   $window.scroll(function() {
     if ($window.scrollTop() + $window.height() > $body.height() - 400) loadMore();
   });
-
-  window.activeMovie = null;
-  $body.click(function() {
-    if (window.activeMovie) window.activeMovie.close();
-  });
 };
-

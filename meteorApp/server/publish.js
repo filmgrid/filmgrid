@@ -1,5 +1,5 @@
 // =================================================================================================
-// WATCHLIST - PUBLISHING
+// FILMGRID - PUBLISHING
 // =================================================================================================
 
 
@@ -47,6 +47,7 @@ Meteor.publish('movies', function() {
         var suggestions = getInitialSuggestions();
         Meteor.users.update({ _id : this.userId }, { $set : { 'profile.movies': suggestions }});
     }
+
 });
 
 
@@ -61,7 +62,7 @@ Meteor.methods({
             text: 'movies',
             search: str || '',
             project: findFields,
-            limit : 25
+            limit: 25
         });
         return (result && result.documents[0].ok === 1) ? result.documents[0].results : [];
     }

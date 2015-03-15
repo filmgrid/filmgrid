@@ -1,15 +1,14 @@
 <template name="moviegrid">
-  	<div class="movie-list"></div>
-  	{{reload}}
-    {{reCompute}}
-    {{rePosition}}
-  	{{#if hasMovies}}
-    	{{#if suggested}}
-    		<div class="suggest-more">Suggest me more movies</div>
-    	{{else}}    	    
-    		<div class="load-more">Load more</div>
-    	{{/if}}
-    {{else}}
-    	<p>No movie found</p>
-    {{/if}}
+  <div class="movie-list"></div>
+
+  <div class="no-movies"></div>
+
+  {{#if favourites}}
+  <a href="/disliked" class="disliked-button">
+    <span class="disliked-icon"></span>
+    Movies you've disliked or hidden
+  </a>
+  {{/if}}
+
+  <!-- TODO Load more buttons, disliked movies link -->
 </template>
