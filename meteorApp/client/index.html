@@ -1,0 +1,25 @@
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Filmgrid</title>
+	<meta name="description" content="Discover movies">
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<link rel="stylesheet" href="http://mathigon.org/styles/fonts.css">
+</head>
+
+<template name="homepage">
+	{{ > sidebar }}
+	<div id="body">
+	 	{{ > moviegrid }}
+	</div>
+</template>
+
+<template name="login">
+	<h1>You are on the login page</h1>
+	{{ > loginButtons }}
+</template>
