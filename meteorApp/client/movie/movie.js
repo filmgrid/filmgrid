@@ -50,21 +50,21 @@ Template.movie.events = {
     },
 
     'click .trailer': function(e) {
-        Session.set('flipped', true);
+      Session.set('flipped', true);
     },
 
     'click .trailer-return': function(e) {
-        Session.set('flipped', false);
+      Session.set('flipped', false);
     }
 };
 
 Template.movie.helpers({
   openClass: function() {
-    return Session.get('activeMovie').id === this.id ? 'open' : '';
+    return Session.get('activeMovie' + this.id) ? 'open' : '';
   },
 
   flippedClass: function() {
-    return Session.get('activeMovie').id === this.id && Session.get('flipped') ? 'flipped' : '';
+    return Session.get('activeMovie' + this.id) && Session.get('flipped') ? 'flipped' : '';
   },
 
   hasTrailer: function() {
@@ -72,7 +72,7 @@ Template.movie.helpers({
   },
 
   showTrailer: function() {
-    return Session.get('activeMovie').id === this.id && Session.get('flipped');
+    return Session.get('activeMovie' + this.id) && Session.get('flipped');
   },
 
   status: function() {
@@ -83,7 +83,7 @@ Template.movie.helpers({
 function updateProfile(movie, status) {
 
   var statusType = movie.statusType;
-  if (!statusType) throw new Error('This is strange Dr Watson, this movie has no status type...')
+  if (!statusType) throw new Error('This is strange Dr Watson, this movie has no status type...');
 
   if (status.type === statusType && status.type != 'liked') {
     // Let's put it back in suggested if it is unclicked from dismissed or bookmarked

@@ -262,13 +262,6 @@ Template.moviegrid.helpers({
 App.on('reload', function() { selectMovies(); });
 App.on('reposition', function() { positionMovies(); });
 
-App.on('clear', function() {
-  selectedMovies = [];
-  allMovies = [];
-  movieCache  = {};
-  shownMovies = [];
-});
-
 Template.moviegrid.rendered = function() {
   var $body = $('body');
   var $window = $(window);
