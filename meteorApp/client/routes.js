@@ -16,7 +16,7 @@ Router.onBeforeAction(function() {
 });
 
 function configureRoute(that, path, sort) {
-  if (Session.get('type') !== path) {3/
+  if (Session.get('type') !== path) {
     Session.set('type', path);
     App.trigger('sortChange', sort);
     App.trigger('reload');
