@@ -58,6 +58,7 @@ function searchMovies(str) {
 
 // Finds and filter user movies
 function lookupMovies(type, search, sort, filter) {
+  console.log('trying to load movies')
   var user = Meteor.user();
   if (!user) return;
   var movies = user.profile.movies;
@@ -85,10 +86,12 @@ function lookupMovies(type, search, sort, filter) {
 
 // Finds an array of selected movies (search, filters, etc.)
 function selectMovies() {
+
   var type = Session.get('type');
   var search = Session.get('search');
   var sort = Session.get('sort');
   var filter = Session.get('filter') || {};
+
 
 
   // Update scroll position when the query changes -----------------------------
