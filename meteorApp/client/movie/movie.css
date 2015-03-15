@@ -99,6 +99,7 @@
 	position: relative;
 	z-index: 10;
 	cursor: pointer;
+	background: #242436;
 
 	-webkit-transition: -webkit-transform .6s;
 	transition: transform .6s;
@@ -114,8 +115,22 @@
 	width: 164px;
 	height: 224px;
 	margin: -2px 0 0 -2px;
-	background: #242436 center;
+	background-position: center;
 	background-size: cover;
+}
+
+.movie-poster-title {
+	position: absolute;
+	top: 50%;
+	left: 5%;
+	width: 90%;
+	font-size: 18px;
+	font-weight: bold;
+	opacity: 0.5;
+	line-height: 1.1;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	text-align: center;
 }
 
 .movie-poster-shadow {
