@@ -14,13 +14,15 @@ Meteor.startup(function () {
 
     // Remove old indexes as you can only have one text index and if you add 
     // more fields to your index then you will need to recreate it.
-    //Movies._dropIndex(search_index_name);
+    // Movies._dropIndex(search_index_name);
 
-    //Movies._ensureIndex({
-    //    title: 'text',
-    //    plot: 'text'
-    //}, {
-    //    name: search_index_name,
-    //    default_language: 'none'
-    //});
+    // Movies._ensureIndex({
+    //     title: 'text',
+    //     actors: 'text'
+    // }, {
+    //     name: search_index_name,
+    //     default_language: 'none'
+    // });
 });
+
+// mongod --setParameter textSearchEnabled=true
