@@ -9,35 +9,6 @@
     background-size: 360px 220px;
 }
 
-.disliked-button {
-    display: block;
-    width: 300px;
-    border-radius: 2px;
-    margin: 20px auto;
-    padding: 12px 12px;
-    height: 22px;
-    text-align: center;
-    background: rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.5);
-    -webkit-transition: background .3s, color .3s;
-    transition: background .3s, color .3s;
-}
-
-.disliked-icon {
-    display: inline-block;
-    height: 24px;
-    width: 24px;
-    background: url('/assets/icons.png') -8px -48px;
-    background-size: 40px 440px;
-    margin: 0 4px -8px;
-    opacity: 0.5;
-    -webkit-transition: opacity .3s;
-    transition: opacity .3s;
-}
-
-.disliked-button:hover { background: rgba(255,255,255,0.3); color: #FFF; }
-.disliked-button:hover .disliked-icon { opacity: 1; }
-
 .no-movies {
     background: url('/assets/empty.png');
     background-size: 360px 220px;

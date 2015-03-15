@@ -156,7 +156,7 @@
 	position: absolute;
 	cursor: pointer;
 	background: url('/assets/icons.png');
-	background-size: 40px 440px;
+	background-size: 40px 480px;
 
 	-webkit-transition: -webkit-transform .2s;
 	transition: transform .2s;
@@ -212,7 +212,7 @@
 
 .movie-like3 {
 	background: url('/assets/icons.png');
-	background-size: 40px 440px;
+	background-size: 40px 480px;
 	background-position: 0 -80px;
 }
 
@@ -220,7 +220,7 @@
 .movie-like2:hover, .status-liked2 .movie-like2,
 .movie-like3:hover, .status-liked3 .movie-like3 {
 	background: url('/assets/icons.png');
-	background-size: 40px 440px;
+	background-size: 40px 480px;
 	background-position: 0 -240px;
 }
 
@@ -370,7 +370,7 @@
 
 	opacity: 0.6;
 	background: url(/assets/icons.png) no-repeat 2px -123px;
-    background-size: 40px 440px;
+    background-size: 40px 480px;
 
 	-webkit-transition: background .2s, opacity .2s;
 	transition: background .2s, opacity .2s;

@@ -19,6 +19,7 @@ nav {
 }
 
 .nav-link {
+    cursor: pointer;
     display: block;
     padding: 7px 12px 7px 62px;
     height: 22px;
@@ -33,7 +34,7 @@ nav {
 
 .nav-icon {
     background: url('/assets/icons.png');
-    background-size: 40px 440px;
+    background-size: 40px 480px;
     width: 30px;
     height: 36px;
     position: absolute;
@@ -78,9 +79,28 @@ nav {
 .nav-icon-favourites { background-position: -5px -82px; }
 .nav-icon-cinema { background-position: -5px -362px; }
 .nav-icon-friends { background-position: -5px -402px; }
+.nav-icon-more { background-position: -5px -442px; }
+.nav-icon-disliked { background-position: -5px -42px; }
+
+#subnav {
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: height .3s;
+    transition: height .3s;
+    margin-left: -10px;
+    width: 210px;
+}
+
+#subnav.open {
+    height: 113px;
+}
+
+#subnav .nav-link { margin-left: -20px; }
+
+/* =========================================== */
 
 .filters {
-    -webkit-transition: transform .3s opacity .3s;
+    -webkit-transition: -webkit-transform .3s opacity .3s;
     transition: transform .3s opacity .3s;
 }
 

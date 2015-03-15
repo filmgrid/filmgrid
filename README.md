@@ -7,9 +7,8 @@ Recommendations engine for movies and tv shows using natural language processing
 
 ### Filters + Search + Data
 * ![](https://tr.im/ecHSB) Sidebar Filters CSS [Philipp before Hamid]
-* ![](https://tr.im/m1m9N) Better Content + Links in Popup [Philipp before Hamid]
-* ![](https://tr.im/m1m9N) Update Data (Keywords, Genre, SearchString) [Philipp before Hamid]
-* ![](https://tr.im/m1m9N) Index Mongo (Full Movie Data + Images) [Thomas before Hamid]
+* ![](https://tr.im/m1m9N) Better Content + Links in Popup [before Hamid]
+* ![](https://tr.im/m1m9N) Update Data (Keywords, Genre, SearchString) [before Hamid]
 * ![](https://tr.im/1sYDP) Fix Global Search (better full text, get user status)
 * ![](https://tr.im/1sYDP) Get recent movies / update job
 * ![](https://tr.im/3GIP7) Improved data flow (no duplication in db)
@@ -25,8 +24,9 @@ Recommendations engine for movies and tv shows using natural language processing
 * ![](https://tr.im/ecHSB) Basic Mobile Version [Philipp before Hamid]
 * ![](https://tr.im/ecHSB) Favicons and HTML Header [Philipp before Hamid]
 * ![](https://tr.im/ecHSB) Fix real time updating
-* ![](https://tr.im/ecHSB) Login Form / Movies When not logged in
-* ![](https://tr.im/m1m9N) Default movie image [Philipp before Hamid]
+* ![](https://tr.im/ecHSB) Fix highlighted action icon after putting back into suggested
+* ![](https://tr.im/ecHSB) Login Form / Movies when not logged in
+* ![](https://tr.im/m1m9N) Coming soon icon for cinema/friends page
 * ![](https://tr.im/m1m9N) Movie trailer fullscreen
 * ![](https://tr.im/m1m9N) Loading icon / load more button
 * ![](https://tr.im/m1m9N) No scroll events when at bottom of page
@@ -34,13 +34,12 @@ Recommendations engine for movies and tv shows using natural language processing
 
 ### New Features
 * ![](https://tr.im/ecHSB) Facebook and Twitter Login [Thomas before Hamid]
-* ![](https://tr.im/m1m9N) 'Others' item with dropdown in sidebar (for disliked) [Philipp before Hamid]
 * ![](https://tr.im/m1m9N) Sort by date of last action
 * ![](https://tr.im/1sYDP) Timeline / coming soon view
 * ![](https://tr.im/3GIP7) Recommend movies to friends
 * ![](https://tr.im/3GIP7) Watch with friends page
 * ![](https://tr.im/3GIP7) Auto-tag user's liked movies from Facebook
-* ![](https://tr.im/3GIP7) Undo
+* ![](https://tr.im/3GIP7) Undo last action
 
 ### Infrastructure
 * ![](https://tr.im/ecHSB) Update about page with legal stuff [before Hamid]

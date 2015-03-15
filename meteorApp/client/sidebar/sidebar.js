@@ -43,6 +43,10 @@ function toggleSidebar() {
   Session.set('showSidebar', !Session.get('showSidebar'));
 }
 
+function toggleSubnav() {
+  Session.set('showSubnav', !Session.get('showSubnav'));
+}
+
 // =================================================================================================
 
 Template.sidebar.events = {
@@ -50,7 +54,8 @@ Template.sidebar.events = {
   'change #sort': handleSort,
   'keyup #search': handleSearch,
   'change #search': handleSearch,
-  'click #mobile-menu': toggleSidebar
+  'click #mobile-menu': toggleSidebar,
+  'click #subnav-link': toggleSubnav
 };
 
 Template.sidebar.helpers({
@@ -62,6 +67,9 @@ Template.sidebar.helpers({
   },
   sidebarClass: function() {
     return Session.get('showSidebar') ? 'show' : '';
+  },
+  subnavClass: function() {
+    return Session.get('showSubnav') ? 'open' : '';
   }
 });
 

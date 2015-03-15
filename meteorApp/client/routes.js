@@ -64,6 +64,9 @@ Meteor.startup(function() {
   Session.set('search', '');
   Session.set('filter', {});
 
+  Session.set('showSidebar', false);
+  Session.set('showSubnav', false);
+
   Meteor.subscribe('movies').ready(function() {
     App.trigger('reload')
   });
