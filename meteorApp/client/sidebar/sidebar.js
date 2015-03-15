@@ -39,19 +39,30 @@ function handleSearch() {
   App.trigger('reload');
 }
 
+function toggleSidebar() {
+  Session.set('showSidebar', !Session.get('showSidebar'));
+}
+
 // =================================================================================================
 
 Template.sidebar.events = {
   'change #genre': handleGenre,
   'change #sort': handleSort,
   'keyup #search': handleSearch,
-  'change #search': handleSearch
+  'change #search': handleSearch,
+  'click #mobile-menu': toggleSidebar
 };
 
 Template.sidebar.helpers({
   navSelectedIs: function(nav) {
     return nav.split('|').indexOf(this.nav) >= 0;
   },
+  filtersClass: function() {
+    return this.nav == 'about' ? 'hidden' : '';
+  },
+  sidebarClass: function() {
+    return Session.get('showSidebar') ? 'show' : '';
+  }
 });
 
 Template.sidebar.rendered = function() {

@@ -1,68 +1,79 @@
 <template name="sidebar">
-    <div id="sidebar">
 
-        <a href="/" id="logo"></a>
+    <div id="mobile-sidebar">
+        <div id="mobile-menu"></div>
+        <div id="mobile-logo"></div>
+    </div>
 
-        <nav>
-            <a href="/" id="nav-link-suggested" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
-                <div class="nav-icon nav-icon-recommended"></div>
-                Recommended
-            </a>
-            <a href="/watchlist" id="nav-link-bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">
-                <div class="nav-icon nav-icon-watchlist"></div>
-                Watchlist
-            </a>
-            <a href="/favourites" id="nav-link-liked" class="nav-link {{#if navSelectedIs 'liked'}} active{{/if}}">
-                <div class="nav-icon nav-icon-favourites"></div>
-                Favourites
-            </a>
-            <a href="/now-playing" class="nav-link {{#if navSelectedIs 'playing'}}active{{/if}}">
-                <div class="nav-icon nav-icon-cinema"></div>
-                In Cinemas
-            </a>
-            <a href="/watch-with-friends" class="nav-link {{#if navSelectedIs 'friends'}}active{{/if}}">
-                <div class="nav-icon nav-icon-friends"></div>
-                Watch with Friends
-            </a>
-        </nav>
+    <div id="sidebar" class="{{ sidebarClass }}">
+        <div id="sidebar-body">
 
-        <label for="search">Search</label>
-        <input type="text" id="search" placeholder="Title, Actor, Keywords"/>
+            <a href="/" id="logo"></a>
 
-        <label for="genre">Genre</label>
-        <select id="genre">
-            <option>All</option>
-            <option>Action</option>
-            <option>Adventure</option>
-            <option>Animation</option>
-            <option>Biography</option>
-            <option>Comedy</option>
-            <option>Crime</option>
-            <option>Documentary</option>
-            <option>Drama</option>
-            <option>Family</option>
-            <option>Fantasy</option>
-            <option>Horror</option>
-            <option>Music</option>
-            <option>Mystery</option>
-            <option>Romance</option>
-            <option>Sci-Fi</option>
-            <option>Sport</option>
-            <option>Thriller</option>
-            <option>War</option>
-        </select>
-        
-        <label for="sort">Sort by</label>
-        <select id="sort">
-            <option id="special-sort" value=""></option>
-            <option value="popularity">Popularity</option>
-            <option value="year">Year</option>
-            <option value="az">A-Z</option>
-        </select>
+            <nav>
+                <a href="/" id="nav-link-suggested" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
+                    <div class="nav-icon nav-icon-recommended"></div>
+                    Recommended
+                </a>
+                <a href="/watchlist" id="nav-link-bookmarked" class="nav-link {{#if navSelectedIs 'bookmarked'}} active{{/if}}">
+                    <div class="nav-icon nav-icon-watchlist"></div>
+                    Watchlist
+                </a>
+                <a href="/favourites" id="nav-link-liked" class="nav-link {{#if navSelectedIs 'liked'}} active{{/if}}">
+                    <div class="nav-icon nav-icon-favourites"></div>
+                    Favourites
+                </a>
+                <a href="/now-playing" class="nav-link {{#if navSelectedIs 'playing'}}active{{/if}}">
+                    <div class="nav-icon nav-icon-cinema"></div>
+                    In Cinemas
+                </a>
+                <a href="/watch-with-friends" class="nav-link {{#if navSelectedIs 'friends'}}active{{/if}}">
+                    <div class="nav-icon nav-icon-friends"></div>
+                    Watch with Friends
+                </a>
+            </nav>
 
-        <div id="login">
-            {{ > loginButtons }}
+            <div class="filters {{ filtersClass }}">
+                <label for="search">Search</label>
+                <input type="text" id="search" placeholder="Title, Actor, Keywords"/>
+
+                <label for="genre">Genre</label>
+                <select id="genre">
+                    <option>All</option>
+                    <option>Action</option>
+                    <option>Adventure</option>
+                    <option>Animation</option>
+                    <option>Biography</option>
+                    <option>Comedy</option>
+                    <option>Crime</option>
+                    <option>Documentary</option>
+                    <option>Drama</option>
+                    <option>Family</option>
+                    <option>Fantasy</option>
+                    <option>Horror</option>
+                    <option>Music</option>
+                    <option>Mystery</option>
+                    <option>Romance</option>
+                    <option>Sci-Fi</option>
+                    <option>Sport</option>
+                    <option>Thriller</option>
+                    <option>War</option>
+                </select>
+                
+                <label for="sort">Sort by</label>
+                <select id="sort">
+                    <option id="special-sort" value=""></option>
+                    <option value="popularity">Popularity</option>
+                    <option value="year">Year</option>
+                    <option value="az">A-Z</option>
+                </select>
+            </div>
+            
+            <div id="nav-bottom">
+                <a href="/about" class="nav-bottom-item {{#if navSelectedIs 'about'}}active{{/if}}">About Filmgrid</a>
+                <div class="nav-bottom-item">{{ > loginButtons }}</div>
+            </div>
+
         </div>
-
     </div>
 </template>

@@ -1,3 +1,10 @@
+#sidebar-body {
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 30px 30px 150px;
+    position: relative;
+}
+
 #logo {
     display: block;
     width: 200px;
@@ -70,6 +77,15 @@ nav {
 .nav-icon-cinema { background-position: -5px -362px; }
 .nav-icon-friends { background-position: -5px -402px; }
 
+.filters {
+    transition: transform .3s opacity .3s;
+}
+
+.filters.hidden {
+    opacity: 0;
+    transform: translateX(-260px);
+}
+
 #sidebar label {
     display: block;
     font-size: 12px;
@@ -91,11 +107,59 @@ nav {
     font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
 }
 
-#login {
+
+#nav-bottom {
     position: absolute;
     bottom: 30px;
-    background: rgba(255,255,255,0.1);
     left: 0;
-    padding: 10px 10px 10px 30px;
-    width: 190px;
+    width: 230px;
+}
+
+.nav-bottom-item {
+    display: block;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    padding: 6px 12px 6px 30px;
+    margin-bottom: 1px;
+    transition: background .2s, color .2s;
+}
+
+a.nav-bottom-item:hover, a.nav-bottom-item.active {
+    background: rgba(255,255,255,0.3);
+    color: #FFF;
+}
+
+/* =========================================== */
+
+#mobile-sidebar {
+    position: fixed;
+    width: 100%;
+    z-index: 500;
+    background: #12121B;
+    height: 44px;
+    display: none;
+    background: #000;
+    top: 0;
+}
+
+#mobile-menu {
+    width: 44px;
+    height: 44px;
+    float: left;
+    margin-right: 10px;
+    background: #C00;
+}
+
+#mobile-logo {
+    float: left;
+    margin: 4px 0;
+    width: 102px;
+    height: 36px;
+    background: url('/assets/logo.png');
+    background-size: 102px 36px;
+}
+
+@media screen and (max-width: 750px) {
+    #mobile-sidebar { display: block; }
+    #logo { display: none; }
 }

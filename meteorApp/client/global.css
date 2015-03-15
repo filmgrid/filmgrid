@@ -19,8 +19,8 @@ html, body {
 
 #sidebar {
     position: fixed;
-    width: 200px;
-    padding: 30px;
+    width: 260px;
+    overflow-y: auto;
     top: 0;
     bottom: 0;
 }
@@ -28,4 +28,17 @@ html, body {
 #page {
     margin-left: 260px;
     padding: 0;
+}
+
+@media screen and (max-width: 750px) {
+    #sidebar {
+        z-index: 500;
+        background: #12121B;
+        transition: transform .4s;
+        transform: translateX(-260px);
+        top: 44px;
+        background: #000;
+    }
+    #sidebar.show { transform: none; }
+    #page { margin: 44px 0 0 0; }
 }

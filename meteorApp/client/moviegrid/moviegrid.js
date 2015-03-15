@@ -156,6 +156,7 @@ var gridColumns;
 
 var previousActiveId = null;
 var previousGridHeight = null;
+var resizeTimeout;
 
 function positionMovies(hideOrShow) {
   if (!$list || !gridColumns) return;
@@ -177,14 +178,16 @@ function positionMovies(hideOrShow) {
 
   // Resize Grid ---------------------------------------------------------------
 
-  var rows = Math.ceil(shownMovies.length/gridColumns);
-  var gridHeight = rows * (movieHeight + gapWidth) - gapWidth + (activeIndex >= 0 ? 1 : 0);
+  var rows = Math.ceil(shownMovies.length/gridColumns) + (activeIndex >= 0 ? 1 : 0);
+  var gridHeight = rows * (movieHeight + gapWidth) - gapWidth;
   $noMovies[shownMovies.length ? 'removeClass' : 'addClass']('show');
 
-  setTimeout(function() {
+  clearTimeout(resizeTimeout);
+
+  resizeTimeout = setTimeout(function() {
     $list.css('height', gridHeight + 'px');
+    previousGridHeight = gridHeight;
   }, gridHeight <= previousGridHeight ? 600 : 0);
-  previousGridHeight = gridHeight;
 
 
   // Calculate Movie Positions -------------------------------------------------
@@ -250,7 +253,7 @@ var loadMore = throttle(function() {
 var resize = throttle(function() {
   var oldGridColumns = gridColumns;
   var gridWidth = $list ? $list.width() : 900;
-  gridColumns = Math.floor(gridWidth / (movieWidth + gapWidth));
+  gridColumns = Math.max(3, Math.floor(gridWidth / (movieWidth + gapWidth)));
   if ($list && gridColumns !== oldGridColumns) positionMovies(initial);
   initial = false;
 }, 300);
@@ -268,6 +271,12 @@ Template.moviegrid.rendered = function() {
   $list = $(this.find('.movie-list'));
   $noMovies = $(this.find('.no-movies'));
 
+  console.log('RENDERED', $list[0]);
+
+  // Reset variables before initialize, if grid is recreated
+  allMovies = [];
+  movieCache  = {};
+  shownMovies = [];
   initialiseMovies();
 
   $window.on('resize', resize);
