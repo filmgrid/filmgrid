@@ -105,10 +105,10 @@ if (Meteor.isClient) {
     };
 
     // Adds an animation class to $el and removes it when the animation is complete
-    flash = function($el, className) {
-        $el.one('webkitAnimationEnd animationend', function() {
+    flash = function($el, className, time) {
+        setTimeout(function() {
             $el.removeClass(className);
-        });
+        }, time);
         $el.addClass(className);
     }
 

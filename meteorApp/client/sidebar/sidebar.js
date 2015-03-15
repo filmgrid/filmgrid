@@ -15,23 +15,26 @@ var specialSortOptions = {
 };
 
 function handleGenre() {
+  console.log('handle genre');
   var genre = $genre.val().replace('All', '') || null;
 
   var query = Session.get('filter') || {};
-  query.filter = { genre: genre };
+  query.genre = genre;
   Session.set('filter', query);
 
   App.trigger('reload');
 }
 
 function handleSort() {
+  console.log('handle sort');
   var sort = $sort.val() || null;
   Session.set('sort', sort);
   App.trigger('reload');
 }
 
 function handleSearch() {
-  var search = $search.val() || null;
+  console.log('handle search');
+  var search = $search.val() || '';
   Session.set('search', search);
   App.trigger('reload');
 }

@@ -12,10 +12,12 @@ Router.onBeforeAction(function() {
 });
 
 function configureRoute(that, path, sort) {
-  Session.set('type', path);
+  if (Session.get('type') !== path) {
+    Session.set('type', path);
+    App.trigger('sortChange', sort);
+    App.trigger('reload');
+  }
   that.render('movies', { data: { nav: path }, waitOn: Meteor.user() });
-  App.trigger('sortChange', sort);
-  App.trigger('reload')
 }
 
 Router.route('/', function() {
@@ -35,17 +37,16 @@ Router.route('/disliked', function() {
 });
 
 Router.route('/now-playing', function() {
-  this.render('now-playing', { data: { nav: 'playing' } });
-  App.trigger('clean')
+  configureRoute(this, 'playing', 'score');
 });
 
 Router.route('/watch-with-friends', function() {
-  this.render('watch-with-friends', { data: { nav: 'friends' } });
-  App.trigger('clean')
+  configureRoute(this, 'friends', 'score');
 });
 
 Meteor.startup(function() {
   Session.set('activeMovie', {});
+  Session.set('type', null);
   Session.set('search', '');
   Session.set('filter', {});
 

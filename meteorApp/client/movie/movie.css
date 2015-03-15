@@ -1,30 +1,44 @@
 .movie {
 	position: absolute;
-	opacity: 0;
 	width: 160px;
 	height: 220px;
 	pointer-events: none;
+	will-change: transform;
+}
 
+.movie.on {
+	pointer-events: all;
+	-webkit-transition: -webkit-transform .6s;
+	-moz-transition: -moz-transform .6s;
+	transition: transform .6s;
+}
+
+.movie.open {
+	z-index: 100;
+}
+
+.movie-scale {
+	opacity: 0;
+	width: 160px;
+	height: 220px;
 	will-change: transform, opacity;
 
 	-webkit-transition: -webkit-transform .6s, opacity .4s;
 	-moz-transition: -moz-transform .6s, opacity .4s;
 	transition: transform .6s, opacity .4s;
 
+	-webkit-transform: scale(0);
+	-moz-transform: scale(0);
+	transform: scale(0);
+
 	-webkit-perspective: 1200px;
 	-moz-perspective: 1200px;
 	perspective: 1200px;
 }
 
-.movie.active {
-	width: 150px;
-	height: 210px;
-	border: 5px solid #0CF;
-}
-
-.movie.on {
+.movie.on .movie-scale {
 	opacity: 1;
-	pointer-events: all;
+
 	-webkit-transform: scale(1);
 	-moz-transform: scale(1);
 	transform: scale(1);
@@ -88,7 +102,7 @@
 	transform: rotateY(0);
 }
 
-/* ---------------------- */
+/* -------------------------------------------------------- */
 
 .movie-poster-wrap {
 	height: 220px;
@@ -104,7 +118,7 @@
 	transition: transform .6s;
 }
 
-.movie-front.open .movie-poster-wrap {
+.movie.open .movie-poster-wrap {
 	-webkit-transform: translate(16px, 16px);
 	-moz-transform: translate(16px, 16px);
 	transform: translate(16px, 16px);
@@ -135,39 +149,47 @@
 	opacity: 0.6;
 }
 
-/* ---------------------- */
+/* -------------------------------------------------------- */
 
-.movie-bookmark, .movie-dismissed, .movie-like {
+.movie-bookmark, .movie-hide, .movie-dislike, .movie-like {
 	height: 40px;
+	width: 40px;
 	position: absolute;
 	cursor: pointer;
 	background: url('/assets/icons.png');
-	background-size: 40px 240px;
+	background-size: 40px 440px;
+
 	-webkit-transition: -webkit-transform .2s;
 	-moz-transition: -moz-transform .2s;
 	transition: transform .2s;
 }
 
-
 .movie-bookmark {
-	width: 40px;
 	-webkit-transform: translateX(-100%);
 	-moz-transform: translateX(-100%);
 	transform: translateX(-100%);
 }
 
-.movie-dismissed {
-	width: 40px;
+.movie-hide {
+	right: 0;
+	background-position: 0 -120px;
+	-webkit-transform: translateX(100%);
+	-moz-transform: translateX(100%);
+	transform: translateX(100%);
+}
+
+.movie-dislike {
 	bottom: 0;
 	background-position: 0 -40px;
+	border-right: 1px solid #FFF;
 	-webkit-transform: translateY(100%);
 	-moz-transform: translateY(100%);
 	transform: translateY(100%);
-	border-right: 1px solid #FFF;
 }
 
-.movie-bookmark:hover, .movie-user-status-bookmarked .movie-bookmark { background-position: 0 -120px; }
-.movie-dismissed:hover, .movie-user-status-dismissed .movie-dismissed { background-position: 0 -160px; }
+.movie-bookmark:hover, .status-bookmarked .movie-bookmark { background-position: 0 -160px; }
+.movie-dislike:hover, .status-disliked .movie-dislike { background-position: 0 -200px; }
+.movie-hide:hover, .status-hidden .movie-dislike { background-position: 0 -280px; }
 
 .movie .movie-like {
 	width: 120px;
@@ -180,7 +202,8 @@
 }
 
 .movie-poster-wrap:hover .movie-bookmark,
-.movie-poster-wrap:hover .movie-dismissed,
+.movie-poster-wrap:hover .movie-dislike,
+.movie-poster-wrap:hover .movie-hide,
 .movie-poster-wrap:hover .movie-like {
 	-webkit-transform: none;
 	-moz-transform: none;
@@ -196,23 +219,23 @@
 
 .movie-like3 {
 	background: url('/assets/icons.png');
-	background-size: 40px 240px;
+	background-size: 40px 440px;
 	background-position: 0 -80px;
 }
 
-.movie-like1:hover, .movie-user-status-liked1 .movie-like1,
-.movie-like2:hover, .movie-user-status-liked2 .movie-like2,
-.movie-like3:hover, .movie-user-status-liked3 .movie-like3 {
+.movie-like1:hover, .status-liked1 .movie-like1,
+.movie-like2:hover, .status-liked2 .movie-like2,
+.movie-like3:hover, .status-liked3 .movie-like3 {
 	background: url('/assets/icons.png');
-	background-size: 40px 240px;
-	background-position: 0 -200px;
+	background-size: 40px 440px;
+	background-position: 0 -240px;
 }
 
 .movie-like1 { width: 40px; }
 .movie-like2 { width: 80px; }
 .movie-like3 { width: 120px; background-position: 0 -80px; bottom: 0; }
 
-/* ---------------------- */
+/* -------------------------------------------------------- */
 
 .movie-details {
 	width: 452px;
@@ -234,7 +257,7 @@
 	transition: opacity .6s;
 }
 
-.movie-front.open .movie-details {
+.movie.open .movie-details {
 	opacity: 1;
 	pointer-events: all;
 }
@@ -279,7 +302,7 @@
 }
 
 .movie-buttons button {
-    font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
+	font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
 	-webkit-appearance: none;
 	display: block;
 	border: none;
@@ -301,38 +324,38 @@
 	background: #116EAB;
 }
 
-.rating-imdb, .rating-rt1, .rating-rt2, .rating-meta {
+.movie-score {
 	display: inline-block;
 	color: #FFF;
 	margin-right: 3px;
 	float: left;
 }
 
-.rating-imdb {
+.movie-score.imdb {
 	background: #d9b72f url(/assets/rating-imdb.png) no-repeat 4px 2px;
 	background-size: 33px 16px;
 	padding: 1px 5px 0 42px;
 }
 
-.rating-rt1 {
+.movie-score.rt1 {
 	background: #c00 url(/assets/rating-rt.png) no-repeat 4px 1px;
 	background-size: 17px 18px;
 	padding: 1px 5px 0 26px;
 	margin: 0 1px 0 0;
 }
 
-.rating-rt2 {
+.movie-score.rt2 {
 	background: #c00;
 	padding: 1px 5px 0;
 }
 
-.rating-meta {
+.movie-score.meta {
 	background: #1e8cd8 url(/assets/rating-meta.png) no-repeat 2px 2px;
 	background-size: 16px 16px;
 	padding: 1px 5px 0 23px;
 }
 
-/* ---------------------- */
+/* -------------------------------------------------------- */
 
 .trailer {
 	border-radius: 0 0 2px 2px;
@@ -355,8 +378,8 @@
 	height: 34px;
 
 	opacity: 0.6;
-	background: url(/assets/close.png) no-repeat 14px 9px;
-	background-size: 16px 16px;
+	background: url(/assets/icons.png) no-repeat 2px -123px;
+    background-size: 40px 440px;
 
 	-webkit-transition: background .2s, opacity .2s;
 	-moz-transition: background .2s, opacity .2s;
