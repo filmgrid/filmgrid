@@ -3,9 +3,14 @@
 // =============================================================================
 
 
-var routeConfig = {waitOn: function () {
-  return { ready: function() { return Meteor.user() != null; }};
-} };
+var routeConfig = { waitOn: function () {
+  return { ready: function() { 
+    if (Meteor.userId())
+      return Meteor.user() != null;
+    else
+      return true;
+  }};
+}};
 
 Router.onBeforeAction(function() {
   if (Meteor.userId()) {
