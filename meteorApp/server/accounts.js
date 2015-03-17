@@ -18,7 +18,7 @@ Accounts.onCreateUser(function(options, user) {
   }
   else if (user.services.twitter)
   {
-    options.profile.picture = user.services.twitter.profile_image_url;
+    options.profile.picture = user.services.twitter.profile_image_url.replace("_normal","_bigger");
     user.profile = options.profile;
   }
   return user;
