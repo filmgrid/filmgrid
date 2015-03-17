@@ -7,3 +7,5 @@ meteor-platform
 accounts-ui
 iron:router
 accounts-github
+accounts-twitter
+accounts-facebook

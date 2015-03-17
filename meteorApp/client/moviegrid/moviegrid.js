@@ -261,6 +261,10 @@ var resize = throttle(function() {
   initial = false;
 }, 300);
 
+Template.moviegrid.helpers({
+  favourites: function() { return this.nav === 'liked'; }
+});
+
 App.on('reload', function() { selectMovies(); });
 App.on('reposition', function() { positionMovies(); });
 
@@ -269,6 +273,8 @@ Template.moviegrid.rendered = function() {
   var $window = $(window);
   $list = $(this.find('.movie-list'));
   $noMovies = $(this.find('.no-movies'));
+
+  console.log('RENDERED', $list[0]);
 
   // Reset variables before initialize, if grid is recreated
   allMovies = [];
