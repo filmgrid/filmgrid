@@ -1,4 +1,3 @@
-
 Jobqueue = new Meteor.Collection('jobqueue');
 
 Meteor.methods({
