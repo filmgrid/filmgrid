@@ -11,6 +11,7 @@
             <a href="/" id="logo"></a>
 
             <nav>
+            {{#if currentUser}}
                 <a href="/" id="nav-link-suggested" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
                     <div class="nav-icon nav-icon-recommended"></div>
                     Recommended
@@ -25,7 +26,7 @@
                 </a>
                 <div id="subnav-link" class="nav-link">
                     <div class="nav-icon nav-icon-more"></div>
-                    More
+                    More &nbsp;▾
                 </div>
                 
                 <div id="subnav" class="{{#if subnavClass}}open{{/if}}">
@@ -42,7 +43,11 @@
                         Disliked and Hidden
                     </a>
                 </div>
-
+            {{else}}
+                {{#each services}}
+                {{> _loginButtonsLoggedOutSingleLoginButton}}
+                {{/each}}
+            {{/if}}
             </nav>
 
             <div class="filters {{ filtersClass }}">
@@ -75,15 +80,20 @@
                 <label for="sort">Sort by</label>
                 <select id="sort">
                     <option id="special-sort" value=""></option>
-                    <option value="popularity">Popularity</option>
+                    <option value="rating">Rating</option>
                     <option value="year">Year</option>
                     <option value="az">A-Z</option>
                 </select>
             </div>
             
             <div id="nav-bottom">
+                {{#if currentUser}}
+                    <div class="nav-bottom-item">Welcome {{currentUser.profile.name}}</div>
+                {{/if}}
                 <a href="/about" class="nav-bottom-item {{#if navSelectedIs 'about'}}active{{/if}}">About Filmgrid</a>
-                <div class="nav-bottom-item">{{ > loginButtons }}</div>
+                {{#if currentUser}}
+                    <a class="nav-bottom-item" id="logout-button" href="#">Sign Out</a>
+                {{/if}}
             </div>
 
         </div>

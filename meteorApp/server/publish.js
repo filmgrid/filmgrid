@@ -66,5 +66,8 @@ Meteor.methods({
         });
 
         return (result && result.documents[0].ok === 1) ? result.documents[0].results : [];
+    },
+    public: function() {
+        return _.values(getInitialSuggestions());
     }
 });
