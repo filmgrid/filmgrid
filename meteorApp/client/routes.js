@@ -71,9 +71,3 @@ Meteor.startup(function() {
     App.trigger('reload')
   });
 });
-
-Accounts.onLogin(function(){
-  Meteor.call('updateUserProfile', function() {
-    console.log(Meteor.user());
-  })
-});
