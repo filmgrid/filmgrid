@@ -88,7 +88,10 @@
             
             <div id="nav-bottom">
                 {{#if currentUser}}
-                    <div class="nav-bottom-item">Welcome {{currentUser.profile.name}}</div>
+                    <div class="nav-bottom-item avatar-item">
+                        <img class="avatar" src="{{currentUser.profile.picture}}" />
+                        {{currentUser.profile.name}}
+                    </div>
                 {{/if}}
                 <a href="/about" class="nav-bottom-item {{#if navSelectedIs 'about'}}active{{/if}}">About Filmgrid</a>
                 {{#if currentUser}}

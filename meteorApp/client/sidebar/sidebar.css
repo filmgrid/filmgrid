@@ -216,3 +216,11 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover 
 #login-buttons-image-github { background-position: -5px -85px !important; }
 #login-buttons-image-twitter { background-position: -5px -45px !important; }
 
+.avatar-item { padding-bottom: 10px; }
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    margin: 0 4px -10px 0;
+}
