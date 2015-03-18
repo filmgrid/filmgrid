@@ -47,7 +47,7 @@ Meteor.methods({
             text: 'movies',
             search: str || '',
             project: findFields,
-            limit: 25
+            limit: 50
         });
 
         return (result && result.documents[0].ok === 1) ? result.documents[0].results : [];
