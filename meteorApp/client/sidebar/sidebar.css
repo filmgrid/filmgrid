@@ -110,28 +110,6 @@ nav {
     transform: translateX(-260px);
 }
 
-#sidebar label {
-    display: block;
-    font-size: 12px;
-    color: rgba(255,255,255,0.4);
-    margin: 20px 0 0 0;
-    display: block;
-}
-
-#sidebar input, #sidebar select {
-    background: #12121B;
-    border: none;
-    display: block;
-    width: 100%;
-    padding: 0 0 2px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    color: #FFF;
-    outline: none;
-    font-size: 16px;
-    font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
-}
-
-
 #nav-bottom {
     position: absolute;
     bottom: 30px;
@@ -223,3 +201,50 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover 
     border-radius: 30px;
     margin: 0 4px -10px 0;
 }
+
+/* =========================================== */
+
+#sidebar label {
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    margin: 20px 0 0 0;
+    display: block;
+}
+
+#sidebar input, #sidebar select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    border-radius: 0;
+    background: #12121B;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.7);
+    opacity: 0.5;
+    color: #FFF;
+
+    display: block;
+    width: 100%;
+    padding: 0 0 2px 0;
+    outline: none;
+    font-size: 16px;
+    font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
+
+    -webkit-transition: opacity .2s;
+    transition: opacity .2s;
+}
+
+#sidebar select {
+    cursor: pointer;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAYAAABoMT8aAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAKtJREFUeNpi/P//PwNFAJ8BQLl+EMarF5cBQHGH/wjgQJIBQDEBIL6PZACILUCKAev/Y4L1RBkA5Af8xw0C8BoAZCsA8Xs8BoDkFPAZsP8/YbAfqwFAuuA/8aAAxQAgNvhPOjBANuA8GQacx5uQiE3FTAwUglEDoAaQG43wqKA4IUENaiBBcwP1MxNVsjNUMAGPAQm0L9KQCtX3aE4XoF+xTkrFwkhp1QYQYADWVBOGS+Ah2AAAAABJRU5ErkJggg==);
+    background-repeat: no-repeat;
+    background-size: 8px 14px;
+    background-position: top 3px right 1px;
+}
+
+#sidebar input { cursor: text; }
+#sidebar option { color: #000; }
+#sidebar input:hover, #sidebar select:hover { opacity: 1; }
+
+

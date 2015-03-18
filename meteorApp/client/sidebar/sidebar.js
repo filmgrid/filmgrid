@@ -76,6 +76,12 @@ Template.sidebar.helpers({
   services: function() {
     // Hack to get access to internal function in accounts-ui-unstyled
     return Template._loginButtonsLoggedOutAllServices.__helpers[' services']();
+  },
+  isNotLoading: function() {
+    return !Session.get('loading');
+  },
+  searchText: function() {
+    return Session.get('type') === 'suggested' ? 'Search all movies' : 'Filter movies'
   }
 });
 
