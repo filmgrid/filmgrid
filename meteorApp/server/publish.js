@@ -17,23 +17,24 @@ _.each(fields, function(f) { findFields[f] = 1 });
 // Subscribe to Movies -----------------------------------------------------------------------------
 
 function getInitialSuggestions() {
-    var suggestions = Movies
-    .find({
-        poster: { $ne: 'N/A' },
-        imdb_votes: { $ne: 'N/A' }
-    }, {
-        sort: { revenue: -1 },
-        fields: findFields
-    })
-    .fetch()
-    .slice(0, 500)
-    .map(function(e) {
-        var mapFields = { id: e._id, statusType:'suggested', statusScore: '', score : 1 };
-        _.each(fields, function(f) { mapFields[f] = e[f] });
-        return [e._id, mapFields];
+    var movies = Movies
+        .find({
+            poster: { $ne: 'N/A' }
+        }, {
+            sort: { revenue: -1 },
+            fields: findFields,
+            limit: 500
+        })
+        .fetch();
+
+    movies.forEach(function(m) {
+        m.id = m._id;
+        m.statusType = 'suggested';
+        m.statusScore =  '';
+        m.score = 1
     });
 
-    return _.object(suggestions);
+    return movies;
 }
 
 // Public Methods ----------------------------------------------------------------------------------
@@ -53,7 +54,7 @@ Meteor.methods({
         return (result && result.documents[0].ok === 1) ? result.documents[0].results : [];
     },
     public: function() {
-        return _.values(getInitialSuggestions());
+        return getInitialSuggestions();
     },
     initialInsert: function() {
         if (!Meteor.users.findOne({_id: this.userId})) return;
@@ -62,8 +63,8 @@ Meteor.methods({
 
         if (!movies) {
             // Initial Insert
-            var suggestions = getInitialSuggestions();
-            Meteor.users.update({ _id : this.userId }, { $set : { 'profile.movies': suggestions }});
+            var suggestions = getInitialSuggestions().map(function(m) { return [m.id, m] });
+            Meteor.users.update({ _id : this.userId }, { $set : { 'profile.movies': _.object(suggestions) }});
         }
     }
 });

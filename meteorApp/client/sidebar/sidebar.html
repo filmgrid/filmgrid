@@ -44,14 +44,16 @@
                     </a>
                 </div>
             {{else}}
-                {{#each services}}
-                {{> _loginButtonsLoggedOutSingleLoginButton}}
-                {{/each}}
+                {{#if isNotLoading}}
+                    {{#each services}}
+                    {{> _loginButtonsLoggedOutSingleLoginButton}}
+                    {{/each}}
+                {{/if}}
             {{/if}}
             </nav>
 
             <div class="filters {{ filtersClass }}">
-                <label for="search">Search</label>
+                <label for="search">{{searchText}}</label>
                 <input type="text" id="search" placeholder="Title, Actor, Keywords"/>
 
                 <label for="genre">Genre</label>

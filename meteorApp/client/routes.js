@@ -70,6 +70,7 @@ Meteor.startup(function() {
 
   Session.set('showSidebar', false);
   Session.set('showSubnav', false);
+  Session.set('loading', true);
 
   Deps.autorun(function(){
     var userId = Meteor.userId();

@@ -9,16 +9,26 @@
     background-size: 360px 220px;
 }
 
+.no-movies-icon {
+    background: url('/assets/loading.png');
+    background-size: 130px 150px;
+    width: 130px;
+    height: 150px;
+    margin: 0 auto 10px;
+}
+
 .no-movies {
-    background: url('/assets/empty.png');
-    background-size: 360px 220px;
     width: 360px;
-    height: 220px;
+    height: 210px;
     position: fixed;
     left: 50%;
     top: 50%;
-    margin: -110px 0 0 -50px;
+    margin: -105px 0 0 -50px;
     
+    text-align: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 32px;
+
     will-change: transform, opacity;
     opacity: 0;
 

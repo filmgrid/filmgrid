@@ -132,6 +132,10 @@ function initialiseMovies() {
   if (!$list) return;
   console.log('Initialise Movies');
 
+  // Remove initial loading
+  if (Session.get('loading')) 
+    setTimeout(function() { Session.set('loading', false); }, 600);
+
   // Reset all existing movies
   _.each(allMovies, function(m) {
     m.wasShown = m.show;
@@ -272,7 +276,12 @@ var resize = throttle(function() {
 }, 300);
 
 Template.moviegrid.helpers({
-  favourites: function() { return this.nav === 'liked'; }
+  favourites: function() {
+    return this.nav === 'liked';
+  },
+  noMoviesText: function() {
+    return Session.get('loading') ? 'Loading Movies…' : 'No Movies Found';
+  }
 });
 
 App.on('reload', function() { selectMovies(); });
