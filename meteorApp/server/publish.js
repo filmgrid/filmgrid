@@ -36,21 +36,6 @@ function getInitialSuggestions() {
     return _.object(suggestions);
 }
 
-Meteor.publish('movies', function() {
-
-    if (!Meteor.users.findOne({_id: this.userId})) return;
-
-    var movies = Meteor.users.findOne({ _id: this.userId }).profile.movies;
-
-    if (!movies) {
-        // Initial Insert
-        var suggestions = getInitialSuggestions();
-        Meteor.users.update({ _id : this.userId }, { $set : { 'profile.movies': suggestions }});
-    }
-
-});
-
-
 // Public Methods ----------------------------------------------------------------------------------
 
 var driver = new MongoInternals.RemoteCollectionDriver(process.env.MONGO_URL);
@@ -69,5 +54,16 @@ Meteor.methods({
     },
     public: function() {
         return _.values(getInitialSuggestions());
+    },
+    initialInsert: function() {
+        if (!Meteor.users.findOne({_id: this.userId})) return;
+
+        var movies = Meteor.users.findOne({ _id: this.userId }).profile.movies;
+
+        if (!movies) {
+            // Initial Insert
+            var suggestions = getInitialSuggestions();
+            Meteor.users.update({ _id : this.userId }, { $set : { 'profile.movies': suggestions }});
+        }
     }
 });

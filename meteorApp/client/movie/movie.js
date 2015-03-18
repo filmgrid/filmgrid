@@ -77,7 +77,13 @@ Template.movie.helpers({
 
   status: function() {
     return this.statusType + this.statusScore;
+  },
+
+  userId: function() {
+    return Meteor.userId();
   }
+
+
 });
 
 function updateProfile(movie, status) {
