@@ -162,28 +162,27 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover 
     width: 100%;
     z-index: 500;
     background: #12121B;
-    height: 44px;
+    height: 60px;
     display: none;
-    background: #000;
     top: 0;
 }
 
 #mobile-menu {
-    width: 44px;
-    height: 44px;
+    width: 60px;
+    height: 60px;
     float: left;
     margin-right: 10px;
     background: url('/assets/mobile.png');
-    background-size: 170px 44px;
+    background-size: 232px 60px;
     opacity: 0.8;
 }
 
 #mobile-logo {
     float: left;
-    width: 126px;
-    height: 44px;
-    background: url('/assets/mobile.png') -44px 0;
-    background-size: 170px 44px;
+    width: 172px;
+    height: 60px;
+    background: url('/assets/mobile.png') -60px 0;
+    background-size: 232px 60px;
 }
 
 @media screen and (max-width: 750px) {
@@ -197,7 +196,7 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover 
     position: fixed;
     width: 530px;
     margin: 40px 0 0 40px;
-    background: #000;
+    background: #242436;
     z-index: 100;
     padding: 0 20px 20px 20px;
     border: 2px solid #FFF;
