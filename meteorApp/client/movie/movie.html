@@ -7,6 +7,7 @@
                     <div class="movie-poster-title">{{this.title}}</div>
                     <div class="movie-poster" style="background-image: url('{{this.poster_1}}')"></div>
                     <div class="movie-poster-shadow"></div>
+                    {{#if userId}}
                     <div class="movie-bookmark"></div>
                     <div class="movie-hide"></div>
                     <div class="movie-dislike"></div>
@@ -15,6 +16,7 @@
                         <div class="movie-like2"></div>
                         <div class="movie-like1"></div>
                     </div>
+                    {{/if}}
                 </div>
                 <div class="movie-details">
                     <div class="movie-body">

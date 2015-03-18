@@ -67,7 +67,11 @@ Meteor.startup(function() {
   Session.set('showSidebar', false);
   Session.set('showSubnav', false);
 
-  Meteor.subscribe('movies').ready(function() {
-    App.trigger('reload')
+  Deps.autorun(function(){
+    var userId=Meteor.userId();
+    App.trigger('reload');
+    Meteor.call('initialInsert', function() { App.trigger('reload');});
   });
 });
+
+
