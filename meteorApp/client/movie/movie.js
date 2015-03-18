@@ -79,11 +79,9 @@ Template.movie.helpers({
     return this.statusType + this.statusScore;
   },
 
-  userId: function() {
-    return Meteor.userId();
+  loggedIn: function() {
+    return Session.get('loggedIn');
   }
-
-
 });
 
 function updateProfile(movie, status) {
@@ -116,6 +114,6 @@ function updateProfile(movie, status) {
   App.trigger('reload');
 
   // Recompute recommendations at regular intervals
-  interactions++;
-  if (interactions % 5 == 0) Meteor.call('recomputePreferences');
+  //interactions++;
+  //if (interactions % 5 == 0) Meteor.call('recomputePreferences');
 }

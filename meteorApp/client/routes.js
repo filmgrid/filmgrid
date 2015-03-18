@@ -12,6 +12,8 @@ var routeConfig = { waitOn: function () {
   }};
 }};
 
+var cachedUserId = "initialUserId";
+
 function configureRoute(that, path, sort) {
   if (Session.get('type') !== path) {
     Session.set('type', path);
@@ -59,6 +61,8 @@ Router.route('/about', function() {
 }, routeConfig);
 
 Meteor.startup(function() {
+
+  Session.set('loggedIn', false);
   Session.set('activeMovie', {});
   Session.set('type', null);
   Session.set('search', '');
@@ -68,9 +72,16 @@ Meteor.startup(function() {
   Session.set('showSubnav', false);
 
   Deps.autorun(function(){
-    var userId=Meteor.userId();
-    App.trigger('reload');
-    Meteor.call('initialInsert', function() { App.trigger('reload');});
+    var userId = Meteor.userId();
+    if (cachedUserId != userId)
+    {
+      cachedUserId = userId;
+      if (cachedUserId)
+        Session.set('loggedIn', true);
+      else
+        Session.set('loggedIn', false);
+      Meteor.call('initialInsert', function() { App.trigger('reload');});
+    }
   });
 });
 

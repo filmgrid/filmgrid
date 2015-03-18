@@ -139,7 +139,7 @@ function initialiseMovies() {
   });
 
   // Infinite scrolling
-  var movies = selectedMovies.slice(0, 40 + scroll * 20);
+  var movies = selectedMovies.slice(0, 50 + scroll * 20);
 
   // Create or update all selected movies
   shownMovies = _.map(movies, function(m) {
