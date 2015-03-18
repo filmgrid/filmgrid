@@ -6,12 +6,12 @@ Recommendations engine for movies and tv shows using natural language processing
 ## TODO List
 
 ### Filters + Search + Data
-* ![](https://tr.im/ecHSB) Sidebar Filters CSS [Philipp before Hamid]
-* ![](https://tr.im/m1m9N) Better Content + Links in Popup [before Hamid]
-* ![](https://tr.im/m1m9N) Update Data (Keywords, Genre, SearchString) [before Hamid]
-* ![](https://tr.im/1sYDP) Fix Global Search (better full text, get user status)
+* ![](https://tr.im/m1m9N) Better Content + Links in Popup
+* ![](https://tr.im/m1m9N) Update Data (Keywords, Genre, SearchString)
+* ![](https://tr.im/1sYDP) Fix Global Search (better full text, fix filters+sort, get user status)
 * ![](https://tr.im/1sYDP) Get recent movies / update job
 * ![](https://tr.im/3GIP7) Improved data flow (no duplication in db)
+* ![](https://tr.im/3GIP7) More filter options in sidebar
 
 ### Recommendations
 * ![](https://tr.im/m1m9N) Compute recommendations by similar movies
@@ -21,11 +21,10 @@ Recommendations engine for movies and tv shows using natural language processing
 * ![](https://tr.im/3GIP7) Compute recommendations by facebook friends
 
 ### Bugs + Design
-* ![](https://tr.im/ecHSB) Basic Mobile Version [Philipp before Hamid]
-* ![](https://tr.im/ecHSB) Favicons and HTML Header [Philipp before Hamid]
+* ![](https://tr.im/ecHSB) Fix Basic Mobile Version
+* ![](https://tr.im/ecHSB) Speed up initial load
 * ![](https://tr.im/ecHSB) Fix real time updating
 * ![](https://tr.im/ecHSB) Fix highlighted action icon after putting back into suggested
-* ![](https://tr.im/ecHSB) Login Form / Movies when not logged in
 * ![](https://tr.im/m1m9N) Coming soon icon for cinema/friends page
 * ![](https://tr.im/m1m9N) Movie trailer fullscreen
 * ![](https://tr.im/m1m9N) Loading icon / load more button
@@ -33,16 +32,16 @@ Recommendations engine for movies and tv shows using natural language processing
 * ![](https://tr.im/1sYDP) Fully Mobile + Touch Version
 
 ### New Features
-* ![](https://tr.im/ecHSB) Facebook and Twitter Login [Thomas before Hamid]
 * ![](https://tr.im/m1m9N) Sort by date of last action
 * ![](https://tr.im/1sYDP) Timeline / coming soon view
 * ![](https://tr.im/3GIP7) Recommend movies to friends
+* ![](https://tr.im/3GIP7) Group movie series into one (Harry Potter, etc.)
 * ![](https://tr.im/3GIP7) Watch with friends page
 * ![](https://tr.im/3GIP7) Auto-tag user's liked movies from Facebook
 * ![](https://tr.im/3GIP7) Undo last action
 
 ### Infrastructure
-* ![](https://tr.im/ecHSB) Update about page with legal stuff [before Hamid]
+* ![](https://tr.im/ecHSB) Update about page with legal stuff
 * ![](https://tr.im/ecHSB) Passwords for Mongo
 * ![](https://tr.im/ecHSB) Hosting + Uptime/balancing issues
 * ![](https://tr.im/1sYDP) Rollbacks and backups
