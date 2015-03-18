@@ -15,7 +15,7 @@
 }
 
 nav {
-    margin-bottom: 30px;
+    margin: 0 0 30px -30px;
 }
 
 .nav-link {
@@ -23,7 +23,7 @@ nav {
     display: block;
     padding: 7px 12px 7px 62px;
     height: 22px;
-    margin: 0 0 1px -30px;
+    margin-bottom: 1px;
     background: rgba(104, 7, 46, 0.4);
     color: rgba(255,255,255,0.5);
     position: relative;
@@ -87,7 +87,7 @@ nav {
     overflow: hidden;
     -webkit-transition: height .3s;
     transition: height .3s;
-    margin-left: -10px;
+    margin-left: 20px;
     width: 210px;
 }
 
@@ -139,7 +139,7 @@ nav {
     width: 230px;
 }
 
-.nav-bottom-item {
+.nav-bottom-item, .login-text-and-button {
     display: block;
     background: rgba(255,255,255,0.1);
     color: rgba(255,255,255,0.5);
@@ -149,7 +149,8 @@ nav {
     transition: background .2s, color .2s;
 }
 
-a.nav-bottom-item:hover, a.nav-bottom-item.active {
+a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover {
+    cursor: pointer;
     background: rgba(255,255,255,0.3);
     color: #FFF;
 }
@@ -188,4 +189,38 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active {
 @media screen and (max-width: 750px) {
     #mobile-sidebar { display: block; }
     #logo { display: none; }
+}
+
+/* =========================================== */
+
+#configure-login-service-dialog {
+    position: fixed;
+    width: 530px;
+    margin: 40px 0 0 40px;
+    background: #000;
+    z-index: 100;
+    padding: 0 20px 20px 20px;
+    border: 2px solid #FFF;
+}
+
+.login-image {
+    background: url(/assets/social.png) !important;
+    background-size: 40px 160px !important;
+    display: inline-block;
+    margin: -3px 0 -9px;
+    width: 30px;
+    height: 30px;
+}
+
+#login-buttons-image-facebook { background-position: -5px -5px !important; }
+#login-buttons-image-github { background-position: -5px -85px !important; }
+#login-buttons-image-twitter { background-position: -5px -45px !important; }
+
+.avatar-item { padding-bottom: 10px; }
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    margin: 0 4px -10px 0;
 }

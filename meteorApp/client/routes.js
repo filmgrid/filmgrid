@@ -12,14 +12,6 @@ var routeConfig = { waitOn: function () {
   }};
 }};
 
-Router.onBeforeAction(function() {
-  if (Meteor.userId()) {
-    this.next();
-  } else {
-    this.render('login');
-  };
-});
-
 function configureRoute(that, path, sort) {
   if (Session.get('type') !== path) {
     Session.set('type', path);
@@ -29,6 +21,14 @@ function configureRoute(that, path, sort) {
   }
   that.render('movies', { data: { nav: path } });
 }
+
+Router.onBeforeAction(function() {
+  if (Meteor.userId()) {
+    this.next();
+  } else {
+    configureRoute(this, 'suggested', 'popularity')
+  };
+});
 
 Router.route('/', function() {
   configureRoute(this, 'suggested', 'score');

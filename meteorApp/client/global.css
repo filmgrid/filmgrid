@@ -1,6 +1,7 @@
 
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); cursor: inherit; color: inherit; }
-::selection { background: rgba(0,0,0,0.1); text-shadow: none; }
+::selection { background: rgba(0,0,0,0.2); text-shadow: none; }
+#sidebar ::selection { background: rgba(255,255,255,0.3); text-shadow: none; }
 
 a, button { text-decoration: none; cursor: pointer; }
 a:hover { text-decoration: none; }
@@ -23,6 +24,11 @@ html, body {
     overflow-y: auto;
     top: 0;
     bottom: 0;
+        
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 
 #page {

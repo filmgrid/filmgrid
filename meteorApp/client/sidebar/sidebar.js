@@ -9,6 +9,7 @@ var $sort;
 var $specialSort;
 
 var specialSortOptions = {
+  popularity: 'Popularity',
   stars: 'Stars',
   score: 'Recommended',
   added: 'Date added'
@@ -55,7 +56,8 @@ Template.sidebar.events = {
   'keyup #search': handleSearch,
   'change #search': handleSearch,
   'click #mobile-menu': toggleSidebar,
-  'click #subnav-link': toggleSubnav
+  'click #subnav-link': toggleSubnav,
+  'click #logout-button': function() { Meteor.logout(); }
 };
 
 Template.sidebar.helpers({
@@ -70,6 +72,10 @@ Template.sidebar.helpers({
   },
   subnavClass: function() {
     return Session.get('showSubnav') ? 'open' : '';
+  },
+  services: function() {
+    // Hack to get access to internal function in accounts-ui-unstyled
+    return Template._loginButtonsLoggedOutAllServices.__helpers[' services']();
   }
 });
 

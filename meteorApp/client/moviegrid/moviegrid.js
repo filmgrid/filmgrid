@@ -24,7 +24,8 @@ var sorts = {
   az: function(m) { return m.title; },
   year:  function(m) { return -m.year; },
   stars: function(m) { return -(m.statusScore || 0); },
-  popularity: function(m) { return -m.score_imdb || 0; },
+  rating: function(m) { return -m.score_imdb || 0; },
+  popularity: function(m) { return -m.revenue || 0; },
   score: function(m) { /* TODO sort by recommendation score */ return -m.revenue || 0; },
   added: function(m) { /* TODO sort by date added to list */ return -m.year; }
 };
@@ -36,6 +37,7 @@ var sorts = {
 var allMovies = [];
 var movieCache  = {};
 var shownMovies = [];
+var publicMovies = [];
 
 var selectedMovies = [];
 var queryCache = '';
@@ -58,10 +60,18 @@ function searchMovies(str) {
 
 // Finds and filter user movies
 function lookupMovies(type, search, sort, filter) {
-  console.log('trying to load movies')
   var user = Meteor.user();
-  if (!user) return;
-  var movies = user.profile.movies;
+  
+  // If not logged in, load public movies, cache them and repeat
+  if (!user && !publicMovies.length) {
+    Meteor.call('public', {}, function(error, movies) {
+      publicMovies = movies;
+      lookupMovies(type, search, sort, filter);
+    });
+    return;
+  }
+
+  var movies = user ? user.profile.movies : publicMovies;
   console.log('Load Movies');
 
   // Select movies on current page
