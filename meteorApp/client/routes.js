@@ -28,7 +28,7 @@ Router.onBeforeAction(function() {
   } else {
     configureRoute(this, 'suggested', 'popularity')
   };
-});
+}, { except: ['about'] });
 
 Router.route('/', function() {
   configureRoute(this, 'suggested', 'score');
