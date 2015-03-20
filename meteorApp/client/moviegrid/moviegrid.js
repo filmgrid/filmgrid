@@ -133,7 +133,7 @@ function initialiseMovies() {
   console.log('Initialise Movies');
 
   // Remove initial loading
-  if (Session.get('loading')) 
+  if (Session.get('loading') && selectedMovies.length > 0)
     setTimeout(function() { Session.set('loading', false); }, 600);
 
   // Reset all existing movies
