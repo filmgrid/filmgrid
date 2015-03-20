@@ -212,6 +212,8 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover 
     display: block;
 }
 
+#sidebar ::-webkit-input-placeholder { color: #FFF; }
+
 #sidebar input, #sidebar select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -244,7 +246,6 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover 
 }
 
 #sidebar input { cursor: text; }
-#sidebar option { color: #000; }
 #sidebar input:hover, #sidebar select:hover { opacity: 1; }
 
 

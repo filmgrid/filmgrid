@@ -75,7 +75,8 @@ function lookupMovies(type, search, sort, filter) {
   console.log('Load Movies');
 
   // Select movies on current page
-  movies = _.filter(movies, function(m) { return m.statusType === type; });
+  var types = type.split('|');
+  movies = _.filter(movies, function(m) { return _.contains(types, m.statusType); });
 
   // Filter movies
   _.each(filter, function(value, type) {

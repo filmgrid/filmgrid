@@ -184,7 +184,7 @@
 
 .movie-bookmark:hover, .status-bookmarked .movie-bookmark { background-position: 0 -160px; }
 .movie-dislike:hover, .status-disliked .movie-dislike { background-position: 0 -200px; }
-.movie-hide:hover, .status-hidden .movie-dislike { background-position: 0 -280px; }
+.movie-hide:hover, .status-hidden .movie-hide { background-position: 0 -280px; }
 
 .movie .movie-like {
 	width: 120px;
