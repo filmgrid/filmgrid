@@ -1,3 +1,6 @@
+@bg: #12121B;
+@blue: #29ABE2;
+
 
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); cursor: inherit; color: inherit; }
 ::selection { background: rgba(0,0,0,0.2); text-shadow: none; }
@@ -24,11 +27,7 @@ html, body {
     overflow-y: auto;
     top: 0;
     bottom: 0;
-        
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+    user-select: none;
 }
 
 #page {
@@ -46,13 +45,9 @@ html, body {
 @media screen and (max-width: 750px) {
     #sidebar {
         z-index: 500;
-        background: #12121B;
+        background: @bg;
         top: 60px;
-
-        -webkit-transition: -webkit-transform .4s;
         transition: transform .4s;
-
-        -webkit-transform: translateX(-260px);
         transform: translateX(-260px);
     }
     #sidebar.show { transform: none; }
@@ -60,7 +55,7 @@ html, body {
     #page.about { padding: 20px; }
 }
 
-.about h1, .about h2, .about a { color: #29ABE2; }
+.about h1, .about h2, .about a { color: @blue; }
 .about h2 { margin: 2em 0 0.3em; }
 .about p, .about ul { margin: 0 0 1em; }
 .about a:hover { text-decoration: underline; }

@@ -8,7 +8,6 @@
 
 .movie.on {
 	pointer-events: all;
-	-webkit-transition: -webkit-transform .6s;
 	transition: transform .6s;
 }
 
@@ -21,21 +20,13 @@
 	width: 160px;
 	height: 220px;
 	will-change: transform, opacity;
-
-	-webkit-transition: -webkit-transform .6s, opacity .4s;
 	transition: transform .6s, opacity .4s;
-
-	-webkit-transform: scale(0);
 	transform: scale(0);
-
-	-webkit-perspective: 1200px;
 	perspective: 1200px;
 }
 
 .movie.on .movie-scale {
 	opacity: 1;
-
-	-webkit-transform: scale(1);
 	transform: scale(1);
 }
 
@@ -45,17 +36,9 @@
 	left: 0;
 
 	will-change: transform;
-
-	-webkit-transform-style: preserve-3d;
 	transform-style: preserve-3d;
-
-	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
-
-	-webkit-transform-origin: 242px 221px;
 	transform-origin: 242px 221px;
-
-	-webkit-transition: -webkit-transform .6s, -webkit-transform-origin 0s;
 	transition: transform .6s, transform-origin 0s;
 }
 
@@ -69,25 +52,12 @@
 	height: 442px;
 	background: black;
 	border-radius: 2px;
-
-	-webkit-transform: rotateY(-180deg);
 	transform: rotateY(-180deg);
 }
 
-.movie.on .movie-front {
-	-webkit-transform: scale(1);
-	transform: scale(1);
-}
-
-.movie.flipped .movie-front {
-	-webkit-transform: scale(1) rotateY(180deg);
-	transform: scale(1) rotateY(180deg);
-}
-
-.movie.flipped .movie-back {
-	-webkit-transform: rotateY(0);
-	transform: rotateY(0);
-}
+.movie.on .movie-front { transform: scale(1); }
+.movie.flipped .movie-front { transform: scale(1) rotateY(180deg); }
+.movie.flipped .movie-back { transform: rotateY(0); }
 
 /* -------------------------------------------------------- */
 
@@ -100,13 +70,10 @@
 	z-index: 10;
 	cursor: pointer;
 	background: #242436;
-
-	-webkit-transition: -webkit-transform .6s;
 	transition: transform .6s;
 }
 
 .movie.open .movie-poster-wrap {
-	-webkit-transform: translate(16px, 16px);
 	transform: translate(16px, 16px);
 }
 
@@ -128,7 +95,6 @@
 	font-weight: bold;
 	opacity: 0.5;
 	line-height: 1.1;
-	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
 	text-align: center;
 }
@@ -140,7 +106,6 @@
 	height: 100%;
 	background: #000;
 	opacity: 0;
-	-webkit-transition: opacity .2s;
 	transition: opacity .2s;
 }
 
@@ -157,20 +122,16 @@
 	cursor: pointer;
 	background: url('/assets/icons.png');
 	background-size: 40px 480px;
-
-	-webkit-transition: -webkit-transform .2s;
 	transition: transform .2s;
 }
 
 .movie-bookmark {
-	-webkit-transform: translateX(-100%);
 	transform: translateX(-100%);
 }
 
 .movie-hide {
 	right: 0;
 	background-position: 0 -120px;
-	-webkit-transform: translateX(100%);
 	transform: translateX(100%);
 }
 
@@ -178,20 +139,18 @@
 	bottom: 0;
 	background-position: 0 -40px;
 	border-right: 1px solid #FFF;
-	-webkit-transform: translateY(100%);
 	transform: translateY(100%);
 }
 
 .movie-bookmark:hover, .status-bookmarked .movie-bookmark { background-position: 0 -160px; }
 .movie-dislike:hover, .status-disliked .movie-dislike { background-position: 0 -200px; }
-.movie-hide:hover, .status-hidden .movie-dislike { background-position: 0 -280px; }
+.movie-hide:hover, .status-hidden .movie-hide { background-position: 0 -280px; }
 
 .movie .movie-like {
 	width: 120px;
 	left: 40px;
 	bottom: 0;
 	background: none;
-	-webkit-transform: translateY(100%);
 	transform: translateY(100%);
 }
 
@@ -199,7 +158,6 @@
 .movie-poster-wrap:hover .movie-dislike,
 .movie-poster-wrap:hover .movie-hide,
 .movie-poster-wrap:hover .movie-like {
-	-webkit-transform: none;
 	transform: none;
 }
 
@@ -242,10 +200,7 @@
 	background: #EEE;
 	color: #333;
 	pointer-events: none;
-
 	will-change: opacity;
-
-	-webkit-transition: opacity .6s;
 	transition: opacity .6s;
 }
 
@@ -294,8 +249,11 @@
 }
 
 .movie-buttons button {
-	font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
 	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
 	display: block;
 	border: none;
 	width: 100%;
@@ -306,8 +264,6 @@
 	background: #00395E;
 	color: #FFF;
 	margin-bottom: 8px;
-
-	-webkit-transition: background .2s;
 	transition: background .2s;
 }
 
@@ -371,8 +327,6 @@
 	opacity: 0.6;
 	background: url(/assets/icons.png) no-repeat 2px -123px;
     background-size: 40px 480px;
-
-	-webkit-transition: background .2s, opacity .2s;
 	transition: background .2s, opacity .2s;
 }
 

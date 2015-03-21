@@ -45,7 +45,7 @@ Router.route('/favourites', function() {
 }, routeConfig);
 
 Router.route('/disliked', function() {
-  configureRoute(this, 'disliked', 'added');
+  configureRoute(this, 'disliked|hidden', 'added');
 }, routeConfig);
 
 Router.route('/now-playing', function() {
