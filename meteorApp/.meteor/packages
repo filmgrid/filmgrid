@@ -9,3 +9,4 @@ iron:router
 accounts-github
 accounts-twitter
 accounts-facebook
+lauricio:less-autoprefixer
