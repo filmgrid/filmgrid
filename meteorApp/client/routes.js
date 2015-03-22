@@ -12,7 +12,7 @@ var routeConfig = { waitOn: function () {
   }};
 }};
 
-var cachedUserId = "initialUserId";
+var cachedUserId = null;
 
 function configureRoute(that, path, sort) {
   if (Session.get('type') !== path) {
@@ -73,17 +73,28 @@ Meteor.startup(function() {
   Session.set('loading', true);
 
   Deps.autorun(function(){
-    var userId = Meteor.userId();
-    if (cachedUserId != userId)
-    {
-      cachedUserId = userId;
-      if (cachedUserId)
-        Session.set('loggedIn', true);
-      else
-        Session.set('loggedIn', false);
-      Meteor.call('initialInsert', function() { App.trigger('reload');});
+    var user = Meteor.user();
+    if (!user && cachedUserId) {
+      cachedUserId = null;
+      Session.set('loggedIn', false);
+      App.trigger('reload')
+    } else if (user && cachedUserId != user._id) {
+      cachedUserId = user._id;
+      Session.set('loggedIn', true);
+      Session.set('actionCount', Meteor.user().profile.actions)
+      Meteor.call('initialInsert', function() { App.trigger('reload'); });
     }
   });
+
+  Deps.autorun(function() {
+    if (!Session.get('loggedIn')) return;
+    var remoteActionCount = (Meteor.user().profile.actions || 0);
+    if (remoteActionCount > Session.get('actionCount')) {
+      Session.set('actionCount', remoteActionCount)
+      App.trigger('reload')
+    }
+  });
+
 });
 
 
