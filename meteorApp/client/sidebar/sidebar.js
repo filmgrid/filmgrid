@@ -16,7 +16,6 @@ var specialSortOptions = {
 };
 
 function handleGenre() {
-  console.log('handle genre');
   var genre = $genre.val().replace('All', '') || null;
 
   var query = Session.get('filter') || {};
@@ -27,16 +26,20 @@ function handleGenre() {
 }
 
 function handleSort() {
-  console.log('handle sort');
   var sort = $sort.val() || null;
   Session.set('sort', sort);
   App.trigger('reload');
 }
 
 function handleSearch() {
-  console.log('handle search');
   var search = $search.val() || '';
   Session.set('search', search);
+  App.trigger('reload');
+}
+
+function clearSearch() {
+  Session.set('search', '');
+  $search.val('')
   App.trigger('reload');
 }
 
@@ -55,6 +58,7 @@ Template.sidebar.events = {
   'change #sort': handleSort,
   'keyup #search': handleSearch,
   'change #search': handleSearch,
+  'click #search-clear': clearSearch,
   'click #mobile-menu': toggleSidebar,
   'click #subnav-link': toggleSubnav,
   'click #logout-button': function() { Meteor.logout(); }
@@ -81,7 +85,10 @@ Template.sidebar.helpers({
     return !Session.get('loading');
   },
   searchText: function() {
-    return Session.get('type') === 'suggested' ? 'Search all movies' : 'Filter movies'
+    return Session.get('type') === 'suggested' ? 'Search all movies' : 'Filter movies';
+  },
+  searchStr: function() {
+    return !!Session.get('search');
   }
 });
 

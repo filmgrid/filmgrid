@@ -6,7 +6,7 @@
 #sidebar-body {
     min-height: 100%;
     box-sizing: border-box;
-    padding: 30px 30px 150px;
+    padding: 30px 30px 175px;
     position: relative;
 }
 
@@ -235,6 +235,20 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover 
 }
 
 #sidebar input { cursor: text; }
-#sidebar input:hover, #sidebar select:hover { opacity: 1; }
+#sidebar input:hover, #sidebar select:hover, #search-wrap:hover input { opacity: 1; }
 
+#search-wrap { position: relative; }
 
+#search-clear {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 2px;
+    top: 18px;
+    background-image: data-uri('../../public/assets/search-clear.png');
+    background-size: contain;
+    opacity: 0.4;
+    cursor: pointer;
+    transition: opacity .2s;
+    &:hover { opacity: 0.8; }
+}
