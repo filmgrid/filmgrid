@@ -27,7 +27,7 @@ function getInitialSuggestions() {
         })
         .fetch();
 
-    var now = Date.now();
+    var now = new Date();
 
     movies.forEach(function(m) {
         m.id = m._id;
