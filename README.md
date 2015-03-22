@@ -6,10 +6,9 @@ Recommendations engine for movies and tv shows using natural language processing
 ## TODO List
 
 ### Filters + Search + Data
-* ![](https://tr.im/m1m9N) Better Content + Links in Popup
-* ![](https://tr.im/m1m9N) Update Data (Keywords, Genre, SearchString)
-* ![](https://tr.im/1sYDP) Fix Global Search (better full text, fix filters+sort, get user status)
-* ![](https://tr.im/1sYDP) Get recent movies / update job
+* ![](https://tr.im/m1m9N) Update data (Keywords, Genre, SearchString), better content in popups
+* ![](https://tr.im/1sYDP) Fix global search (better full text, filters + sort)
+* ![](https://tr.im/1sYDP) Get more movies, and update job to get recent movies
 * ![](https://tr.im/3GIP7) Improved data flow (no duplication in db)
 * ![](https://tr.im/3GIP7) More filter options in sidebar
 
@@ -21,18 +20,18 @@ Recommendations engine for movies and tv shows using natural language processing
 * ![](https://tr.im/3GIP7) Compute recommendations by facebook friends
 
 ### Bugs + Design
-* ![](https://tr.im/ecHSB) Fix Basic Mobile Version
-* ![](https://tr.im/ecHSB) Speed up initial load
 * ![](https://tr.im/ecHSB) Fix real time updating
-* ![](https://tr.im/ecHSB) Fix highlighted action icon after putting back into suggested
+* ![](https://tr.im/ecHSB) Fix basic mobile version
 * ![](https://tr.im/m1m9N) Coming soon icon for cinema/friends page
 * ![](https://tr.im/m1m9N) Movie trailer fullscreen
 * ![](https://tr.im/m1m9N) Loading icon / load more button
 * ![](https://tr.im/m1m9N) No scroll events when at bottom of page
+* ![](https://tr.im/m1m9N) Better transitions betweeon grid + about page
 * ![](https://tr.im/1sYDP) Fully Mobile + Touch Version
 
 ### New Features
 * ![](https://tr.im/m1m9N) Sort by date of last action
+* ![](https://tr.im/m1m9N) Get Netflix and Amazon Instant Video Links
 * ![](https://tr.im/1sYDP) Timeline / coming soon view
 * ![](https://tr.im/3GIP7) Recommend movies to friends
 * ![](https://tr.im/3GIP7) Group movie series into one (Harry Potter, etc.)
