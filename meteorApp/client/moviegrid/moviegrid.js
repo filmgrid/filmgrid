@@ -196,7 +196,8 @@ function positionMovies(hideOrShow) {
 
   // Resize Grid ---------------------------------------------------------------
 
-  var rows = Math.ceil(shownMovies.length/gridColumns) + (activeIndex >= 0 ? 1 : 0);
+  var additionalBottomRows = activeIndex >= 0 ? (gridColumns < 5 ? 2 : 1) : 0;
+  var rows = Math.ceil(shownMovies.length/gridColumns) + additionalBottomRows;
   var gridHeight = rows * (movieHeight + gapWidth) - gapWidth;
   $noMovies[shownMovies.length ? 'removeClass' : 'addClass']('show');
 
