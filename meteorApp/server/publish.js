@@ -27,11 +27,14 @@ function getInitialSuggestions() {
         })
         .fetch();
 
+    var now = Date.now();
+
     movies.forEach(function(m) {
         m.id = m._id;
         m.statusType = 'suggested';
         m.statusScore =  '';
-        m.score = 1
+        m.score = 1;
+        m.changed = now;
     });
 
     return movies;
