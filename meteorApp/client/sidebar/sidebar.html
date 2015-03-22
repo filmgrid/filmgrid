@@ -53,8 +53,13 @@
             </nav>
 
             <div class="filters {{ filtersClass }}">
-                <label for="search">{{searchText}}</label>
-                <input type="text" id="search" placeholder="Title, Actor, Keywords"/>
+                <div id="search-wrap">
+                    <label for="search">{{searchText}}</label>
+                    <input type="text" id="search" placeholder="Title, Actor, Keywords"/>
+                    {{#if searchStr}}
+                        <div id="search-clear"></div>
+                    {{/if}}
+                </div>
 
                 <label for="genre">Genre</label>
                 <select id="genre">
