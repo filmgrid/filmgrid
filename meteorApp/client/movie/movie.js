@@ -117,8 +117,7 @@ function updateProfile(movie, status) {
     Session.set('actionCount', newActionCount);
     var $set = {};
     $set['profile.movies.' + movie.id]  = movie;
-    $set['profile.actions'] = newActionCount;
-    Meteor.users.update({ _id: Meteor.userId()}, { $set: $set });
+    Meteor.users.update({ _id: Meteor.userId()}, { $set: $set, $inc : {'profile.actions' : 1} });
   }
 
   App.trigger('reload');
