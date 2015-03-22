@@ -19,14 +19,12 @@ function recomputePreferences()
     throw new Meteor.Error("not-logged-in",
       "Must be logged in to add to the job queue.");
   }
-
-  console.log("trying to upsert RECOMPUTING !!!!!");
-  
+  payload = {userId:this.userId};
   Jobqueue.upsert(
-    {'payload.userId':this.userId},
+    {'payload' : payload},
     {   $set: 
       {
-        payload:{userId:this.userId}, 
+        payload:payload, 
         priority:1, 
         time:null, 
         period:0,
@@ -36,9 +34,6 @@ function recomputePreferences()
         attempts:0
       }
     });
-
-
-  console.log("upserted");
-
+  
   return null;
 }

@@ -125,6 +125,6 @@ function updateProfile(movie, status) {
   Session.set('movieStatus'+movie.id, movie.statusType+movie.statusScore);
 
   // Recompute recommendations at regular intervals
-  //interactions++;
-  //if (interactions % 5 == 0) Meteor.call('recomputePreferences');
+  interactions++;
+  if (interactions % 5 == 0) Meteor.call('recomputePreferences');
 }
