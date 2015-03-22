@@ -10,7 +10,7 @@ Recommendations engine for movies and tv shows using natural language processing
 * ![](https://tr.im/m1m9N) Fix global search (throttle, better full text, filters + sort)
 * ![](https://tr.im/1sYDP) Get more movies, and update job to get recent movies
 * ![](https://tr.im/3GIP7) Improved data flow (no duplication in db)
-* ![](https://tr.im/3GIP7) More filter options in sidebar (languare, rating, ...)
+* ![](https://tr.im/3GIP7) More filter options in sidebar (language, rating, ...)
 
 ### Recommendations
 * ![](https://tr.im/ecHSB) Compute recommendations by similar movies
