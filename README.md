@@ -30,7 +30,6 @@ Recommendations engine for movies and tv shows using natural language processing
 * ![](https://tr.im/1sYDP) Fully Mobile + Touch Version
 
 ### New Features
-* ![](https://tr.im/m1m9N) Sort by date of last action
 * ![](https://tr.im/m1m9N) Get Netflix and Amazon Instant Video Links
 * ![](https://tr.im/1sYDP) Timeline / coming soon view
 * ![](https://tr.im/3GIP7) Recommend movies to friends
