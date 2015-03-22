@@ -111,9 +111,15 @@ function updateProfile(movie, status) {
   }
 
   // Update Db
-  var $set = {};
-  $set['profile.movies.' + movie.id]  = movie;
-  Meteor.users.update({ _id: Meteor.userId()}, { $set: $set });
+  var user = Meteor.user();
+  if (user) {
+    var newActionCount = (user.profile.actions || 0) + 1
+    Session.set('actionCount', newActionCount);
+    var $set = {};
+    $set['profile.movies.' + movie.id]  = movie;
+    $set['profile.actions'] = newActionCount;
+    Meteor.users.update({ _id: Meteor.userId()}, { $set: $set });
+  }
 
   App.trigger('reload');
   Session.set('movieStatus'+movie.id, movie.statusType+movie.statusScore);

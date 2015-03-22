@@ -77,13 +77,26 @@ Meteor.startup(function() {
     if (cachedUserId != userId)
     {
       cachedUserId = userId;
-      if (cachedUserId)
+      if (cachedUserId) {
         Session.set('loggedIn', true);
-      else
+        Session.set('actionCount', Meteor.user().profile.actions)
+      } else {
         Session.set('loggedIn', false);
+      }
       Meteor.call('initialInsert', function() { App.trigger('reload');});
     }
   });
+
+  Deps.autorun(function() {
+    var user = Meteor.user();
+    if (!user) return;
+    var remoteActionCount = (user.profile.actions || 0);
+    if (remoteActionCount > Session.get('actionCount')) {
+      Session.set('actionCount', remoteActionCount)
+      App.trigger('reload')
+    }
+  });
+
 });
 
 

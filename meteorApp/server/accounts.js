@@ -1,4 +1,5 @@
 Accounts.onCreateUser(function(options, user) {
+  options.profile.actions = 0;
   if (user.services.github && options.profile)
   {
     var result = Meteor.http.get('https://api.github.com/user', 
