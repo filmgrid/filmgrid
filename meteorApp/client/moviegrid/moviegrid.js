@@ -27,7 +27,7 @@ var sorts = {
   rating: function(m) { return -m.score_imdb || 0; },
   popularity: function(m) { return -m.revenue || 0; },
   score: function(m) { /* TODO sort by recommendation score */ return -m.revenue || 0; },
-  added: function(m) { /* TODO sort by date added to list */ return -m.year; }
+  added: function(m) { return -m.changed; }
 };
 
 
@@ -293,8 +293,6 @@ Template.moviegrid.rendered = function() {
   var $window = $(window);
   $list = $(this.find('.movie-list'));
   $noMovies = $(this.find('.no-movies'));
-
-  console.log('RENDERED', $list[0]);
 
   // Reset variables before initialize, if grid is recreated
   allMovies = [];
