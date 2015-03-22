@@ -88,6 +88,7 @@ Meteor.startup(function() {
 
   Deps.autorun(function() {
     if (!Session.get('loggedIn')) return;
+
     var remoteActionCount = (Meteor.user().profile.actions || 0);
     if (remoteActionCount > Session.get('actionCount')) {
       Session.set('actionCount', remoteActionCount)
