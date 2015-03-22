@@ -76,6 +76,7 @@ Template.movie.helpers({
   },
 
   status: function() {
+    Session.get('movieStatus'+this.id);
     return this.statusType + this.statusScore;
   },
 
@@ -112,6 +113,7 @@ function updateProfile(movie, status) {
   Meteor.users.update({ _id: Meteor.userId()}, { $set: $set });
 
   App.trigger('reload');
+  Session.set('movieStatus'+movie.id, movie.statusType+movie.statusScore);
 
   // Recompute recommendations at regular intervals
   //interactions++;
