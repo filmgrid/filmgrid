@@ -101,6 +101,9 @@ function updateProfile(movie, status) {
     if (!(status.type === statusType && status.type == 'liked')) flash($('#nav-link-' + status.type), 'bounce', 600);
   }
 
+  // Remember time of last action
+  movie.changed = new Date();
+
   // Re position : the clicked stuff should disappear
   if (Session.get('activeMovie').id === movie.id) {
     Session.set('activeMovie' + movie.id, false);
