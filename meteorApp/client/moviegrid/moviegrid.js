@@ -241,6 +241,7 @@ function positionMovies(hideOrShow) {
     var y = Math.floor(i / gridColumns) * (movieHeight + gapWidth);
 
     m.el.css('transform', 'translate(' + x + 'px, ' + y + 'px)');
+    m.el.css('transition-delay', i*10+'ms');
   });
 
 
