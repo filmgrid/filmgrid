@@ -270,11 +270,18 @@ var loadMore = throttle(function() {
 }, 300);
 
 var resize = throttle(function() {
-  var oldGridColumns = gridColumns;
   var gridWidth = $list ? $list.width() : 900;
+  var windowWidth = window.innerWidth;
+  
+  // Recalculate number of columns
+  var oldGridColumns = gridColumns;
   gridColumns = Math.max(3, Math.floor(gridWidth / (movieWidth + gapWidth)));
   if ($list && gridColumns !== oldGridColumns) positionMovies(initial);
   initial = false;
+
+  // Scale movies on mobile
+  var transform = (windowWidth < 651) ? 'scale(' + (windowWidth/488) + ')' : 'none';
+  $list.css('transform', transform);
 }, 300);
 
 Template.moviegrid.helpers({

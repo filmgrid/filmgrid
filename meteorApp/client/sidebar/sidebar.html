@@ -1,11 +1,14 @@
 <template name="sidebar">
 
-    <div id="mobile-sidebar">
-        <div id="mobile-menu"></div>
+    <div id="mobile-header">
         <div id="mobile-logo"></div>
+        <div id="mobile-menu"></div>
     </div>
 
-    <div id="sidebar" class="{{ sidebarClass }}">
+    <div id="sidebar-in-target"></div>
+    <div id="sidebar-out-target" class="{{#if showSidebar}}show{{/if}}"></div>
+
+    <div id="sidebar">
         <div id="sidebar-body">
 
             <a href="/" id="logo"></a>

@@ -42,6 +42,11 @@ swap = function(array, i, j){
     }
 };
 
+bound = function(x, min, max){
+    return Math.min(Math.max(min, x), max);
+};
+
+
 
 var eventCache = {};
 
@@ -64,52 +69,3 @@ App = {
         }
     }
 };
-
-
-if (Meteor.isClient) {
-
-    var rAF = (function() {
-        return  window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        function(callback) { window.setTimeout(callback, 1000 / 60); };
-    })();
-
-    var ease = function(t) {
-        if (t < 0.5) return 4 * t * t * t;
-        return 1 - 4 * (1 - t) * (1 - t) * (1 - t);
-    };
-
-    animate = function(callback, duration) {
-        var startTime = Date.now();
-        var time = 0;
-
-        function getFrame() {
-            if (time < duration) rAF(getFrame);
-            time = Date.now() - startTime;
-            callback(Math.min(1, time/duration));
-        }
-
-        getFrame();
-    };
-
-    scrollTo = function(pos, time) {
-        if (pos < 0) pos = 0;
-        if (time == null) time = 1000;
-
-        var startPosition = $(window).scrollTop();
-        var distance = pos - startPosition;
-
-        var animation = animate(function(t) {
-            document.body.scrollTop = document.documentElement.scrollTop = startPosition + distance * ease(t);
-        }, time);
-    };
-
-    // Adds an animation class to $el and removes it when the animation is complete
-    flash = function($el, className, time) {
-        setTimeout(function() {
-            $el.removeClass(className);
-        }, time);
-        $el.addClass(className);
-    }
-
-}

@@ -7,7 +7,7 @@
 
 	<!-- Mobile Capable -->
 	<meta name="HandheldFriendly" content="True">
-	<meta name="viewport" content="width=490, maximum-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta http-equiv="cleartype" content="on">
 
 	<!-- Web Apps -->
@@ -27,3 +27,16 @@
 
 	<link rel="stylesheet" href="http://mathigon.org/styles/fonts.css">
 </head>
+
+<template name="index">
+	{{ > sidebar }}
+
+	<div id="page">
+		{{#if navSelectedIs 'suggested,bookmarked,liked,disliked|hidden,playing,friends'}}
+	 		{{ > moviegrid }}
+	 	{{/if}}
+		{{#if navSelectedIs 'about'}}
+	 		{{ > about }}
+	 	{{/if}}
+	</div>
+</template>

@@ -1,3 +1,8 @@
+// =============================================================================
+// FILMGRID - GLOBAL STYLES
+// =============================================================================
+
+
 @bg: #12121B;
 @blue: #29ABE2;
 
@@ -35,24 +40,11 @@ html, body {
     padding: 0;
 }
 
-#page.about {
+.about {
     padding: 0 40px 40px 20px;
     max-width: 720px;
     color: #DDD;
     position: relative;
-}
-
-@media screen and (max-width: 750px) {
-    #sidebar {
-        z-index: 500;
-        background: @bg;
-        top: 60px;
-        transition: transform .4s;
-        transform: translateX(-260px);
-    }
-    #sidebar.show { transform: none; }
-    #page { margin: 60px 0 0 0; }
-    #page.about { padding: 20px; }
 }
 
 .about h1, .about h2, .about a { color: @blue; }
