@@ -3,6 +3,7 @@
 // =================================================================================================
 
 
+var $sidebar;
 var $search;
 var $genre;
 var $sort;
@@ -53,6 +54,19 @@ function toggleSubnav() {
 
 // =================================================================================================
 
+Deps.autorun(function() {
+  var show = Session.get('showSidebar');
+  if (!$sidebar || show === 'sliding') return;
+
+  $sidebar.css('transition', 'transform .4s');
+  $sidebar.one('transitionend webkitTransitionEnd', function() { $sidebar.css('transition', ''); });
+
+  document.body.offsetTop;
+  $sidebar.css('transform', 'translateX(' + (show ? '-240' : '0') + 'px)');
+});
+
+// =================================================================================================
+
 Template.sidebar.events = {
   'change #genre': handleGenre,
   'change #sort': handleSort,
@@ -66,16 +80,16 @@ Template.sidebar.events = {
 
 Template.sidebar.helpers({
   navSelectedIs: function(nav) {
-    return nav.split('|').indexOf(this.nav) >= 0;
+    return nav === this.nav;
   },
   filtersClass: function() {
     return this.nav == 'about' ? 'hidden' : '';
   },
-  sidebarClass: function() {
-    return Session.get('showSidebar') ? 'show' : '';
-  },
   subnavClass: function() {
     return Session.get('showSubnav') ? 'open' : '';
+  },
+  showSidebar: function() {
+    return Session.get('showSidebar') === true;
   },
   services: function() {
     // Hack to get access to internal function in accounts-ui-unstyled
@@ -93,13 +107,39 @@ Template.sidebar.helpers({
 });
 
 Template.sidebar.rendered = function() {
+  
+  // Global variables
+  $sidebar = $('#sidebar');
   $search = $('#search');
   $genre = $('#genre');
   $sort = $('#sort');
   $specialSort = $('#special-sort');
 
+  // Set value of page-specific sort option
   $specialSort.attr('value', Session.get('sort'));
   $specialSort.text(specialSortOptions[Session.get('sort')]);
+
+  // Create sliders for mobile sidebar
+  touchSlider($('#sidebar-in-target'), {
+    onMove: function(x) {
+      Session.set('showSidebar', 'sliding');
+      $sidebar.css('transform', 'translateX(' + bound(x, -240, 0) + 'px)')
+    },
+    onEnd: function(x) {
+      Session.set('showSidebar', x < -100)
+    }
+  });
+  
+  touchSlider($('#sidebar-out-target'), {
+    onMove: function(x) {
+      Session.set('showSidebar', 'sliding');
+      $sidebar.css('transform', 'translateX(' + bound(x - 240, -240, 0) + 'px)')
+    },
+    onEnd: function(x) {
+      Session.set('showSidebar', Math.abs(x) > 5 && x < 60)
+    }
+  });
+
 };
 
 App.on('sortChange', function(sort) {

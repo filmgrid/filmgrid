@@ -1,0 +1,93 @@
+// =============================================================================
+// FILMGRID - MOBILE STYLES
+// =============================================================================
+
+
+@bg: #12121B;
+
+@media screen and (max-width: 750px) {
+
+    #sidebar {
+        z-index: 500;
+        background: fade(lighten(@bg,4%), 97%);
+        top: 50px;
+        right: -240px;
+        width: 240px;
+        transform: translateX(0);
+        &.show { transform: translateX(-240px); }
+    }
+
+    #mobile-header {
+        position: fixed;
+        width: 100%;
+        z-index: 500;
+        background: @bg;
+        height: 50px;
+        top: 0;
+    }
+
+    #mobile-menu {
+        float: right;
+        width: 44px;
+        height: 44px;
+        padding: 3px 3px 20px 20px;
+        background: url('/assets/mobile.png') no-repeat;
+        background-size: 170px 44px;
+        background-position: 20px 3px;
+        opacity: 0.8;
+    }
+
+    #mobile-logo {
+        float: left;
+        width: 126px;
+        height: 44px;
+        background: url('/assets/mobile.png') -44px 0;
+        background-size: 170px 44px;
+        margin: 3px;
+    }
+
+    #sidebar-in-target {
+        position: fixed;
+        top: 50px;
+        right: 0;
+        bottom: 0;
+        width: 20px;
+        z-index: 400;
+    }
+
+    #sidebar-out-target {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        right: 240px;
+        bottom: 0;
+        z-index: 400;
+        display: none;
+        &.show { display: block; }
+    }
+
+
+    // Fix existing sidebar styles
+    #sidebar-body { padding: 0; }
+    nav { margin: 0; }
+    .nav-link { padding-left: 50px; }
+    .nav-icon { left: 16px; }
+    #subnav { margin-left: 10px; }
+    #subnav .nav-link { padding-left: 40px; margin-left: 0; }
+    #subnav .nav-icon { left: 6px; }
+    .filters { margin: 0 16px; }
+    #sidebar input, #sidebar select { background: transparent; }
+    #nav-bottom { bottom: 0; width: 240px; }
+    .nav-bottom-item, .login-text-and-button { padding: 6px 16px; }
+
+
+    // Fix existing page styles
+    #logo { display: none; }
+    #page { margin: 50px 0 0 0; }
+    .about { padding: 20px; }
+    .about h2 { clear: both; }
+    .team { margin-bottom: 10px; }
+    .no-movies { margin-left: -180px; }
+    .movie-list { padding: 2px; }
+
+}

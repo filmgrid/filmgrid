@@ -1,7 +1,14 @@
+// =============================================================================
+// FILMGRID - MOVIEGRID STYLES
+// =============================================================================
+
+
 .movie-list {
     position: relative;
     overflow: hidden;
     padding: 2px 0;
+    transform-origin: 0 0;
+    min-width: 484px;
 }
 
 .movie-list.empty {
@@ -38,8 +45,4 @@
 .no-movies.show {
     transform: scale(1);
     opacity: 1;
-}
-
-@media screen and (max-width: 750px) {
-    .no-movies { margin-left: -180px; }
 }

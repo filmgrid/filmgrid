@@ -19,9 +19,8 @@ function configureRoute(that, path, sort) {
     Session.set('type', path);
     App.trigger('sortChange', sort);
     App.trigger('reload');
-    Session.set('showSidebar', false);
   }
-  that.render('movies', { data: { nav: path } });
+  that.render('index', { data: { nav: path } });
 }
 
 Router.onBeforeAction(function() {
@@ -31,6 +30,10 @@ Router.onBeforeAction(function() {
     configureRoute(this, 'suggested', 'popularity')
   };
 }, { except: ['about'] });
+
+Router.onAfterAction(function() {
+  Session.set('showSidebar', false);
+});
 
 Router.route('/', function() {
   configureRoute(this, 'suggested', 'score');
@@ -57,8 +60,14 @@ Router.route('/watch-with-friends', function() {
 }, routeConfig);
 
 Router.route('/about', function() {
-  this.render('about', { data: { nav: "about" }, waitOn: Meteor.user() });
+  this.render('index', { data: { nav: "about" }, waitOn: Meteor.user() });
 }, routeConfig);
+
+Template.index.helpers({
+  navSelectedIs: function(nav) {
+    return _.indexOf(nav.split(','), this.nav) >= 0;
+  }
+});
 
 Meteor.startup(function() {
 
