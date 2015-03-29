@@ -120,6 +120,7 @@ function updateProfile(movie, status) {
     Meteor.users.update({ _id: Meteor.userId()}, { $set: $set, $inc : {'profile.actions' : 1} });
   }
 
+  Session.set('lastRatedMovieId', movie.id);
   App.trigger('reload');
   Session.set('movieStatus'+movie.id, movie.statusType+movie.statusScore);
 
