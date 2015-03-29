@@ -37,6 +37,7 @@ var sorts = {
 var allMovies = [];
 var movieCache  = {};
 var shownMovies = [];
+var shownMoviesPrevious = [];
 var publicMovies = [];
 
 var selectedMovies = [];
@@ -147,6 +148,7 @@ function initialiseMovies() {
   var movies = selectedMovies.slice(0, 50 + scroll * 20);
 
   // Create or update all selected movies
+  shownMoviesPrevious = shownMovies;
   shownMovies = _.map(movies, function(m) {
     if (movieCache[m.id]) {
       movieCache[m.id].data = m;
@@ -183,14 +185,20 @@ function positionMovies(hideOrShow) {
 
   // Compare with previously active movie --------------------------------------
 
+  var lastRatedMovieId = Session.get('lastRatedMovieId');
+  var lastRatedMovieIndex =  findIndex(shownMoviesPrevious, function(x) { return x.data.id === lastRatedMovieId });
+
   var activeMovie = Session.get('activeMovie');
-
-  var previousActiveIndex = (activeMovie.id && activeMovie.id !== previousActiveId) ?
-      findIndex(shownMovies, function(x) { return x.data.id === previousActiveId }) : -1;
-
   var activeIndex = activeMovie.id ?
       findIndex(shownMovies, function(x) { return x.data.id === activeMovie.id }) : -1;
 
+  var previousIndex = findIndex(shownMovies, function(x) { return x.data.id === previousActiveId });
+  console.log(lastRatedMovieIndex, lastRatedMovieId);
+  // We update the position from the lastRatedMovieIndex if possible, or ActiveIndex or lastIndex;
+  var slideIndex = lastRatedMovieIndex != -1 ? lastRatedMovieIndex : activeIndex != -1 ? activeIndex : previousIndex; 
+
+  var previousActiveIndex = (activeMovie.id && activeMovie.id !== previousActiveId) ?
+      findIndex(shownMovies, function(x) { return x.data.id === previousActiveId }) : -1;
   previousActiveId = activeMovie.id || null;
 
 
@@ -211,6 +219,8 @@ function positionMovies(hideOrShow) {
 
   // Calculate Movie Positions -------------------------------------------------
 
+
+
   var computedActiveIndex = activeIndex;
   if (previousActiveIndex >= 0 && activeIndex > previousActiveIndex) {
     computedActiveIndex += 2;
@@ -218,7 +228,6 @@ function positionMovies(hideOrShow) {
     swap(shownMovies, activeIndex, computedActiveIndex);
   }
   activeIndex = computedActiveIndex;
-
   var activeColumn = activeIndex % gridColumns;
   var shift = Math.max(0, activeColumn - (gridColumns - 3));
 
@@ -241,7 +250,7 @@ function positionMovies(hideOrShow) {
     var y = Math.floor(i / gridColumns) * (movieHeight + gapWidth);
 
     m.el.css('transform', 'translate(' + x + 'px, ' + y + 'px)');
-    m.el.css('transition-delay', i*10+'ms');
+    m.el.css('transition-delay', Math.abs(slideIndex-i)*15+'ms');
   });
 
 
@@ -294,8 +303,8 @@ Template.moviegrid.helpers({
   }
 });
 
-App.on('reload', function() { selectMovies(); });
-App.on('reposition', function() { positionMovies(); });
+App.on('reload', function(id) { selectMovies(id); });
+App.on('reposition', function(id) { positionMovies(id); });
 
 Template.moviegrid.rendered = function() {
   var $body = $('body');
@@ -307,6 +316,7 @@ Template.moviegrid.rendered = function() {
   allMovies = [];
   movieCache  = {};
   shownMovies = [];
+  shownMoviesPrevious = [];
   initialiseMovies();
 
   $window.on('resize', resize);
