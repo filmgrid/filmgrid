@@ -55,12 +55,12 @@ function searchMovies(str) {
 
     // TODO sorting + filtering options ?
 
-    initialiseMovies();
+    initialiseMovies(true);
   });
 }
 
 // Finds and filter user movies
-function lookupMovies(type, search, sort, filter) {
+function lookupMovies(type, search, sort, filter, instantaneaousRepositionning) {
   var user = Meteor.user();
   
   // If not logged in, load public movies, cache them and repeat
@@ -93,7 +93,7 @@ function lookupMovies(type, search, sort, filter) {
   if (sort) movies = _.sortBy(movies, sorts[sort]);
 
   selectedMovies = movies;
-  initialiseMovies();
+  initialiseMovies(instantaneaousRepositionning);
 }
 
 // Finds an array of selected movies (search, filters, etc.)
@@ -107,12 +107,13 @@ function selectMovies() {
 
 
   // Update scroll position when the query changes -----------------------------
-
+  var instantaneaousRepositionning = false;
   var query = [type, search, sort, filter.genre].join('|');
   if (query !== queryCache) {
     scroll = 0;
     scrollTo(0, 600);
     queryCache = query;
+    instantaneaousRepositionning = true;
   }
 
 
@@ -125,12 +126,12 @@ function selectMovies() {
     // Global Search
     searchMovies(search);
   } else {
-    lookupMovies(type, search, sort, filter);
+    lookupMovies(type, search, sort, filter, instantaneaousRepositionning);
   }
 }
 
 // Creates the movie objects and dom elements for all requred movies
-function initialiseMovies() {
+function initialiseMovies(instantaneaousRepositionning) {
   if (!$list) return;
   console.log('Initialise Movies');
 
@@ -162,7 +163,7 @@ function initialiseMovies() {
     return movieCache[m.id];
   });
 
-  positionMovies(true);
+  positionMovies(true, instantaneaousRepositionning);
 }
 
 
@@ -178,7 +179,7 @@ var previousActiveId = null;
 var previousGridHeight = null;
 var resizeTimeout;
 
-function positionMovies(hideOrShow) {
+function positionMovies(hideOrShow, instantaneaousRepositionning) {
   if (!$list || !gridColumns) return;
   console.log('Position Movies');
 
@@ -253,7 +254,10 @@ function positionMovies(hideOrShow) {
     var y = Math.floor(i / gridColumns) * (movieHeight + gapWidth);
 
     m.el.css('transform', 'translate(' + x + 'px, ' + y + 'px)');
-    m.el.css('transition-delay', Math.abs(slideIndex-i)*15+'ms');
+    if (instantaneaousRepositionning)
+      m.el.css('transition-delay', 0+'ms');
+    else
+      m.el.css('transition-delay', Math.abs(slideIndex-i)*15+'ms');
   });
 
 
