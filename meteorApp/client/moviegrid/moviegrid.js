@@ -186,14 +186,17 @@ function positionMovies(hideOrShow) {
   // Compare with previously active movie --------------------------------------
 
   var lastRatedMovieId = Session.get('lastRatedMovieId');
-  var lastRatedMovieIndex =  findIndex(shownMoviesPrevious, function(x) { return x.data.id === lastRatedMovieId });
+  var lastRatedMovieIndex = -1;
+  if (lastRatedMovieId) {
+    lastRatedMovieIndex =  findIndex(shownMoviesPrevious, function(x) { return x.data.id === lastRatedMovieId });
+    Session.set('lastRatedMovieId', false);
+  }
 
   var activeMovie = Session.get('activeMovie');
   var activeIndex = activeMovie.id ?
       findIndex(shownMovies, function(x) { return x.data.id === activeMovie.id }) : -1;
 
   var previousIndex = findIndex(shownMovies, function(x) { return x.data.id === previousActiveId });
-  console.log(lastRatedMovieIndex, lastRatedMovieId);
   // We update the position from the lastRatedMovieIndex if possible, or ActiveIndex or lastIndex;
   var slideIndex = lastRatedMovieIndex != -1 ? lastRatedMovieIndex : activeIndex != -1 ? activeIndex : previousIndex; 
 
