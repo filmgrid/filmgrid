@@ -49,7 +49,8 @@ function searchMovies(str, filter) {
   console.log('Search Movies');
   Meteor.call('search', str, function(error, result) {
     var movies = _.sortBy(result, function(x) { return -x.score});
-    movies = _.map(selectedMovies, function(x) { 
+    movies = _.map(movies, function(x) { 
+      
       x.obj.id = x.obj._id;
       x.obj.statusType = 'search';
       x.obj.statusScore = '';
