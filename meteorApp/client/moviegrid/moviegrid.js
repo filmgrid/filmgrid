@@ -306,8 +306,8 @@ Template.moviegrid.helpers({
   }
 });
 
-App.on('reload', function(id) { selectMovies(id); });
-App.on('reposition', function(id) { positionMovies(id); });
+App.on('reload', function() { selectMovies(); });
+App.on('reposition', function() { positionMovies(); });
 
 Template.moviegrid.rendered = function() {
   var $body = $('body');
