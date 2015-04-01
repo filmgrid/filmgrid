@@ -26,6 +26,13 @@ function handleGenre() {
   App.trigger('reload');
 }
 
+function handleReleased(from, to) {
+  var query = Session.get('filter') || {};
+  query.released = [from, to];
+  Session.set('filter', query);
+  App.trigger('reload');  
+}
+
 function handleSort() {
   var sort = $sort.val() || null;
   Session.set('sort', sort);
@@ -118,6 +125,22 @@ Template.sidebar.rendered = function() {
   // Set value of page-specific sort option
   $specialSort.attr('value', Session.get('sort'));
   $specialSort.text(specialSortOptions[Session.get('sort')]);
+
+  // Release year range slider
+  var $released = $("#released");
+  $released.noUiSlider({
+    start: [1960, 2015],
+    connect: true,
+    // behaviour: 'tap',
+    step: 1,
+    // margin: 1,
+    range: { min: 1960, max: 2015 }
+  });
+  $released.on({
+    slide: function(e, range){ handleReleased(+range[0], +range[1]) }
+  });
+  $released.Link('lower').to($('#released-start'), null, wNumb({ decimals: 0 }));
+  $released.Link('upper').to($('#released-end'), null, wNumb({ decimals: 0 }));
 
   // Create sliders for mobile sidebar
   touchSlider($('#sidebar-in-target'), {
