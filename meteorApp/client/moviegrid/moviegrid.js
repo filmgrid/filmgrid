@@ -11,6 +11,7 @@ var $noMovies;
 
 var filters = {
   genre: function(m, value) { return m.genre.indexOf(value) !== -1; },
+  released: function(m, value) { return m.year >= value[0] && m.year <= value[1]; },
   title: function(m, value) {
     // TODO better searching
     // TODO generate search string in db (+ keywords)
