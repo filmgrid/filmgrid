@@ -1,0 +1,32 @@
+<template name="filters">
+
+    <div id="search-wrap">
+        <label for="search">{{ searchText }}</label>
+        <input type="text" id="search" placeholder="Title, Actor, Keywords"/>
+        {{ #if searchStr }}
+            <div id="search-clear"></div>
+        {{ /if }}
+    </div>
+
+    <label for="sort">Sort by</label>
+    <select id="sort">
+        <option id="special-sort" value=""></option>
+        <option value="rating">Rating</option>
+        <option value="year">Year</option>
+        <option value="az">A-Z</option>
+    </select>
+
+    <label for="genre">Genres</label>
+    {{ > dropdown genres }}
+
+    <label for="genre">Streaming Services</label>
+    {{ > dropdown streaming }}
+
+    <label for="genre">Release Year</label>
+    <div id="released-slider">
+        <div id="released-start"></div>
+        <div id="released"></div>
+        <div id="released-end"></div>
+    </div>
+
+</template>

@@ -1,0 +1,16 @@
+<template name="dropdown">
+
+    <div class="dropdown {{ dropdownClass }}">
+		{{ #if multiSelect }}
+			<div class="dropdown-wrap {{ wrapClass }}">
+				<div class="dropdown-all">{{ allText }}</div>
+			</div>
+		{{ /if }}
+        {{ #each items }}
+			<div class="dropdown-wrap {{ wrapClass this }}">
+				<div class="dropdown-item">{{ this }}</div>
+			</div>
+        {{ /each }}
+    </div>
+
+</template>

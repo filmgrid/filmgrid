@@ -10,7 +10,11 @@ var $list;
 var $noMovies;
 
 var filters = {
-  genre: function(m, value) { return m.genre.indexOf(value) !== -1; },
+  genre: function(m, value) {
+    // TODO update data so that .split isn't necessary
+    return value.length ? _.intersection(value, m.genre.split(', ')).length : true;
+  },
+  streaming: function(m, value) { return true; /* TODO */ },
   released: function(m, value) { return m.year >= value[0] && m.year <= value[1]; },
   title: function(m, value) {
     // TODO better searching
