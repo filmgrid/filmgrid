@@ -21,22 +21,51 @@
                 <div class="movie-details">
                     <div class="movie-body">
                         <h2>{{ this.title }}</h2>
-                        <p class="metadata">{{ year }} &nbsp;•&nbsp; {{ runtime }}min &nbsp;•&nbsp; <span class="rating">{{ rating }}</span></p>
-                        <p class="metadata">{{ genre }}</p>
-                        <p class="metadata">{{ actors }}</p>
                         <p class="metadata">
-                            <a href="http://www.imdb.com/title/tt{{ link_imdb }}/" target="_blank" class="movie-score imdb">{{ score_imdb }}</a>
-                            <a href="{{ link_rt }}" target="_blank">
-                                <span class="movie-score rt1">Public: {{ score_rtaudience }}</span>
-                                <span class="movie-score rt2">Critics: {{  score_rtcritics }}</span>
+                            {{#if score_imdb}}
+                            <a href="http://www.imdb.com/title/tt{{ link_imdb }}/" target="_blank" class="movie-score imdb">
+                                {{ score_imdb }}
+                                <span class="movie-score-tooltip">
+                                    <strong>IMDb:</strong><br>
+                                    Rating: {{ score_imdb }}<br>
+                                    {{#if numberOfVotes}}{{ numberOfVotes }} Votes{{/if}}
+                                </span>
                             </a>
-                            <span class="movie-score meta">{{ score_metascore }}</span>
+                            {{/if}}
+                            {{#if or score_rtcritics score_rtaudience}}
+                            <a href="{{ link_rt }}" target="_blank" class="movie-score rt">
+                                {{ score_rtcritics }}
+                                {{#if and score_rtcritics score_rtaudience}}•{{/if}}
+                                {{ score_rtaudience }}
+                                <span class="movie-score-tooltip">
+                                    <strong>Rotten Tomatoes:</strong><br>
+                                    {{#if score_rtcritics}}Critics Score: {{ score_rtcritics }}{{/if}}
+                                    {{#if and score_rtcritics score_rtaudience}}<br>{{/if}}
+                                    {{#if score_rtaudience}}Audience Score: {{ score_rtaudience }}{{/if}}
+                                </span>
+                            </a>
+                            {{/if}}
+                            {{#if score_metascore}}
+                            <span class="movie-score meta">
+                                {{ score_metascore }}
+                                <span class="movie-score-tooltip">
+                                    <strong>Metacritic:</strong><br>
+                                    Metascore: {{ score_metascore }}
+                                </span>
+                            </span>
+                            {{/if}}
                         </p>
-                        <p class="plot">{{ plot }}</p>
+                        <p class="metadata">{{ released }} &nbsp;•&nbsp; {{ runtime }}min &nbsp;•&nbsp; <span class="rating">{{ rating }}</span></p>
+                        <p class="metadata">{{ movieGenres }}</p>
+                        <p class="metadata">{{ actors }}</p>
+                        <p class="plot">{{ moviePlot }}</p>
                     </div>
                     <div class="movie-buttons">
-                        {{#if hasTrailer}}
+                        {{#if trailer_youtube}}
                         <button class="trailer">Watch Trailer</button>
+                        {{/if}}
+                        {{#if streaming.netflix}}
+                        <a class="stream-netflix" target="_blank" href="https://www.netflix.com/title/{{ streaming.netflix.id }}">Watch on <span></span></a>
                         {{/if}}
                         <!--<button>Watch on Amazon</button>
                         <button>Watch on Netflix</button>-->

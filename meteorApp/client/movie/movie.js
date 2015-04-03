@@ -67,10 +67,6 @@ Template.movie.helpers({
     return Session.get('activeMovie' + this.id) && Session.get('flipped') ? 'flipped' : '';
   },
 
-  hasTrailer: function() {
-    return !!this.trailer_youtube;
-  },
-
   showTrailer: function() {
     return Session.get('activeMovie' + this.id) && Session.get('flipped');
   },
@@ -82,7 +78,35 @@ Template.movie.helpers({
 
   loggedIn: function() {
     return Session.get('loggedIn');
-  }
+  },
+
+  movieGenres: function() {
+    return this.genres.join(', ');
+  },
+
+  numberOfVotes: function() {
+    var v = '' + this.votes_imdb;
+    if (v < 999) return v;
+    if (v < 9999) return v[0] + ',' + v.substring(1,4);
+    if (v < 999999) return Math.round(this.votes_imdb/1000) + 'k';
+    return Math.round(this.votes_imdb/1000000) + 'm';
+  },
+
+  moviePlot: function() {
+    return this.plot.replace(/\s\-\-\s/g, '—')
+                    .replace(/\s\"/g, ' “')
+                    .replace(/\"\s/g, '” ')
+                    .replace(/\s\'/g, ' ‘')
+                    .replace(/\'\s/g, '’ ')
+                    .replace(/\'/g, '’');
+  },
+
+  netflixCountries: function() {
+    return this.streaming.netflix.countries.join(', ')
+  },
+
+  and: function(a, b) { return a && b; },
+  or:  function(a, b) { return a || b; }
 });
 
 function updateProfile(movie, status) {

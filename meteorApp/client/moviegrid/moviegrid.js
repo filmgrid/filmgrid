@@ -11,8 +11,7 @@ var $noMovies;
 
 var filters = {
   genre: function(m, value) {
-    // TODO update data so that .split isn't necessary
-    return value.length ? _.intersection(value, m.genre.split(', ')).length : true;
+    return value.length ? _.intersection(value, m.genres).length : true;
   },
   streaming: function(m, value) { return true; /* TODO */ },
   released: function(m, value) { return m.year >= value[0] && m.year <= value[1]; },
