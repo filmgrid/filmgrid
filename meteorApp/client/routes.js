@@ -17,6 +17,7 @@ var cachedUserId = null;
 function configureRoute(that, path, sort) {
   if (Session.get('type') !== path) {
     Session.set('type', path);
+    Session.set('sort', sort);
     App.trigger('sortChange', sort);
     App.trigger('reload');
   }
@@ -27,7 +28,7 @@ Router.onBeforeAction(function() {
   if (Meteor.userId()) {
     this.next();
   } else {
-    configureRoute(this, 'suggested', 'popularity')
+    configureRoute(this, 'suggested', 'Popularity')
   };
 }, { except: ['about'] });
 
@@ -36,27 +37,27 @@ Router.onAfterAction(function() {
 });
 
 Router.route('/', function() {
-  configureRoute(this, 'suggested', 'score');
+  configureRoute(this, 'suggested', 'Recommended');
 }, routeConfig);
 
 Router.route('/watchlist', function() {
-  configureRoute(this, 'bookmarked', 'added');
+  configureRoute(this, 'bookmarked', 'Date added');
 }, routeConfig);
 
 Router.route('/favourites', function() {
-  configureRoute(this, 'liked', 'stars');
+  configureRoute(this, 'liked', 'Stars');
 }, routeConfig);
 
 Router.route('/disliked', function() {
-  configureRoute(this, 'disliked|hidden', 'added');
+  configureRoute(this, 'disliked|hidden', 'Date added');
 }, routeConfig);
 
 Router.route('/now-playing', function() {
-  configureRoute(this, 'playing', 'score');
+  configureRoute(this, 'playing', 'Recommended');
 }, routeConfig);
 
 Router.route('/watch-with-friends', function() {
-  configureRoute(this, 'friends', 'score');
+  configureRoute(this, 'friends', 'Recommended');
 }, routeConfig);
 
 Router.route('/about', function() {

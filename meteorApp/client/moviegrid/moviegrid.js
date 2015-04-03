@@ -26,13 +26,14 @@ var filters = {
 };
 
 var sorts = {
-  az: function(m) { return m.title; },
-  year:  function(m) { return -m.year; },
-  stars: function(m) { return -(m.statusScore || 0); },
-  rating: function(m) { return -m.score_imdb || 0; },
-  popularity: function(m) { return -m.revenue || 0; },
-  score: function(m) { /* TODO sort by recommendation score */ return -m.revenue || 0; },
-  added: function(m) { return -m.changed; }
+  'A-Z': function(m) { return m.title; },
+  Year:  function(m) { return -m.released.replace(/\-/g,''); },
+  Stars: function(m) { return -(m.statusScore || 0); },
+  // TODO calculate average rating in db
+  Rating: function(m) { return -((m.score_rtcritics || 0) + (m.score_rtaudience || 0) + (m.score_imdb || 0)*10); },
+  Popularity: function(m) { return -m.revenue || 0; },
+  Recommended: function(m) { /* TODO sort by recommendation score */ return -m.revenue || 0; },
+  'Date added': function(m) { return -m.changed; }
 };
 
 

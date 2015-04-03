@@ -3,14 +3,32 @@
     <div class="dropdown {{ dropdownClass }}">
 		{{ #if multiSelect }}
 			<div class="dropdown-wrap {{ wrapClass }}">
-				<div class="dropdown-all">{{ allText }}</div>
+				<div class="dropdown-all">{{ multiSelect }}</div>
 			</div>
 		{{ /if }}
-        {{ #each items }}
-			<div class="dropdown-wrap {{ wrapClass this }}">
-				<div class="dropdown-item">{{ this }}</div>
+        {{ #each allItems }}
+			<div class="dropdown-wrap {{ wrapClass this }}" style="{{ wrapStyle this }}">
+				<div class="dropdown-item">
+				{{ #if showImages }}
+					<img height="16" alt="{{ this }}" src="{{ imageSrc this }}"/>
+				{{ else }}
+					{{ this }}
+				{{ /if }}
+				{{ #if hasSelect this }}
+					<select>
+						{{ #each selectItems this }}
+							<option>{{ this }}</option>
+						{{ /each }}
+					</select>
+				{{ /if }}
+				</div>
 			</div>
         {{ /each }}
+        {{ #if footer }}
+			<div class="dropdown-wrap">
+				<div class="dropdown-footer"><em>{{ footer }}</em></div>
+			</div>
+		{{ /if }}
     </div>
 
 </template>

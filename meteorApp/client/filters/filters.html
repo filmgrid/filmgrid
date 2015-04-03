@@ -9,12 +9,7 @@
     </div>
 
     <label for="sort">Sort by</label>
-    <select id="sort">
-        <option id="special-sort" value=""></option>
-        <option value="rating">Rating</option>
-        <option value="year">Year</option>
-        <option value="az">A-Z</option>
-    </select>
+    {{ > dropdown sort }}
 
     <label for="genre">Genres</label>
     {{ > dropdown genres }}
