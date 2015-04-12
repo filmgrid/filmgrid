@@ -99,7 +99,7 @@ function lookupMovies(type, search, sort, filter, instantaneaousRepositionning) 
 
   // Search movies
   if (search.length > 1) {
-    movies = movies.filter(function(m) { return filters.title(m, search); });
+    movies = _.filter(movies, function(m) { return filters.title(m, search); });
   }
 
   // Sort movies
@@ -327,7 +327,6 @@ App.on('reload', function() { selectMovies(); });
 App.on('reposition', function() { positionMovies(); });
 
 Template.moviegrid.rendered = function() {
-  var $body = $('body');
   var $window = $(window);
   $list = $(this.find('.movie-list'));
   $noMovies = $(this.find('.no-movies'));
@@ -343,6 +342,6 @@ Template.moviegrid.rendered = function() {
   resize();
 
   $window.scroll(function() {
-    if ($window.scrollTop() + $window.height() > $body.height() - 400) loadMore();
+    if ($window.scrollTop() + $window.height() > $list.height() - 400) loadMore();
   });
 };
