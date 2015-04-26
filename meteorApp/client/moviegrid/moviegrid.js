@@ -270,7 +270,7 @@ function positionMovies(hideOrShow, instantaneaousRepositionning) {
     if (instantaneaousRepositionning)
       m.el.css('transition-delay', 0+'ms');
     else
-      m.el.css('transition-delay', Math.abs(slideIndex-i)*15+'ms');
+      m.el.css('transition-delay', easeExpo(Math.abs(slideIndex-i),20)*30*15+'ms');
   });
 
 

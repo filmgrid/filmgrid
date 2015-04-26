@@ -102,3 +102,8 @@ touchSlider = function($el, callbacks) {
 
     $el.on('touchstart', onStart);
 };
+
+
+easeExpo = function(i, halflife) {
+    return 1 - Math.exp(-i/halflife);
+}
