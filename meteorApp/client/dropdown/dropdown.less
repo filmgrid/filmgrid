@@ -1,0 +1,114 @@
+// =============================================================================
+// FILMGRID - FILTER STYLES
+// =============================================================================
+
+
+@bg: #12121B;
+
+.dropdown {
+    cursor: pointer;
+    line-height: 1.2;
+    font-size: 16px;
+    background-color: fade(white, 14%);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.dropdown-wrap {
+    height: 0;
+    overflow: hidden;
+    transition: height .3s;
+    &.active, .expanded & { height: 27px; }
+    &:last-child { margin-bottom: -1px; }
+}
+
+.dropdown-item, .dropdown-all, .dropdown-footer {
+    position: relative;
+    height: 20px;
+    padding: 3px 8px;
+    font-size: 16px;
+    line-height: 1.2;
+    color: fade(white, 70%);
+    border-bottom: 1px solid @bg;
+    transition: background .2s, color .2s, padding .3s;
+
+    .dropdown-wrap:first-child & { border-radius: 2px 2px 0 0; }
+    .dropdown-wrap:last-child & { border: none; border-radius: 0 0 2px 2px; }
+}
+
+.dropdown-item, .dropdown-all {
+    &:before {
+        content: " ";
+        width: 12px;
+        height: 12px;
+        background: data-uri('../../public/assets/check.png');
+        background-size: 12px 12px;
+        position: absolute;
+        top: 7px;
+        left: 7px;
+        transform: scale(0);
+        transition: transform .3s;
+    }
+
+    img {
+        display: inline-block;
+        height: 16px;
+        width: auto;
+        margin: 0 5px -3px 0;
+        opacity: 0.8;
+        transition: opacity .2s;
+    }
+
+    .dropdown:not(.expanded):hover &,
+    .expanded .active &,
+    .expanded &:hover {
+        background-color: fade(white, 20%);
+        color: #FFF;
+        img { opacity: 1; }
+    }
+
+    .expanded & { padding-left: 24px; }
+    .expanded .active &:before {
+        transition-timing-function: cubic-bezier(.42,2,.55,1.11);
+        transform: scale(1);
+    }
+}
+
+.dropdown-footer {
+    cursor: default;
+    text-align: center;
+}
+
+.dropdown-item select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    display: inline-block;
+    float: right;
+    padding: 1px 16px 0 4px;
+    margin: 1px -4px 0 0;
+
+    outline: none;
+    cursor: pointer;
+
+    font-family: 'Whitney Mathigon', Whitney, Helvetica, Arial, sans-serif;
+    color: #FFF;
+    font-size: 13px;
+    text-align: right;
+
+    border-radius: 2px;
+    border: 1px solid transparent;
+    
+    background: transparent;
+    background-image: data-uri('../../public/assets/arrow.png');
+    background-repeat: no-repeat;
+    background-size: 8px 5px;
+    background-position: top 6px right 4px;
+
+    opacity: .6;
+    transition: border .2s, opacity .2s;
+}
+
+.dropdown-item:hover select { border-color: fade(white, 50%); }
+.dropdown-item select:hover { opacity: 1; border-color: fade(white, 80%); }

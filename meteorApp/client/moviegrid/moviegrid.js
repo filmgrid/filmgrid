@@ -10,7 +10,10 @@ var $list;
 var $noMovies;
 
 var filters = {
-  genre: function(m, value) { return m.genre.indexOf(value) !== -1; },
+  genre: function(m, value) {
+    return value.length ? _.intersection(value, m.genres).length : true;
+  },
+  streaming: function(m, value) { return true; /* TODO */ },
   released: function(m, value) { return m.year >= value[0] && m.year <= value[1]; },
   title: function(m, value) {
     // TODO better searching
@@ -22,13 +25,14 @@ var filters = {
 };
 
 var sorts = {
-  az: function(m) { return m.title; },
-  year:  function(m) { return -m.year; },
-  stars: function(m) { return -(m.statusScore || 0); },
-  rating: function(m) { return -m.score_imdb || 0; },
-  popularity: function(m) { return -m.revenue || 0; },
-  score: function(m) { /* TODO sort by recommendation score */ return -m.revenue || 0; },
-  added: function(m) { return -m.changed; }
+  'A-Z': function(m) { return m.title; },
+  Year:  function(m) { return -m.released.replace(/\-/g,''); },
+  Stars: function(m) { return -(m.statusScore || 0); },
+  // TODO calculate average rating in db
+  Rating: function(m) { return -((m.score_rtcritics || 0) + (m.score_rtaudience || 0) + (m.score_imdb || 0)*10); },
+  Popularity: function(m) { return -m.revenue || 0; },
+  Recommended: function(m) { /* TODO sort by recommendation score */ return -m.revenue || 0; },
+  'Date added': function(m) { return -m.changed; }
 };
 
 
@@ -95,7 +99,7 @@ function lookupMovies(type, search, sort, filter, instantaneaousRepositionning) 
 
   // Search movies
   if (search.length > 1) {
-    movies = movies.filter(function(m) { return filters.title(m, search); });
+    movies = _.filter(movies, function(m) { return filters.title(m, search); });
   }
 
   // Sort movies
@@ -266,7 +270,7 @@ function positionMovies(hideOrShow, instantaneaousRepositionning) {
     if (instantaneaousRepositionning)
       m.el.css('transition-delay', 0+'ms');
     else
-      m.el.css('transition-delay', Math.abs(slideIndex-i)*15+'ms');
+      m.el.css('transition-delay', easeExpo(Math.abs(slideIndex-i),20)*30*15+'ms');
   });
 
 
@@ -323,7 +327,6 @@ App.on('reload', function() { selectMovies(); });
 App.on('reposition', function() { positionMovies(); });
 
 Template.moviegrid.rendered = function() {
-  var $body = $('body');
   var $window = $(window);
   $list = $(this.find('.movie-list'));
   $noMovies = $(this.find('.no-movies'));
@@ -339,6 +342,6 @@ Template.moviegrid.rendered = function() {
   resize();
 
   $window.scroll(function() {
-    if ($window.scrollTop() + $window.height() > $body.height() - 400) loadMore();
+    if ($window.scrollTop() + $window.height() > $list.height() - 400) loadMore();
   });
 };

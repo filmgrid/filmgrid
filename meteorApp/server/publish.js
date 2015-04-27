@@ -5,10 +5,10 @@
 
 // Table Config ------------------------------------------------------------------------------------
 
-var fields = ['title', 'plot', 'genre', 'runtime', 'budget', 'revenue', 'year', 'released',
+var fields = ['title', 'plot', 'genres', 'runtime', 'budget', 'revenue', 'year', 'released',
 'languages', 'country', 'score_rtaudience', 'score_rtcritics', 'score_imdb', 'score_metascore',
 'votes_imdb', 'awards', 'rating', 'actors', 'directors', 'studio', 'link_rt', 'link_imdb',
-'homepage', 'trailer_youtube', 'poster', 'poster_1', 'background'];
+'homepage', 'trailer_youtube', 'poster', 'poster_1', 'background', 'streaming'];
 
 var findFields = { _id: 1 };
 _.each(fields, function(f) { findFields[f] = 1 });
