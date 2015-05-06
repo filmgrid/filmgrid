@@ -6,6 +6,7 @@
 ### Data + Infrastructure
 * ![](https://tr.im/RtH0v) Hosting + Uptime/balancing issues
 * ![](https://tr.im/RtH0v) Update data (Keywords, Plot, SearchString, Rating), only publish what's needed
+* ![](https://tr.im/PtXLf) CMS to update Movie details
 * ![](https://tr.im/PtXLf) Get better Netflix, Amazon Prime and Hulu ids
 * ![](https://tr.im/PtXLf) Get more movies, and update job to get recent movies
 * ![](https://tr.im/PtXLf) Rollbacks and backups
@@ -29,7 +30,7 @@
 * ![](https://tr.im/PtXLf) No scroll events when at bottom of page
 * ![](https://tr.im/PtXLf) More intuitive action icons (stars, dismiss, etc.)
 * ![](https://tr.im/PtXLf) Fix global search (throttle, better full text, filters + sort)
-* ![](https://tr.im/PtXLf) Better transitions betweeon grid + about page
+* ![](https://tr.im/PtXLf) Better transitions between grid + about page
 * ![](https://tr.im/3GIP7) Refactor movie grid, maybe use React on front end
 
 ### New Features
