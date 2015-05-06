@@ -3,6 +3,8 @@
 // =============================================================================
 
 
+@blue: #29ABE2;
+
 .movie-list {
     position: relative;
     overflow: hidden;
@@ -46,3 +48,30 @@
     transform: scale(1);
     opacity: 1;
 }
+
+.new-recommendations {
+    position: fixed;
+    top: 20px;
+    background: #EEE;
+    border-radius: 5px;
+    color: #333;
+    padding: 10px 20px;
+    box-shadow: 0 10px 60px #000;
+    left: 50%;
+    text-align: center;
+    width: 340px;
+    margin-left: -60px;
+    z-index: 100;
+
+    a { color: @blue; }
+    a:hover { text-decoration: underline; }
+
+    transform: scale(0);
+    transition: transform .4s;
+    &.active {
+        transform: scale(1);
+        transition-timing-function: cubic-bezier(.42,2,.55,1.11);
+    }
+}
+
+

@@ -71,16 +71,13 @@ Template.index.helpers({
 });
 
 Meteor.startup(function() {
+  Session.keys = {}
 
-  Session.set('loggedIn', false);
   Session.set('activeMovie', {});
-  Session.set('type', null);
   Session.set('search', '');
   Session.set('filter', {});
-
-  Session.set('showSidebar', false);
-  Session.set('showSubnav', false);
   Session.set('loading', true);
+  Session.set('type', '');
 
   Deps.autorun(function(){
     var user = Meteor.user();

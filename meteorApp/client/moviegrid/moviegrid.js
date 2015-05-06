@@ -320,8 +320,33 @@ Template.moviegrid.helpers({
   },
   noMoviesText: function() {
     return Session.get('loading') ? 'Loading Movies…' : 'No Movies Found';
+  },
+  newRecommendationsClass: function() {
+    var user = Meteor.user();
+    return user && user.profile.new_movies ? 'active' : '';
   }
 });
+
+Template.moviegrid.events = {
+  'click .reload-recommendations': function() {
+    var user = Meteor.user();
+    var newMovies = user.profile.new_movies;
+
+    _.each(user.profile.movies, function(movie, key) {
+      if (newMovies[key]) {
+        newMovies[key].statusScore = movie.statusScore;
+        newMovies[key].statusType = movie.statusType;
+      }
+    });
+
+    Meteor.users.update({ _id: Meteor.userId()}, { $set: {
+      'profile.movies': newMovies,
+      'profile.new_movies': null
+    } });
+    App.trigger('reload');
+    scrollTo(0, 600);
+  }
+};
 
 App.on('reload', function() { selectMovies(); });
 App.on('reposition', function() { positionMovies(); });
