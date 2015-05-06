@@ -150,5 +150,5 @@ function updateProfile(movie, status) {
 
   // Recompute recommendations at regular intervals
   interactions++;
-  if (interactions % 5 == 0) Meteor.call('recomputePreferences');
+  if (interactions % 3 == 0) Meteor.call('recomputePreferences');
 }
