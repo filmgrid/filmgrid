@@ -67,7 +67,9 @@
                         {{#if streaming.netflix}}
                         <a class="stream-netflix movie-button tooltip-box" target="_blank" href="https://www.netflix.com/title/{{ streaming.netflix.id }}">Watch on <span class="netflix-icon"></span>
                             <span class="tooltip">
-                                {{ streaming.netflix.countries }}
+                            {{#each countries}}
+                                {{ name }}<br>
+                            {{/each}}
                             </span>
                         </a>
                         {{/if}}

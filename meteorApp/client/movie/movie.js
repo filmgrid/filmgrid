@@ -6,6 +6,16 @@
 var $window = $(window);
 var interactions = 0;
 
+var countries = {
+  de: 'Germany',
+  ca: 'Canada',
+  fr: 'France',
+  au: 'Australia',
+  nz: 'New Zealand',
+  uk: 'United Kingdom',
+  us: 'United States'
+};
+
 Template.movie.events = {
 
     'click .movie-bookmark' : function (e) {
@@ -82,6 +92,10 @@ Template.movie.helpers({
 
   movieGenres: function() {
     return this.genres.join(', ');
+  },
+
+  countries: function() {
+    return _.map(this.streaming.netflix.countries, function(c) { return { name: countries[c] } });
   },
 
   numberOfVotes: function() {

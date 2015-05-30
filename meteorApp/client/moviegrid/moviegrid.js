@@ -9,11 +9,41 @@
 var $list;
 var $noMovies;
 
+var countries = {
+  'Germany': 'de',
+  'Canada': 'ca',
+  'France': 'fr',
+  'Australia': 'au',
+  'New Zealand': 'nz',
+  'UK': 'uk',
+  'US': 'us'
+};
+
 var filters = {
   genre: function(m, value) {
     return value.length ? _.intersection(value, m.genres).length : true;
   },
-  streaming: function(m, value) { return true; /* TODO */ },
+  streaming: function(m, selectedServices) {
+    var movieServices = m.streaming;
+    var selectedCountries = Session.get('streamingCountries');
+
+    if (!movieServices) return false;  // Movie has no associated services
+    if (!selectedServices.length) return true;  // No filters applied
+
+    for (var i=0; i<selectedServices.length; ++i) {
+      var service = selectedServices[i];
+      var movieService = movieServices[service];
+      if (!movieService) continue;
+
+      var selectedCountry = selectedCountries[service]
+      if (!selectedCountries) return true;
+
+      var movieCountries = movieService.countries;
+      if (movieCountries.indexOf(countries[selectedCountry]) >= 0) return true;
+    }
+
+    return false;
+  },
   released: function(m, value) { return m.year >= value[0] && m.year <= value[1]; },
   title: function(m, value) {
     // TODO better searching

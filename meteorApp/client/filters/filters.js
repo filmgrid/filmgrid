@@ -36,13 +36,6 @@ function handleFilter(type, value) {
   App.trigger('reload');
 }
 
-function handleReleased(from, to) {
-  var query = Session.get('filter') || {};
-  query.released = [from, to];
-  Session.set('filter', query);
-  App.trigger('reload');  
-}
-
 // =================================================================================================
 
 Template.filters.events = {
@@ -75,14 +68,14 @@ Template.filters.helpers({
   },
 
   streaming: {
-    items: ['Netflix', 'Amazon Prime', 'Hulu'],  // TODO Youtube, iTunes, Vudu
-    colours: { Netflix: '#681014', 'Amazon Prime': '#8F5601', 'Hulu': '#526E23' },
-    images: { Netflix: '/assets/netflix.png', 'Amazon Prime': '/assets/amazon.png', 'Hulu': '/assets/hulu.png' },
-    select: { Netflix: ['US', 'UK', 'Germany', 'France', 'Australia'] },
+    items: ['netflix'/*, 'amazonPrime', 'hulu', 'Youtube', 'iTunes', 'Vudu'*/],
+    colours: { netflix: '#681014', amazonPrime: '#8F5601', hulu: '#526E23' },
+    images: { netflix: '/assets/netflix.png', amazonPrime: '/assets/amazon.png', hulu: '/assets/hulu.png' },
+    select: { netflix: ['US', 'UK', 'Germany', 'France'/*, 'Australia', 'New Zealand'*/] },
     multiSelect: 'None',
-    footer: 'More coming soon!',
+    footer: 'More services coming soon!',
     onChange: function(services, countries) {
-      console.log(services, countries); // TODO Implement countries
+      Session.set('streamingCountries', countries);
       handleFilter('streaming', services);
     }
   }
@@ -106,7 +99,7 @@ Template.filters.rendered = function() {
   });
 
   $released.on({
-    slide: function(e, range){ handleReleased(+range[0], +range[1]) }
+    slide: function(e, range){ handleFilter('released', [+range[0], +range[1]]); }
   });
 
   $released.Link('lower').to($('#released-start'), null, wNumb({ decimals: 0 }));
