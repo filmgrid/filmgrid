@@ -48,14 +48,35 @@
 * ![](https://tr.im/PtXLf) Advertising (Hackernews, ...)
 
 
-## Ideas
-* http://developer.rottentomatoes.com/docs
-* http://www.omdbapi.com/
-
-
 <!--
 TAGS:
 * https://tr.im/RtH0v  -  beta
 * https://tr.im/PtXLf  -  1.0
 * https://tr.im/3GIP7  -  future
 -->
+
+
+## Data Sources
+
+* http://developer.rottentomatoes.com/docs
+* http://www.omdbapi.com/
+* http://www.canistream.it/
+* https://github.com/bulv1ne/CanIStreamIt/blob/master/canistreamit/canistreamit.py
+* http://www.imdb.com/interfaces
+* http://developer.rottentomatoes.com/docs/read/json/v10/Movie_Info
+* http://www.allflicks.net/ (Netflix)
+
+
+## Competition
+
+* https://www.popcha.tv/popchax/en/
+* http://www.traileraddict.com/
+* http://movieo.me/?grid=grid_movie&file=movies%2F_movies&rate_by=imdb_top&years%5B%5D=1926&years%5B%5D=2015
+* https://news.ycombinator.com/item?id=8547351
+
+
+## Machine Learning Libraries
+
+* http://muricoca.github.io/crab/tutorial.html
+* http://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html
+
