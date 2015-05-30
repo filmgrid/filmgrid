@@ -50,9 +50,9 @@ var queryCache = '';
 var scroll = 0;
 
 // Handles global search
-function searchMovies(str, filter) {
-  console.log('Search Movies');
-  Meteor.call('search', str, function(error, result) {
+function searchMovies(str, filter, sort) {
+  console.log('Search Movies', filter, sort);
+  Meteor.call('search', {string: str, filter: filter, sort: sort}, function(error, result) {
     var movies = _.sortBy(result, function(x) { return -x.score});
     movies = _.map(movies, function(x) { 
       
@@ -66,6 +66,9 @@ function searchMovies(str, filter) {
       if (value) movies = _.filter(movies, function(m) { return filters[type](m, value); });
     });
 
+  // Sort movies
+  if (sort) movies = _.sortBy(movies, sorts[sort]);
+  
     selectedMovies = movies;
 
     initialiseMovies(true);
@@ -137,7 +140,7 @@ function selectMovies() {
 
   if (search.length > 1 && type === 'suggested') {
     // Global Search
-    searchMovies(search, filter);
+    searchMovies(search, filter, sort);
   } else {
     lookupMovies(type, search, sort, filter, instantaneaousRepositionning);
   }

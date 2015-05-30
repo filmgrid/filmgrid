@@ -5,11 +5,17 @@
 
 var $search;
 var $released;
+var tempSearch;
 
 function handleSearch() {
   var search = $search.val() || '';
-  Session.set('search', search);
-  App.trigger('reload');
+  tempSearch = search;
+  setTimeout(function() {
+    if (tempSearch == search) {
+      Session.set('search', search);
+      App.trigger('reload');  
+    }
+  }, 200);
 }
 
 function clearSearch() {
