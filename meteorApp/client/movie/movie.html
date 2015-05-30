@@ -23,9 +23,9 @@
                         <h2>{{ this.title }}</h2>
                         <p class="metadata">
                             {{#if score_imdb}}
-                            <a href="http://www.imdb.com/title/tt{{ link_imdb }}/" target="_blank" class="movie-score imdb">
+                            <a href="http://www.imdb.com/title/tt{{ link_imdb }}/" target="_blank" class="movie-score imdb tooltip-box">
                                 {{ score_imdb }}
-                                <span class="movie-score-tooltip">
+                                <span class="tooltip">
                                     <strong>IMDb:</strong><br>
                                     Rating: {{ score_imdb }}<br>
                                     {{#if votes_imdb}}{{ votes_imdb }} Votes{{/if}}
@@ -33,11 +33,11 @@
                             </a>
                             {{/if}}
                             {{#if or score_rtcritics score_rtaudience}}
-                            <a href="{{ link_rt }}" target="_blank" class="movie-score rt">
+                            <a href="{{ link_rt }}" target="_blank" class="movie-score rt tooltip-box">
                                 {{ score_rtcritics }}
                                 {{#if and score_rtcritics score_rtaudience}}•{{/if}}
                                 {{ score_rtaudience }}
-                                <span class="movie-score-tooltip">
+                                <span class="tooltip">
                                     <strong>Rotten Tomatoes:</strong><br>
                                     {{#if score_rtcritics}}Critics Score: {{ score_rtcritics }}{{/if}}
                                     {{#if and score_rtcritics score_rtaudience}}<br>{{/if}}
@@ -46,9 +46,9 @@
                             </a>
                             {{/if}}
                             {{#if score_metascore}}
-                            <span class="movie-score meta">
+                            <span class="movie-score meta tooltip-box">
                                 {{ score_metascore }}
-                                <span class="movie-score-tooltip">
+                                <span class="tooltip">
                                     <strong>Metacritic:</strong><br>
                                     Metascore: {{ score_metascore }}
                                 </span>
@@ -62,10 +62,14 @@
                     </div>
                     <div class="movie-buttons">
                         {{#if trailer_youtube}}
-                        <button class="trailer">Watch Trailer</button>
+                        <button class="trailer movie-button">Watch Trailer</button>
                         {{/if}}
                         {{#if streaming.netflix}}
-                        <a class="stream-netflix" target="_blank" href="https://www.netflix.com/title/{{ streaming.netflix.id }}">Watch on <span></span></a>
+                        <a class="stream-netflix movie-button tooltip-box" target="_blank" href="https://www.netflix.com/title/{{ streaming.netflix.id }}">Watch on <span class="netflix-icon"></span>
+                            <span class="tooltip">
+                                {{ streaming.netflix.countries }}
+                            </span>
+                        </a>
                         {{/if}}
                         <!--<button>Watch on Amazon</button>
                         <button>Watch on Netflix</button>-->
@@ -79,7 +83,7 @@
                 </div>
                 {{#if showTrailer}}
                 <iframe class="trailer" width="484" height="408" frameborder="0" allowfullscreen="true" webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen
-                src="http://www.youtube.com/embed/{{ trailer_youtube }}?autoplay=1&autohide=1&modestbranding=1&showinfo=0&iv_load_policy=3&fs=1" ></iframe>
+                src="http://www.youtube.com/embed/{{ trailer_youtube }}?autoplay=1&autohide=1&modestbranding=1&showinfo=0&iv_load_policy=3&fs=1"></iframe>
                 {{/if}}
             </div>
         </div>
