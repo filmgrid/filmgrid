@@ -9,10 +9,12 @@
     <div id="sidebar-out-target" class="{{#if showSidebar}}show{{/if}}"></div>
 
     <div id="sidebar">
-        <div id="sidebar-body">
 
+        <div id="sidebar-top">
             <a href="/" id="logo"></a>
+        </div>
 
+        <div id="sidebar-middle">
             <nav>
             {{#if currentUser}}
                 <a href="/" id="nav-link-suggested" class="nav-link {{#if navSelectedIs 'suggested'}} active{{/if}}">
@@ -29,7 +31,7 @@
                 </a>
                 <div id="subnav-link" class="nav-link">
                     <div class="nav-icon nav-icon-more"></div>
-                    More &nbsp;▾
+                    More &nbsp;<span class="rotate {{#if subnavClass}}active{{/if}}">▾</span>
                 </div>
                 
                 <div id="subnav" class="{{#if subnavClass}}open{{/if}}">
@@ -58,20 +60,20 @@
             <div class="filters {{ filtersClass }}">
                 {{ > filters }}
             </div>
-            
-            <div id="nav-bottom">
-                {{#if currentUser}}
-                    <div class="nav-bottom-item avatar-item">
-                        <img class="avatar" src="{{currentUser.profile.picture}}" />
-                        {{currentUser.profile.name}}
-                    </div>
-                {{/if}}
-                <a href="/about" class="nav-bottom-item {{#if navSelectedIs 'about'}}active{{/if}}">About Filmgrid</a>
-                {{#if currentUser}}
-                    <a class="nav-bottom-item" id="logout-button" href="#">Sign Out</a>
-                {{/if}}
-            </div>
-
         </div>
+            
+        <div id="sidebar-bottom">
+            {{#if currentUser}}
+                <div class="nav-bottom-item avatar-item">
+                    <img class="avatar" src="{{currentUser.profile.picture}}" />
+                    {{currentUser.profile.name}}
+                </div>
+            {{/if}}
+            <a href="/about" class="nav-bottom-item {{#if navSelectedIs 'about'}}active{{/if}}">About Filmgrid</a>
+            {{#if currentUser}}
+                <a class="nav-bottom-item" id="logout-button" href="#">Sign Out</a>
+            {{/if}}
+        </div>
+
     </div>
 </template>

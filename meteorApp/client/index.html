@@ -34,11 +34,14 @@
 	{{ > sidebar }}
 
 	<div id="page">
-		{{#if navSelectedIs 'suggested,bookmarked,liked,disliked|hidden,playing,friends'}}
+		{{#if navSelectedIs 'suggested,bookmarked,liked,disliked|hidden'}}
 	 		{{ > moviegrid }}
 	 	{{/if}}
 		{{#if navSelectedIs 'about'}}
 	 		{{ > about }}
 	 	{{/if}}
-	</div>
+	 	{{#if navSelectedIs 'playing,friends'}}
+	 		{{ > error }}
+	 	{{/if}}
+	 </div>
 </template>

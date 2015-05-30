@@ -53,11 +53,11 @@ Router.route('/disliked', function() {
 }, routeConfig);
 
 Router.route('/now-playing', function() {
-  configureRoute(this, 'playing', 'Recommended');
+  this.render('index', { data: { nav: "playing" }, waitOn: Meteor.user() });
 }, routeConfig);
 
 Router.route('/watch-with-friends', function() {
-  configureRoute(this, 'friends', 'Recommended');
+  this.render('index', { data: { nav: "friends" }, waitOn: Meteor.user() });
 }, routeConfig);
 
 Router.route('/about', function() {

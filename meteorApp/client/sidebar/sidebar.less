@@ -8,24 +8,45 @@
 @red: rgb(104, 7, 46);
 
 
-#sidebar-body {
-    min-height: 100%;
-    box-sizing: border-box;
-    padding: 30px 30px 175px;
-    position: relative;
+// =============================================================================
+// Logo
+
+#sidebar-top {
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding: 30px;
 }
 
 #logo {
     display: block;
     width: 200px;
     height: 70px;
-    margin-bottom: 40px;
     background: url('/assets/logo.png');
     background-size: 200px 70px;
 }
 
-nav {
-    margin: 0 0 30px -30px;
+
+// =============================================================================
+// Main Navigation
+
+#sidebar-middle {
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 0 18px 30px 0;
+    overflow-y: scroll;
+}
+
+#sidebar-middle::-webkit-scrollbar {
+    width: 12px;
+}
+
+#sidebar-middle::-webkit-scrollbar-thumb {
+    border-right: 6px solid transparent;
+    border-bottom: 30px solid transparent;
+    border-left: 2px solid transparent;
+    background-color: rgba(255,255,255,0.7);
+    background-clip: padding-box;
+    cursor: pointer;
 }
 
 .nav-link {
@@ -81,6 +102,9 @@ nav {
 .nav-icon-more { background-position: -5px -442px; }
 .nav-icon-disliked { background-position: -5px -42px; }
 
+.nav-link .rotate { display: inline-block; transition: transform .3s; transform: rotate(-90deg); }
+.nav-link .rotate.active { transform: rotate(0deg); }
+
 #subnav {
     height: 0;
     overflow: hidden;
@@ -95,7 +119,8 @@ nav {
 #subnav .nav-link { margin-left: -20px; }
 
 .filters {
-    transition: transform .3s opacity .3s;
+    margin: 30px 0 0 30px;
+    transition: transform .3s, opacity .3s;
 }
 
 .filters.hidden {
@@ -103,11 +128,14 @@ nav {
     transform: translateX(-260px);
 }
 
-#nav-bottom {
-    position: absolute;
-    bottom: 30px;
-    left: 0;
-    width: 230px;
+
+// =============================================================================
+// Bottom Nav
+
+#sidebar-bottom {
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 0 30px 30px 0;
 }
 
 .nav-bottom-item, .login-text-and-button {
@@ -155,7 +183,7 @@ a.nav-bottom-item:hover, a.nav-bottom-item.active, .login-text-and-button:hover 
 .avatar-item { padding-bottom: 10px; }
 
 .avatar {
-    width: 30px;
+    width: 0 30px 30px 0;
     height: 30px;
     border-radius: 30px;
     margin: 0 4px -10px 0;

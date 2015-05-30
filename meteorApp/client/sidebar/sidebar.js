@@ -22,7 +22,7 @@ Template.sidebar.helpers({
     return nav === this.nav;
   },
   filtersClass: function() {
-    return this.nav == 'about' ? 'hidden' : '';
+    return ['about', 'playing', 'friends'].indexOf(this.nav) < 0 ? '' : 'hidden';
   },
   subnavClass: function() {
     return Session.get('showSubnav') ? 'open' : '';
