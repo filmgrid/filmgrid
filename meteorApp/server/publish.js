@@ -8,7 +8,7 @@
 var fields = ['title', 'plot', 'genres', 'runtime', 'budget', 'revenue', 'year', 'released',
 'languages', 'country', 'score_rtaudience', 'score_rtcritics', 'score_imdb', 'score_metascore',
 'votes_imdb', 'awards', 'rating', 'actors', 'directors', 'studio', 'link_rt', 'link_imdb',
-'homepage', 'trailer_youtube', 'poster', 'poster_1', 'background', 'streaming'];
+'homepage', 'trailer_youtube', 'poster', 'poster_1', 'background', 'streaming', 'votes_imdb'];
 
 var findFields = { _id: 1 };
 _.each(fields, function(f) { findFields[f] = 1 });
@@ -45,15 +45,16 @@ function getInitialSuggestions() {
 var driver = new MongoInternals.RemoteCollectionDriver(process.env.MONGO_URL);
 
 Meteor.methods({
-    search: function(str) {
+    search: function(input) {
+        var sort = {};
+        sort['released'] = '-1';
         var asyncDb = Meteor.wrapAsync(driver.mongo.db.executeDbCommand, driver.mongo.db);
         var result = asyncDb({
             text: 'movies',
-            search: str || '',
+            search: input.string || '',
             project: findFields,
-            limit: 50
+            limit: 250
         });
-
         return (result && result.documents[0].ok === 1) ? result.documents[0].results : [];
     },
     public: function() {
