@@ -7,12 +7,14 @@
 // =============================================================================
 // Movie Poster and Animations
 
+// Note: will-change seems to break the YouTube full screen button
+
 .movie {
 	position: absolute;
 	width: 160px;
 	height: 220px;
 	pointer-events: none;
-	will-change: transform;
+	//will-change: transform;
 }
 
 .movie.on {
@@ -28,7 +30,7 @@
 	opacity: 0;
 	width: 160px;
 	height: 220px;
-	will-change: transform, opacity;
+	//will-change: transform, opacity;
 	transition: transform .6s, opacity .4s;
 	transform: scale(0);
 	perspective: 1200px;
@@ -44,7 +46,7 @@
 	top: 0;
 	left: 0;
 
-	will-change: transform;
+	//will-change: transform;
 	transform-style: preserve-3d;
 	backface-visibility: hidden;
 	transform-origin: 242px 221px;

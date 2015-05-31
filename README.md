@@ -20,7 +20,6 @@
 ### Bug Fixes
 * ![](https://tr.im/RtH0v) Active movie on initial load (global session variables)
 * ![](https://tr.im/RtH0v) Search Icon
-* ![](https://tr.im/RtH0v) Movie trailer fullscreen
 * ![](https://tr.im/RtH0v) Loading icon / load more button
 * ![](https://tr.im/RtH0v) No scroll events when at bottom of page
 * ![](https://tr.im/PtXLf) When opening movies, scroll into view
