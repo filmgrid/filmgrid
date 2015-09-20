@@ -4,11 +4,10 @@
 ## TODO List
 
 ### Data
-* ![](https://tr.im/RtH0v) Update data (Keywords, Plot, Search String, Rating), only publish what's needed
 * ![](https://tr.im/RtH0v) Get better Netflix, Amazon Prime and Hulu ids
-* ![](https://tr.im/RtH0v) Get more movies, and update job to get recent movies
-* ![](https://tr.im/PtXLf) CMS to update Movie details
-* ![](https://tr.im/3GIP7) Improved data flow (no duplication in db)
+* ![](https://tr.im/RtH0v) Load movie data asynchronously
+* ![](https://tr.im/RtH0v) Python Update job for new movies
+* ![](https://tr.im/3GIP7) CMS to update Movie details
 
 ### Recommendations
 * ![](https://tr.im/RtH0v) Ratings bonus for very recent movies
@@ -24,14 +23,14 @@
 * ![](https://tr.im/RtH0v) No scroll events when at bottom of page
 * ![](https://tr.im/PtXLf) When opening movies, scroll into view
 * ![](https://tr.im/PtXLf) Search Autocomplete
-* ![](https://tr.im/PtXLf) Improve global search (throttle)
+* ![](https://tr.im/3GIP7) Improve global search (throttle)
 * ![](https://tr.im/3GIP7) Better transitions between grid + other pages
 * ![](https://tr.im/3GIP7) More intuitive action icons (stars, dismiss, etc.)
-* ![](https://tr.im/3GIP7) Load movie details in separate request when opening popup
 
 ### New Features
 * ![](https://tr.im/RtH0v) Amazon Referral Buttons
 * ![](https://tr.im/PtXLf) Timeline / coming soon view
+* ![](https://tr.im/3GIP7) Cool Plot view with entity extraction
 * ![](https://tr.im/3GIP7) Open Source Grid
 * ![](https://tr.im/3GIP7) Recommend movies to friends
 * ![](https://tr.im/3GIP7) Group movie series (Harry Potter, ...) into one item
@@ -42,11 +41,10 @@
 
 ### Performance & Infrastructure
 * ![](https://tr.im/RtH0v) Hosting + Uptime/balancing issues
-* ![](https://tr.im/RtH0v) Basic iOS Support
 * ![](https://tr.im/PtXLf) Fully Mobile + Touch Version
 * ![](https://tr.im/PtXLf) Rollbacks and backups
 * ![](https://tr.im/3GIP7) Kill Meteor
-* ![](https://tr.im/3GIP7) Native Movie Apps
+* ![](https://tr.im/3GIP7) Native Mobile Apps
 
 ### Publicity
 * ![](https://tr.im/PtXLf) Facebook, Twitter, Google+, Tumbler Pages
