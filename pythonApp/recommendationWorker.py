@@ -1,8 +1,8 @@
 from __future__ import division
 import sklearn
 from pymongo import MongoClient
-import sys
-sys.path.insert(0, '/Users/tdelteil/Projects/Filmgrid/pythonApp/vendor/mongoqueue')
+import sys,os
+sys.path.append(os.path.realpath('vendor/mongoqueue'))
 from mongoqueue import MongoQueue
 import time
 import string
