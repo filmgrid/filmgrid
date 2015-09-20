@@ -126,7 +126,10 @@ if __name__ == "__main__":
 	######### ACTUAL WORKER LOOP #############
 
 	print "Starting worker " + name
-	while(1):
+	count = 0;
+	######### Make it run for only 10 minutes #######
+	while(count < 600/sleepTime):
+	    count = count + 1
 	    job = queue.next()
 	    while(job):
 	        t0 = time.time()
@@ -139,5 +142,5 @@ if __name__ == "__main__":
 	        job.complete()
 	        job = queue.next()
 	        print (time.time() -t0)
-    	time.sleep(sleepTime);
+    	    time.sleep(sleepTime);
 
