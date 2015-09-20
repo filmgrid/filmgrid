@@ -45,12 +45,9 @@ var filters = {
     return false;
   },
   released: function(m, value) { return m.year >= value[0] && m.year <= value[1]; },
-  title: function(m, value) {
-    // TODO better searching
-    // TODO generate search string in db (+ keywords)
+  title: function(m, value) { 
     var words = value.toLowerCase().trim().replace(/\s+/g, ' ').split(' ');
-    var searchStr = m.title .toLowerCase() + ' ' + m.actors.toLowerCase();
-    return _.all(words, function(w) { return searchStr.indexOf(w) !== -1; });
+    return _.all(words, function(w) { return m.search_str.indexOf(w) !== -1; });
   }
 };
 
@@ -59,7 +56,7 @@ var sorts = {
   Year:  function(m) { return -m.released.replace(/\-/g,''); },
   Stars: function(m) { return -(m.statusScore || 0); },
   // TODO calculate average rating in db
-  Rating: function(m) { return -((m.score_rtcritics || 0) + (m.score_rtaudience || 0) + (m.score_imdb || 0)*10); },
+  Rating: function(m) { return -m.score; },
   Popularity: function(m) { return -m.revenue || 0; },
   Recommended: function(m) { /* TODO sort by recommendation score */ return -m.revenue || 0; },
   'Date added': function(m) { return -m.changed; }

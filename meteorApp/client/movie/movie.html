@@ -4,8 +4,8 @@
             <div class="movie-front">
                 <div class="movie-poster-wrap status-{{ status }}">
 
-                    <div class="movie-poster-title">{{this.title}}</div>
-                    <div class="movie-poster" style="background-image: url('{{this.poster_1}}')"></div>
+                    <div class="movie-poster-title">{{ title }}</div>
+                    <div class="movie-poster" style="background-image: url('{{ poster }}')"></div>
                     <div class="movie-poster-shadow"></div>
                     {{#if loggedIn}}
                     <div class="movie-bookmark"></div>
@@ -20,51 +20,51 @@
                 </div>
                 <div class="movie-details">
                     <div class="movie-body">
-                        <h2>{{ this.title }}</h2>
+                        <h2>{{ title }}</h2>
                         <p class="metadata">
-                            {{#if score_imdb}}
-                            <a href="http://www.imdb.com/title/tt{{ link_imdb }}/" target="_blank" class="movie-score imdb tooltip-box">
-                                {{ score_imdb }}
+                            {{#if data 'score_imdb'}}
+                            <a href="http://www.imdb.com/title/tt{{ data 'link_imdb' }}/" target="_blank" class="movie-score imdb tooltip-box">
+                                {{ data 'score_imdb' }}
                                 <span class="tooltip">
                                     <strong>IMDb:</strong><br>
-                                    Rating: {{ score_imdb }}<br>
-                                    {{#if votes_imdb}}{{ votes_imdb }} Votes{{/if}}
+                                    Rating: {{ data 'score_imdb' }}<br>
+                                    {{#if data 'votes_imdb'}}{{ numberOfVotes }} Votes{{/if}}
                                 </span>
                             </a>
                             {{/if}}
-                            {{#if or score_rtcritics score_rtaudience}}
+                            <!--{{#if or data 'score_rtcritics' data score_rtaudience}}-->
                             <a href="{{ link_rt }}" target="_blank" class="movie-score rt tooltip-box">
-                                {{ score_rtcritics }}
-                                {{#if and score_rtcritics score_rtaudience}}•{{/if}}
-                                {{ score_rtaudience }}
+                                {{ data 'score_rtcritics' }}
+                                <!--{{#if and data 'score_rtcritics' data 'score_rtaudience'}}•{{/if}}-->
+                                {{ data 'score_rtaudience' }}
                                 <span class="tooltip">
                                     <strong>Rotten Tomatoes:</strong><br>
-                                    {{#if score_rtcritics}}Critics Score: {{ score_rtcritics }}{{/if}}
-                                    {{#if and score_rtcritics score_rtaudience}}<br>{{/if}}
-                                    {{#if score_rtaudience}}Audience Score: {{ score_rtaudience }}{{/if}}
+                                    {{#if data 'score_rtcritics'}}Critics Score: {{ data 'score_rtcritics' }}{{/if}}
+                                    <!--{{#if and data 'score_rtcritics data score_rtaudience}}<br>{{/if}}-->
+                                    {{#if data 'score_rtaudience'}}Audience Score: {{ data 'score_rtaudience' }}{{/if}}
                                 </span>
                             </a>
-                            {{/if}}
-                            {{#if score_metascore}}
+                            <!--{{/if}}-->
+                            {{#if data 'score_metacritic'}}
                             <span class="movie-score meta tooltip-box">
-                                {{ score_metascore }}
+                                {{ data 'score_metacritic' }}
                                 <span class="tooltip">
                                     <strong>Metacritic:</strong><br>
-                                    Metascore: {{ score_metascore }}
+                                    Metascore: {{ data 'score_metacritic' }}
                                 </span>
                             </span>
                             {{/if}}
                         </p>
-                        <p class="metadata">{{ released }} &nbsp;•&nbsp; {{ runtime }}min &nbsp;•&nbsp; <span class="rating">{{ rating }}</span></p>
+                        <p class="metadata">{{ data 'released' }} &nbsp;•&nbsp; {{ data 'runtime' }}min &nbsp;•&nbsp; <span class="rating">{{ data 'rating' }}</span></p>
                         <p class="metadata">{{ movieGenres }}</p>
-                        <p class="metadata">{{ actors }}</p>
+                        <p class="metadata">{{ data 'actors' }}</p>
                         <p class="plot">{{ moviePlot }}</p>
                     </div>
                     <div class="movie-buttons">
-                        {{#if trailer_youtube}}
+                        {{#if data 'trailer_youtube'}}
                         <button class="trailer movie-button">Watch Trailer</button>
                         {{/if}}
-                        {{#if streaming.netflix}}
+                        {{#if data 'streaming'}}
                         <a class="stream-netflix movie-button tooltip-box" target="_blank" href="https://www.netflix.com/title/{{ streaming.netflix.id }}">Watch on <span class="netflix-icon"></span>
                             <span class="tooltip">
                             {{#each countries}}
@@ -85,7 +85,7 @@
                 </div>
                 {{#if showTrailer}}
                 <iframe class="trailer" width="484" height="408" frameborder="0" allowfullscreen="true" webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen
-                src="http://www.youtube.com/embed/{{ trailer_youtube }}?autoplay=1&autohide=1&modestbranding=1&showinfo=0&iv_load_policy=3&fs=1"></iframe>
+                src="http://www.youtube.com/embed/{{ data 'trailer_youtube' }}?autoplay=1&autohide=1&modestbranding=1&showinfo=0&iv_load_policy=3&fs=1"></iframe>
                 {{/if}}
             </div>
         </div>

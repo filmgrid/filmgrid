@@ -6,6 +6,8 @@
 var $window = $(window);
 var interactions = 0;
 
+var moviesCache = {};
+
 var countries = {
   de: 'Germany',
   ca: 'Canada',
@@ -57,6 +59,17 @@ Template.movie.events = {
       }
       App.trigger('reposition');
       Session.set('flipped', false);
+
+      var id = this.id;
+      if (!(id in moviesCache)) {
+        Session.set('reloadMovie'+id, false);
+        moviesCache[id] = null;  // avoid repeated loading
+        Meteor.call('getData', { id: id}, function(error, result) {
+          console.log('load data for ' + result.title);
+          moviesCache[id] = result;
+          Session.set('reloadMovie'+id, true);
+        });
+      }
     },
 
     'click .trailer': function(e) {
@@ -71,6 +84,12 @@ Template.movie.events = {
 Template.movie.helpers({
   openClass: function() {
     return Session.get('activeMovie' + this.id) ? 'open' : '';
+  },
+
+  data: function(value) {
+    Session.get('reloadMovie'+this.id);
+    var m = moviesCache[this.id];
+    return m ? m[value] : null;
   },
 
   flippedClass: function() {
@@ -91,32 +110,45 @@ Template.movie.helpers({
   },
 
   movieGenres: function() {
-    return this.genres.join(', ');
+    Session.get('reloadMovie'+this.id);
+    if (!moviesCache[this.id]) return;
+    return moviesCache[this.id].genres.join(', ');
   },
 
   countries: function() {
-    return _.map(this.streaming.netflix.countries, function(c) { return { name: countries[c] } });
+    Session.get('reloadMovie'+this.id);
+    if (!moviesCache[this.id]) return;
+    return _.map(moviesCache[this.id].streaming.netflix.countries, function(c) { return { name: countries[c] } });
   },
 
   numberOfVotes: function() {
-    var v = '' + this.votes_imdb;
+    Session.get('reloadMovie'+this.id);
+    if (!moviesCache[this.id]) return;
+
+    var v = '' + moviesCache[this.id].votes_imdb;
     if (v < 999) return v;
     if (v < 9999) return v[0] + ',' + v.substring(1,4);
-    if (v < 999999) return Math.round(this.votes_imdb/1000) + 'k';
-    return Math.round(this.votes_imdb/1000000) + 'm';
+    if (v < 999999) return Math.round(moviesCache[this.id].votes_imdb/1000) + 'k';
+    return Math.round(moviesCache[this.id].votes_imdb/1000000) + 'm';
   },
 
   moviePlot: function() {
-    return this.plot.replace(/\s\-\-\s/g, '—')
-                    .replace(/\s\"/g, ' “')
-                    .replace(/\"\s/g, '” ')
-                    .replace(/\s\'/g, ' ‘')
-                    .replace(/\'\s/g, '’ ')
-                    .replace(/\'/g, '’');
+    Session.get('reloadMovie'+this.id);
+    if (!moviesCache[this.id]) return;
+
+    return moviesCache[this.id].plot.replace(/\s\-\-\s/g, '—')
+               .replace(/\s\"/g, ' “')
+               .replace(/\"\s/g, '” ')
+               .replace(/\s\'/g, ' ‘')
+               .replace(/\'\s/g, '’ ')
+               .replace(/\'/g, '’');
   },
 
   netflixCountries: function() {
-    return this.streaming.netflix.countries.join(', ')
+    Session.get('reloadMovie'+this.id);
+    if (!moviesCache[this.id]) return;
+
+    return moviesCache[this.id].streaming.netflix.countries.join(', ')
   },
 
   and: function(a, b) { return a && b; },
