@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
 	uri = args.uri
 	sleepTime = args.sleep
-	name = args.name
+	name = args.name+'-'+str(randint(0,10000000))
 
 	# Create the objects
 	client = MongoClient(uri)
