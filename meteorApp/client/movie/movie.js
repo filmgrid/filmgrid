@@ -118,6 +118,8 @@ Template.movie.helpers({
   countries: function() {
     Session.get('reloadMovie'+this.id);
     if (!moviesCache[this.id]) return;
+    if (!moviesCache[this.id].streaming) return;
+    if (!moviesCache[this.id].streaming.netflix) return;
     return _.map(moviesCache[this.id].streaming.netflix.countries, function(c) { return { name: countries[c] } });
   },
 
